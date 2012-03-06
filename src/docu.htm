@@ -121,7 +121,7 @@ When sending commands to the RedFly you always have to check, that the input buf
       uint8_t getip(char *host, uint8_t *ip)<br>
     </dt>
     <dd>
-      Returns 0 if the ip address of the domain is succefully received. (FW >= 4.3.0 required)<br>
+      Returns 0 if the ip address of the host is succefully received. (FW >= 4.3.0 required)<br>
       <i>host</i> - host name<br>
       <i>ip</i> - Pointer to a buffer to receive the IP address<br>
     </dd>
@@ -130,7 +130,7 @@ When sending commands to the RedFly you always have to check, that the input buf
   <dl>
     <dt>
       uint32_t gettime(uint8_t *server, uint16_t port)<br>
-      uint32_t gettime(uint8_t *server)<br>
+      uint32_t gettime(uint8_t *server) //use port 123<br>
     </dt>
     <dd>
       Returns the seconds since 1970 or 0 (zero) on an error.<br>
@@ -178,7 +178,7 @@ When sending commands to the RedFly you always have to check, that the input buf
       uint8_t scan(void)<br>
     </dt>
     <dd>
-      Scan for wireless networks and return SSID, Mode and RSSI. If the scanning was successful the return vaule is 0.<br>
+      Scan for wireless networks and return SSID, Mode and RSSI. If the scanning was successful the return vaule is 0. A scan cannot be started after joining a network.<br>
       <i>chn</i> - Channel (0=all channels)<br>
       <i>ssid</i> - Pointer to a buffer to receive the SSID (if set on function call, the module scans for networks with hidden SSID)<br>
       <i>mode</i> - Pointer to a buffer to receive the mode value 0=Open, 1=WPA, 2=WPA2, 3=WEP<br>
@@ -192,7 +192,7 @@ When sending commands to the RedFly you always have to check, that the input buf
       uint8_t nextscan(char *ssid)<br>
     </dt>
     <dd>
-      Scan for next wireless networks and return SSID, Mode and RSSI. If the scanning was successful the return vaule is 0.<br>
+      Scan for next wireless networks and return SSID, Mode and RSSI. If the scanning was successful the return vaule is 0. A scan cannot be started after joining a network.<br>
       <i>ssid</i> - SSID<br>
       <i>mode</i> - Mode<br>
       <i>rssi</i> - RSSI<br>
@@ -210,7 +210,7 @@ When sending commands to the RedFly you always have to check, that the input buf
       uint8_t join(char *ssid) //infrastructure<br>
     </dt>
     <dd>
-      Join wireless network. If everything is okay the return value is 0.<br>
+      Join wireless network. If everything is okay then the return value is 0.<br>
       scan() has to be called before this function for infrastructure and IBSS joiner networks.<br>
       <i>ssid</i> - SSID<br>
       <i>key</i> - Key / Password (max 31 characters, WEP-64bit: 10 hex digits and WEP-128bit: 26 hex digits)<br>
@@ -240,7 +240,7 @@ When sending commands to the RedFly you always have to check, that the input buf
     uint8_t begin(void) //Use DHCP to get IP config.<br>
     </dt>
     <dd>
-      Set IP configuration.<br>
+      Set IP configuration. If everything is okay then the return value is 0.<br>
       <i>dhcp</i> - 1=DHCP or 2=Auto-IP (Auto-IP requires FW >= 4.3.0)<br>
       <i>ip</i> - IP address<br>
       <i>dns</i> - DNS server (FW >= 4.3.0 required)<br>
@@ -481,7 +481,7 @@ received_len = socketRead(&socket, &len, dst, d_size);</pre>
 
   <dl>
     <dt>
-      uint8_t getSocket(void)<br>
+      uint8_t getsocket(void)<br>
     </dt>
     <dd>
       Returns the socket handle for the connection.<br>
@@ -579,7 +579,7 @@ received_len = socketRead(&socket, &len, dst, d_size);</pre>
     </dt>
     <dd>
       Create server.<br>
-      <i>port</i> - Server port to connect<br>
+      <i>port</i> - Server port to start listening<br>
     </dd>
   </dl>
 
@@ -589,9 +589,12 @@ received_len = socketRead(&socket, &len, dst, d_size);</pre>
       void beginUDP(void)<br>
       int connect(void)<br>
       int connectUDP(void)<br>
+      int connect(uint16_t port)<br>
+      int connectUDP(uint16_t port)<br>
     </dt>
     <dd>
       Start the TCP or UDP server. connect() returns 1 if everything is okay.<br>
+      <i>port</i> - Server port to start listening<br>
     </dd>
   </dl>
 
@@ -625,10 +628,29 @@ received_len = socketRead(&socket, &len, dst, d_size);</pre>
 
   <dl>
     <dt>
-      uint8_t getSocket(void)<br>
+      uint8_t getsocket(void)<br>
     </dt>
     <dd>
       Returns the socket handle for the connection.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      void getip(uint8_t *ip)<br>
+    </dt>
+    <dd>
+      Returns the IP of the client on an UDP connection.<br>
+      <i>ip</i> - IP address<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint16_t getport(void)<br>
+    </dt>
+    <dd>
+      Returns the port of the client on an UDP connection..<br>
     </dd>
   </dl>
 

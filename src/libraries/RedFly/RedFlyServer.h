@@ -19,16 +19,21 @@ class RedFlyServer : public Server
   public:
     RedFlyServer(void);
     RedFlyServer(uint16_t port);
+    ~RedFlyServer(void);
 
     virtual void begin(void); //same as connect()
     virtual void beginUDP(void); //same as connect()
     virtual int connect(void);
     virtual int connectUDP(void);
+    virtual int connect(uint16_t port);
+    virtual int connectUDP(uint16_t port);
     int connectSocket(uint8_t p);
     virtual uint8_t connected(void);
     virtual void stop(void);
     uint8_t status(void);
-    uint8_t getSocket(void);
+    uint8_t getsocket(void);
+    void getip(uint8_t *ip);
+    uint16_t getport(void);
 
     virtual int available(void);
     virtual int read(void);

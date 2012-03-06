@@ -63,6 +63,7 @@ class REDFLY
 {
   public:
     REDFLY(void);
+    ~REDFLY(void);
 
     uint8_t init(uint32_t br, uint8_t pwr); //br=baudrate, pwr=tx_power
     uint8_t init(uint8_t pwr);              //pwr=tx_power

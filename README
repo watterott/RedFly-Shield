@@ -15,5 +15,5 @@ Features:
 
 Directories:
  /fw  - Firmware for the WiFi module
- /pcb - Schematics and layout files
- /src - Arduino library and examples
+ /pcb - Schematics and Layout files
+ /src - Arduino Library and Examples

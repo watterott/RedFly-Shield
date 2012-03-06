@@ -336,7 +336,6 @@ void loop()
             len   = 0;
           }
         }
-
       }
       else //file not found
       {
@@ -349,7 +348,7 @@ void loop()
       //clear input buffer
       server.flush();
       //send HTTP 400 header
-      server.print_P(PSTR("HTTP/1.0 400 Bad request\r\n\r\n"));
+      server.print_P(PSTR("HTTP/1.0 400 Bad request\r\n\r\nError 400 Bad request"));
     }
 
     //close connection

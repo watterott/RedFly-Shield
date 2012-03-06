@@ -52,7 +52,9 @@ status	KEYWORD2
 service	KEYWORD2
 setName	KEYWORD2
 setNamePGM	KEYWORD2
-getSocket	KEYWORD2
+getsocket	KEYWORD2
+getip	KEYWORD2
+getport	KEYWORD2
 available	KEYWORD2
 read	KEYWORD2
 flush	KEYWORD2

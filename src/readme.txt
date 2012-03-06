@@ -1,4 +1,4 @@
-RedFly-Shield Software Package v0.10
+RedFly-Shield Software Package v0.11
 ====================================
   Visit www.watterott.net/projects/redfly-shield for updates.
 
@@ -21,6 +21,10 @@ Third party software
   digitalWriteFast
     http://code.google.com/p/digitalwritefast/
 
+  ArdOSC
+    http://recotana.com/
+    http://github.com/recotana/ArdOSC/
+
 
 License
 -------
@@ -29,6 +33,8 @@ License
 
 History
 -------
+  Feb 26 2012  v0.11  Added ArdOSC Lib.
+
   Jan 07 2012  v0.10  Compatible with Arduino 1.0.
                       Added UDP Client+Server API.
                       Added basic NBNS support.

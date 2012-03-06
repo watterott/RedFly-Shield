@@ -18,7 +18,7 @@ extern "C" {
 #define MAX_ERRORS (10)
 
 
-//-------------------- Constructor --------------------
+//-------------------- Constructor/Destructor --------------------
 
 
 RedFlyClient::RedFlyClient(void)
@@ -61,6 +61,14 @@ RedFlyClient::RedFlyClient(uint8_t *ip, uint16_t port, uint16_t lport)
   c_port   = port;
   c_lport  = lport;
   c_socket = INVALID_SOCKET;
+
+  return;
+}
+
+
+RedFlyClient::~RedFlyClient(void)
+{
+  stop();
 
   return;
 }
@@ -257,7 +265,7 @@ uint8_t RedFlyClient::status(void)
 }
 
 
-uint8_t RedFlyClient::getSocket(void)
+uint8_t RedFlyClient::getsocket(void)
 {
   return c_socket;
 }

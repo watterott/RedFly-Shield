@@ -21,6 +21,7 @@ class RedFlyClient : public Server
     RedFlyClient(uint8_t socket);
     RedFlyClient(uint8_t *ip, uint16_t port);
     RedFlyClient(uint8_t *ip, uint16_t port, uint16_t lport);
+    ~RedFlyClient(void);
 
     virtual void begin(void); //same as connect()
     virtual void beginUDP(void); //same as connect()
@@ -36,7 +37,7 @@ class RedFlyClient : public Server
     virtual uint8_t connected(void);
     virtual void stop(void);
     uint8_t status(void);
-    uint8_t getSocket(void);
+    uint8_t getsocket(void);
 
     virtual int available(void);
     virtual int read(void);

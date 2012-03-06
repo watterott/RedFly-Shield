@@ -32,10 +32,16 @@ extern "C" {
 REDFLY RedFly;
 
 
-//-------------------- Constructor --------------------
+//-------------------- Constructor/Destructor --------------------
 
 
 REDFLY::REDFLY(void)
+{
+  return;
+}
+
+
+REDFLY::~REDFLY(void)
 {
   return;
 }
@@ -1052,14 +1058,14 @@ uint16_t REDFLY::socketRead(uint8_t *socket, uint16_t *len, uint8_t *ip, uint16_
 
   *socket = last_socket;
   *len    = last_len;
-  if(ip)
+  if(ip && udp_ip[0])
   {
     ip[0] = udp_ip[0];
     ip[1] = udp_ip[1];
     ip[2] = udp_ip[2];
     ip[3] = udp_ip[3];
   }
-  if(port)
+  if(port && udp_port)
   {
     *port = udp_port;
   }
@@ -1252,14 +1258,14 @@ uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, int16_t val)
   return cmd(dst, dst_size, p1, buf, 0, 0, 0);
 }
 
-uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, uint8_t *v2, uint16_t v2_size)            { return cmd(dst, dst_size, p1, 0,  0,  v2, v2_size); }
-uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, char *v1)                                 { return cmd(dst, dst_size, p1, v1,  0,  0,       0); }
-uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1)                                           { return cmd(dst, dst_size, p1,  0,  0,  0,       0); }
-uint8_t REDFLY::cmd(                                 PGM_P p1, char *v1, PGM_P p2)                      { return cmd(  0,        0, p1, v1, p2,  0,       0); }
-uint8_t REDFLY::cmd(                                 PGM_P p1, char *v1, uint8_t *v2, uint16_t v2_size) { return cmd(  0,        0, p1, v1,  0, v2, v2_size); }
-uint8_t REDFLY::cmd(                                 PGM_P p1, char *v1)                                { return cmd(  0,        0, p1, v1,  0,  0,       0); }
-uint8_t REDFLY::cmd(                                 PGM_P p1, int16_t v1)                              { return cmd(  0,        0, p1, v1                 ); }
-uint8_t REDFLY::cmd(                                 PGM_P p1)                                          { return cmd(  0,        0, p1,  0,  0,  0,       0); }
+uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, uint8_t *v2, uint16_t v2_size)           { return cmd(dst, dst_size, p1, 0,  0,  v2, v2_size); }
+uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, char *v1)                                { return cmd(dst, dst_size, p1, v1,  0,  0,       0); }
+uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1)                                          { return cmd(dst, dst_size, p1,  0,  0,  0,       0); }
+uint8_t REDFLY::cmd(                                PGM_P p1, char *v1, PGM_P p2)                      { return cmd(  0,        0, p1, v1, p2,  0,       0); }
+uint8_t REDFLY::cmd(                                PGM_P p1, char *v1, uint8_t *v2, uint16_t v2_size) { return cmd(  0,        0, p1, v1,  0, v2, v2_size); }
+uint8_t REDFLY::cmd(                                PGM_P p1, char *v1)                                { return cmd(  0,        0, p1, v1,  0,  0,       0); }
+uint8_t REDFLY::cmd(                                PGM_P p1, int16_t v1)                              { return cmd(  0,        0, p1, v1                 ); }
+uint8_t REDFLY::cmd(                                PGM_P p1)                                          { return cmd(  0,        0, p1,  0,  0,  0,       0); }
 
 
 void REDFLY::flush(void)

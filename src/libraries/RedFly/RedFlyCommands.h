@@ -76,6 +76,7 @@
 
 
 //TCP/IP Commands
+/*
 #define ERROR_1          (-1) //255 Waiting for the connection from peer.
 #define ERROR_2          (-2) //254 Socket not available.
 #define ERROR_3          (-3) //253 Deauthentication from the Access Point.
@@ -93,6 +94,7 @@
 #define ERROR_15        (-15) //241 JOIN cmd already issued. This error is sent when the JOIN cmd is sent more than once.
 #define ERROR_16        (-16) //240 DHCP Failure.
 #define ERROR_17        (-17) //239 Baud Rate Not Supported.
+*/
 
 #define CMD_IPCONF      "AT+RSI_IPCONF=" //DHCP_MODE(0=manual, 1=DHCP),IP,SUBNET,GATEWAY
   //ret: OKMACaddrIPaddrSUBNETGateway

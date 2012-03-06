@@ -68,7 +68,7 @@ typedef struct __attribute__((packed))
 } NBNS_Packet;
 
 
-//-------------------- Constructor --------------------
+//-------------------- Constructor/Destructor --------------------
 
 
 RedFlyNBNS::RedFlyNBNS(void) : RedFlyServer(NBNS_PORT)
@@ -82,6 +82,14 @@ RedFlyNBNS::RedFlyNBNS(void) : RedFlyServer(NBNS_PORT)
 RedFlyNBNS::RedFlyNBNS(char *name) : RedFlyServer(NBNS_PORT)
 {
   strcpy(devname, name);
+
+  return;
+}
+
+
+RedFlyNBNS::~RedFlyNBNS(void)
+{
+  stop();
 
   return;
 }

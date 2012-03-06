@@ -18,23 +18,30 @@ extern "C" {
 #define MAX_ERRORS (10)
 
 
-//-------------------- Constructor --------------------
+//-------------------- Constructor/Destructor --------------------
 
 
 RedFlyServer::RedFlyServer(void) 
 {
-  s_port = 80;
+  s_port   = 80;
   s_socket = INVALID_SOCKET;
 
   return;
 }
 
 
-
 RedFlyServer::RedFlyServer(uint16_t port)
 {
   s_port   = port;
   s_socket = INVALID_SOCKET;
+
+  return;
+}
+
+
+RedFlyServer::~RedFlyServer(void) 
+{
+  stop();
 
   return;
 }
@@ -71,6 +78,22 @@ int RedFlyServer::connectUDP(void)
 }
 
 
+int RedFlyServer::connect(uint16_t port)
+{
+  s_port = port;
+
+  return connectSocket(PROTO_TCP);
+}
+
+
+int RedFlyServer::connectUDP(uint16_t port)
+{
+  s_port = port;
+
+  return connectSocket(PROTO_UDP);
+}
+
+
 int RedFlyServer::connectSocket(uint8_t p)
 {
   if(s_socket != INVALID_SOCKET)
@@ -85,8 +108,13 @@ int RedFlyServer::connectSocket(uint8_t p)
     return 0;
   }
 
-  proto = p;
-  error = 0;
+  c_ip[0] = 0;
+  c_ip[1] = 0;
+  c_ip[2] = 0;
+  c_ip[3] = 0;
+  c_port  = 0;
+  proto   = p;
+  error   = 0;
 
   return 1;
 }
@@ -150,9 +178,26 @@ uint8_t RedFlyServer::status(void)
 }
 
 
-uint8_t RedFlyServer::getSocket(void)
+uint8_t RedFlyServer::getsocket(void)
 {
   return s_socket;
+}
+
+
+void RedFlyServer::getip(uint8_t *ip)
+{
+  ip[0] = c_ip[0];
+  ip[1] = c_ip[1];
+  ip[2] = c_ip[2];
+  ip[3] = c_ip[3];
+
+  return;
+}
+
+
+uint16_t RedFlyServer::getport(void)
+{
+  return c_port;
 }
 
 
@@ -163,7 +208,7 @@ int RedFlyServer::available(void)
 
   if(socket != INVALID_SOCKET)
   {
-    RedFly.socketRead(&socket, &len, c_ip, &c_port, 0, 0);
+    RedFly.socketRead(&socket, &len, 0, 0);
   }
 
   return (int)len;
@@ -181,7 +226,14 @@ int RedFlyServer::read(void)
     return -1;
   }
 
-  rd = RedFly.socketRead(&socket, &len, c_ip, &c_port, &b, 1);
+  if(RedFly.socketState(socket) == SOCKET_UDP)
+  {
+    rd = RedFly.socketRead(&socket, &len, c_ip, &c_port, &b, 1);
+  }
+  else
+  {
+    rd = RedFly.socketRead(&socket, &len, &b, 1);
+  }
   if(rd == 0)
   {
     return -1;

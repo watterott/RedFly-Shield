@@ -18,6 +18,7 @@ class RedFlyNBNS : RedFlyServer
   public:
     RedFlyNBNS(void);
     RedFlyNBNS(char *name);
+    ~RedFlyNBNS(void);
 
     void setName(char *name);
     void setNamePGM(PGM_P name);
