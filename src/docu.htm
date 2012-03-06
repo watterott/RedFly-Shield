@@ -1,0 +1,785 @@
+<html>
+<head>
+  <title>RedFly-Shield for Arduino</title>
+  <style type="text/css">
+    h1
+      { font-size:135%; font-weight:bold; text-shadow:1px 1px 1px #DDDDDD; }
+    h2
+      { font-size:120%; font-weight:bold; text-shadow:1px 1px 1px #DDDDDD; }
+    h3
+      { font-size:110%; font-weight:bold; }
+    h4
+      { font-size:105%; font-weight:normal; }
+    dl dt
+      { font-size:102%; font-weight:normal; font-family:monospace; background:#F0F0F0;}
+    dl dd
+      { font-size:100%; font-weight:normal; }
+    a
+      { text-decoration:none; }
+    a:active, a:hover, a:focus
+      { text-decoration:underline; }
+  </style>
+</head>
+<body>
+<h1>RedFly-Shield for Arduino</h1>
+<ul>
+  <li>Updates: <a href="http://www.watterott.net/projects/redfly-shield">watterott.net/projects/redfly-shield</a></li>
+  <li>Further infos: <a href="readme.txt">readme.txt</a></li>
+  <li>License: <a href="license.txt">license.txt</a></li>
+  <li><a href="#Libraries">Arduino Libraries</a></li>
+  <li><a href="#Examples">Arduino Examples</a></li>
+</ul>
+French description and additional functions: <a href="http://www.mon-club-elec.fr/pmwiki_reference_arduino/pmwiki.php?n=Main.LibrairieRedFly">Librairie RedFly-Shield</a>, <a href="http://www.mon-club-elec.fr/pmwiki_mon_club_elec/pmwiki.php?n=MAIN.MATERIELArduinoShieldWifiRedflyShield">RedFly-Shield</a><br>
+<br>
+DHCP and DNS servers for RedFly: <a href="http://notebook.kulchenko.com/embedded/dhcp-and-dns-servers-with-arduino">DHCP and DNS servers with Arduino</a>, <a href="https://github.com/pkulchenko/DHCPLite">DHCPLite</a><br>
+<br>
+The RedFly uses the hardware serial port (8N2) of the Arduino. 
+If you want to use the serial port for other things then you have to disable the communication with the RedFly (see enable() and disable()).<br>
+When sending commands to the RedFly you always have to check, that the input buffer doesn't contain data (see socketRead(), client.read() and server.read()).<br>
+
+
+<br><hr><br>
+
+
+<a name="Libraries"></a>
+<h2>Libraries</h2>
+<ul>
+  <li><a href="#RedFly">RedFly</a></li>
+  <li><a href="#Client">RedFlyClient</a></li>
+  <li><a href="#Server">RedFlyServer</a></li>
+  <li><a href="#NBNS">RedFlyNBNS</a></li>
+</ul>
+
+
+<br><br>
+<a name="RedFly"></a>
+<h3>RedFly</h3>
+<blockquote>
+  <dl>
+    <dt>
+      uint8_t init(uint32_t br, uint8_t pwr)<br>
+      uint8_t init(uint8_t pwr) //br=9600<br>
+      uint8_t init(void) //br=9600, pwr=HIGH_POWER<br>
+    </dt>
+    <dd>
+      Initialize the WiFi module and set baud rate and transmitter power. Returns 0 if everything is okay.<br>
+      <i>br</i> - Baud rate: 9600, 19200, 38400, 57600, 115200, 200000, 230400, 460800, 921600, 1843200, 3686400 (only baud rates up to 230400 are support by Arduino @16MHz)<br>
+      <i>pwr</i> - Transmitter power: LOW_POWER, MED_POWER, HIGH_POWER<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      void enable(void)<br>
+    </dt>
+    <dd>
+      Enable communication with the RedFly-Shield.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      void disable(void)<br>
+    </dt>
+    <dd>
+      Disable communication with the RedFly-Shield.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t getversion(char *ver)<br>
+    </dt>
+    <dd>
+      Get the firmware version. The return value is 0 if the version is successfully copied to ver.<br>
+     <i>ver</i> - Pointer to a buffer to receive the version<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t getmac(uint8_t *mac)<br>
+    </dt>
+    <dd>
+      Get the MAC address of the WiFi module. The return value is 0 if the MAC is successfully copied to mac.<br>
+     <i>mac</i> - Pointer to a buffer to receive the address<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t getlocalip(uint8_t *ip)<br>
+    </dt>
+    <dd>
+      Get the IP address of the WiFi module. The return value is 0 if the IP is successfully copied to ip.<br>
+      <i>ip</i> - Pointer to a buffer to receive the address<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t getip(char *host, uint8_t *ip)<br>
+    </dt>
+    <dd>
+      Returns 0 if the ip address of the domain is succefully received. (FW >= 4.3.0 required)<br>
+      <i>host</i> - host name<br>
+      <i>ip</i> - Pointer to a buffer to receive the IP address<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint32_t gettime(uint8_t *server, uint16_t port)<br>
+      uint32_t gettime(uint8_t *server)<br>
+    </dt>
+    <dd>
+      Returns the seconds since 1970 or 0 (zero) on an error.<br>
+      <i>server</i> - IP address of NTP server<br>
+      <i>port</i> - Port of NTP server<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t getrssi(void)<br>
+    </dt>
+    <dd>
+      Returns the signal strengh (in dBm) of the current connection.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t getbssid(char *ssid, uint8_t *mac)<br>
+    </dt>
+    <dd>
+      Get the SSID and MAC of the scanned network. Run after scan(). The return value is 0 if no error occurred.<br>
+      <i>ssid</i> - Pointer to a buffer to receive the SSID<br>
+      <i>mac</i> - Pointer to a buffer to receive the MAC address<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t gettype(char *ssid, uint8_t *type)<br>
+    </dt>
+    <dd>
+      Get the SSID and type of the scanned network. Run after scan(). The return value is 0 if no error occurred.<br>
+      <i>ssid</i> - Pointer to a buffer to receive the SSID<br>
+      <i>type</i> - Pointer to a buffer to receive the type (0=Ad-hoc, 1=Infrastructure)<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t scan(uint8_t chn, char *ssid, uint8_t *mode, uint8_t *rssi)<br>
+      uint8_t scan(char *ssid, uint8_t *mode, uint8_t *rssi)<br>
+      uint8_t scan(char *ssid)<br>
+      uint8_t scan(void)<br>
+    </dt>
+    <dd>
+      Scan for wireless networks and return SSID, Mode and RSSI. If the scanning was successful the return vaule is 0.<br>
+      <i>chn</i> - Channel (0=all channels)<br>
+      <i>ssid</i> - Pointer to a buffer to receive the SSID (if set on function call, the module scans for networks with hidden SSID)<br>
+      <i>mode</i> - Pointer to a buffer to receive the mode value 0=Open, 1=WPA, 2=WPA2, 3=WEP<br>
+      <i>rssi</i> - Pointer to a buffer to receive the RSSI value (signal strengh)<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t nextscan(char *ssid, uint8_t *mode, uint8_t *rssi)<br>
+      uint8_t nextscan(char *ssid)<br>
+    </dt>
+    <dd>
+      Scan for next wireless networks and return SSID, Mode and RSSI. If the scanning was successful the return vaule is 0.<br>
+      <i>ssid</i> - SSID<br>
+      <i>mode</i> - Mode<br>
+      <i>rssi</i> - RSSI<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t join(char *ssid, char *key, uint8_t net, uint8_t chn, uint8_t authmode) //infrastructure or IBSS joiner / creator<br>
+      uint8_t join(char *ssid, char *key, uint8_t net, uint8_t chn) //IBSS creator<br>
+      uint8_t join(char *ssid, char *key, uint8_t net) //infrastructure or IBSS joiner<br>
+      uint8_t join(char *ssid, uint8_t net, uint8_t chn) //IBSS creator<br>
+      uint8_t join(char *ssid, uint8_t net) //infrastructure or IBSS joiner<br>
+      uint8_t join(char *ssid, char *key) //infrastructure<br>
+      uint8_t join(char *ssid) //infrastructure<br>
+    </dt>
+    <dd>
+      Join wireless network. If everything is okay the return value is 0.<br>
+      scan() has to be called before this function for infrastructure and IBSS joiner networks.<br>
+      <i>ssid</i> - SSID<br>
+      <i>key</i> - Key / Password (max 31 characters, WEP-64bit: 10 hex digits and WEP-128bit: 26 hex digits)<br>
+      <i>net</i> - Network: INFRASTRUCTURE, IBSS_JOINER, IBSS_CREATOR<br>
+      <i>chn</i> - Channel: 0...14, 0=all channels<br>
+      <i>authmode</i> - Auth mode: 0=Open Key, 1=Shared Key (only for WEP)<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t disconnect(void)<br>
+    </dt>
+    <dd>
+      Disconnect / disassociate wireless connection.<br>
+    </dd>
+  </dl>
+  
+  <dl>
+    <dt>
+    uint8_t begin(uint8_t dhcp, uint8_t *ip, uint8_t *dns, uint8_t *gateway, uint8_t *netmask)<br>
+    uint8_t begin(uint8_t *ip, uint8_t *dns, uint8_t *gateway, uint8_t *netmask)<br>
+    uint8_t begin(uint8_t *ip, uint8_t *dns, uint8_t *gateway) //netmask=255.255.255.0<br>
+    uint8_t begin(uint8_t *ip, uint8_t *dns) //netmask=255.255.255.0<br>
+    uint8_t begin(uint8_t *ip) //netmask=255.255.255.0<br>
+    uint8_t begin(uint8_t dhcp) //Use 1=DHCP or 2=Auto-IP to get IP config.<br>
+    uint8_t begin(void) //Use DHCP to get IP config.<br>
+    </dt>
+    <dd>
+      Set IP configuration.<br>
+      <i>dhcp</i> - 1=DHCP or 2=Auto-IP (Auto-IP requires FW >= 4.3.0)<br>
+      <i>ip</i> - IP address<br>
+      <i>dns</i> - DNS server (FW >= 4.3.0 required)<br>
+      <i>gateway</i> - Gateway address<br>
+      <i>netmask</i> - Network mask<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t socketConnect(uint8_t proto, uint8_t *ip, uint16_t port, uint16_t lport)<br>
+      uint8_t socketConnect(uint8_t proto, uint8_t *ip, uint16_t port) //lport=1024<br>
+    </dt>
+    <dd>
+      Connect to server. Returns the socket handle or 0xFF on an error.<br>
+      <i>proto</i> - Protocol: PROTO_TCP, PROTO_UDP, PROTO_MCAST (Multicast requires FW >= 4.3.0)<br>
+      <i>ip</i> - Server IP address<br>
+      <i>port</i> - Server port<br>
+      <i>lport</i> - Local port<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t socketListen(uint8_t proto, uint16_t lport)<br>
+    </dt>
+    <dd>
+      Listen on port. Returns the socket handle or 0xFF on an error.<br>
+      <i>proto</i> - Protocol: PROTO_TCP, PROTO_UDP<br>
+      <i>lport</i> - Local port<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t socketClose(uint8_t socket)<br>
+    </dt>
+    <dd>
+      Close socket.<br>
+      <i>socket</i> - Socket handle<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t socketClosed(uint8_t socket)<br>
+    </dt>
+    <dd>
+      Is the socket closed? A return value >0 means that the socket is closed.<br>
+      <i>socket</i> - Socket handle<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t socketStatus(uint8_t socket)<br>
+    </dt>
+    <dd>
+      Get socket status from WiFi module (0xFF=error).<br>
+      <i>socket</i> - Socket handle<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t socketState(uint8_t socket)<br>
+    </dt>
+    <dd>
+      Get socket state (0x00=TCP, 0x01=UDP, 0x02=MCAST, 0xFF=closed).<br>
+      <i>socket</i> - Socket handle<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t socketSend(uint8_t socket, uint8_t *stream, uint16_t size, uint8_t *ip, uint16_t port)<br>
+      uint8_t socketSendPGM(uint8_t socket, PGM_P stream, uint8_t *ip, uint16_t port)<br>
+      uint8_t socketSend(uint8_t socket, char *stream, uint8_t *ip, uint16_t port)<br>
+      uint8_t socketSend(uint8_t socket, uint8_t *stream, uint16_t size)<br>
+      uint8_t socketSendPGM(uint8_t socket, PGM_P stream)<br>
+      uint8_t socketSend(uint8_t socket, char *stream)<br>
+      uint8_t socketSend(uint8_t socket, int value)<br>
+    </dt>
+    <dd>
+      Send data on socket and returns 0 if everything is okay.<br>
+      ip and port only used on UDP connections.<br>
+      Note: The input buffer has to be empty before sending data (see socketRead()).<br>
+      <i>socket</i> - Socket handle<br>
+      <i>stream</i> - Data<br>
+      <i>size</i> - Data length<br>
+      <i>value</i> - Data (int)<br>
+      <i>ip</i> - Server IP address (only on UDP)<br>
+      <i>port</i> - Server port (only on UDP)<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint16_t socketRead(uint8_t *socket, uint16_t *len, uint8_t *ip, uint16_t *port, uint8_t *dst, uint16_t dst_size) //UDP connection<br>
+      uint16_t socketRead(uint8_t *socket, uint16_t *len, uint8_t *dst, uint16_t dst_size)<br>
+    </dt>
+    <dd>
+      Read data. Returns data length in dst (0xFFFF=socket closed).<br>
+      <i>socket</i> - Socket handle (set from function or if set on function call, only return data from this socket)<br>
+      <i>len</i> - Complete data length<br>
+      <i>ip</i> - Server IP address (only UDP)<br>
+      <i>port</i> - Server port (only UDP)<br>
+      <i>dst</i> - Receive buffer<br>
+      <i>dst_size</i> - Receive buffer length<br>
+      <pre><u>Example:</u>
+uint8_t socket=0xFF;   //0xFF = return data from all sockets, otherwise return only data from specialized socket
+uint16_t len;          //complete data length, that is available
+uint8_t ip[4];         //source IP, only on UDP connection
+uint16_t port          //source port, only on UDP connection
+uint8_t dst[64];       //destination buffer for the data
+uint16_t d_size=64;    //size of destination buffer
+uint16_t received_len; //data copied to destination buffer
+received_len = socketRead(&socket, &len, ip, &port, dst, d_size); //ip and port only on UDP connections
+received_len = socketRead(&socket, &len, dst, d_size);</pre>
+    </dd>
+  </dl>
+
+  <br><pre>
+<u><b>Error codes</b></u>
+255   (-1) Waiting for the connection from peer. 
+254   (-2) Socket not available. 
+253   (-3) De-authentication from the Access Point. 
+252   (-4) Illegal IP/Port parameters.
+251   (-5) TCP/IP configuration failure.
+250   (-6) Invalid socket.
+249   (-7) Association not done.
+248   (-8) Error in command. 
+247   (-9) Error with byte stuffing for escape characters.
+246  (-10) IP Lease expired.
+245  (-11) TCP connection closed.
+244  (-12) Pre-Shared Key not set for connection to a secure Access Point, or if PSK for WEP security is set wrongly.
+243  (-13) No Access Points present.
+242  (-14) This error is sent when the INIT cmd is sent more than once.
+241  (-15) This error is sent when the JOIN cmd is sent more than once or the SCAN cmd is sent after the module has already associated with a network.  
+240  (-16) DHCP Failure.
+239  (-17) Baud Rate not supported.
+238  (-18) Encryption mode not supported.
+237  (-19) Invalid channel.
+236  (-20) SEND command is issued but there is no network in the remote terminal.
+235  (-21) Authentication failure.
+234  (-22) Re-join failure.
+187  (-69) The reply did not contain an answer with an IP address.
+186  (-70) DNS class error.
+184  (-72) The number of queries is more than 1 or the number of replies is zero. 
+183  (-73) The reply contained an error code.
+182  (-74) The reply was truncated or not a response to a standard query.
+181  (-75) The ID number of the reply did not match the ID number sent.
+171  (-85) No buffer was passed or the reply was too short.
+161  (-91) Invalid IP address passed or unable to send IGMP report.
+160  (-92) DNS response timed out.
+157  (-95) Unable to send data as ARP is not resolved.
+143 (-113) Unable to send data.
+135 (-121) Error issued when trying to connect to a non-existent TCP server socket.
+132 (-124) Connection establishment failure.
+129 (-127) Socket already exists.
+126 (-130) Maximum number of retries over, in Auto-IP mode.
+125 (-131) IP address conflict, in Auto-IP mode.
+ 64 (-192) This error is issued when the CLOSE cmd is given on a TCP socket that is already undergoing close operation.
+ 45 (-211) This code is returned when a listing TCP socket is closed because of wrong SYN/ACK packets.
+</pre>
+</blockquote>
+
+
+<br><br>
+<a name="Client"></a>
+<h3>RedFlyClient</h3>
+<blockquote>
+  <dl>
+    <dt>
+    RedFlyClient()<br>
+    RedFlyClient(uint8_t socket)<br>
+    RedFlyClient(uint8_t *ip, uint16_t port)<br>
+    RedFlyClient(uint8_t *ip, uint16_t port, uint16_t lport)<br>
+    </dt>
+    <dd>
+      Create client.<br>
+      <i>socket</i> - Socket handle<br>
+      <i>ip</i> - Client ip to connect<br>
+      <i>port</i> - Client port to connect<br>
+      <i>lport</i> - Local port<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      void begin(void)<br>
+      void beginUDP(void)<br>
+      int connect(void)<br>
+      int connectUDP(void)<br>
+      int connect(uint8_t *ip, uint16_t port)<br>
+      int connectUDP(uint8_t *ip, uint16_t port)<br>
+      int connect(uint8_t *ip, uint16_t port, uint16_t lport)<br>
+      int connectUDP(uint8_t *ip, uint16_t port, uint16_t lport)<br>
+      int connect(char *host, uint16_t port)<br>
+      int connectUDP(char *host, uint16_t port)<br>
+    </dt>
+    <dd>
+      Start the TCP or UDP client. connect() returns 1 if everything is okay.<br>
+      <i>ip</i> - Client ip to connect<br>
+      <i>port</i> - Client port to connect<br>
+      <i>lport</i> - Local port<br>
+      <i>host</i> - Host name<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t connected(void)<br>
+    </dt>
+    <dd>
+      Is the Client connected? The return value is 1 if yes.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      void stop(void)<br>
+    </dt>
+    <dd>
+      Stop the Client.<br>
+    </dd>
+  </dl>
+ 
+  <dl>
+    <dt>
+      uint8_t status(void)<br>
+    </dt>
+    <dd>
+      Returns the Client status. 0 means an open connection.<br>
+      The status will be directly read from the WiFi module.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t getSocket(void)<br>
+    </dt>
+    <dd>
+      Returns the socket handle for the connection.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      int available(void)<br>
+    </dt>
+    <dd>
+      Returns the size of available data.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      int read(void)<br>
+    </dt>
+    <dd>
+      Get the received data. On -1 an error occurred.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      int read(uint8_t *s, size_t sz)<br>
+    </dt>
+    <dd>
+      Returns the received data len.<br>
+      <i>s</i> - Destination buffer<br>
+      <i>sz</i> - Buffer size<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      void flush(void)<br>
+    </dt>
+    <dd>
+      Flushes the receive buffer.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      size_t write(uint8_t b)<br>
+      size_t write(const char *s)<br>
+      size_t write(const uint8_t *s, size_t sz)<br>
+    </dt>
+    <dd>
+      Write data to the connected device and return the number of written bytes.<br>
+      Note: The input buffer has to be empty before sending data (see read()).<br>
+      <i>b</i> - Byte to write<br>
+      <i>s</i> - String or Array to write<br>
+      <i>sz</i> - Array size<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      size_t print(text)<br>
+      size_t print(int, base)<br>
+      size_t println(text)<br>
+      size_t println(int, base)<br>
+    </dt>
+    <dd>
+      Print text from RAM.<br>
+      <i>text, int</i> - String, Char, Integer, Long, Float (RAM)<br>
+      <i>base</i> - DEC, HEX, OCT, BIN<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      size_t print_P(PGM_P s)<br>
+      size_t println_P(PGM_P s)<br>
+    </dt>
+    <dd>
+      Print text from Flash.<br>
+      <i>s</i> - Pointer to string (Flash), example: PSTR("test"), further infos about using flash memory: <a href="http://www.nongnu.org/avr-libc/user-manual/pgmspace.html">Link</a><br>
+    </dd>
+  </dl>
+</blockquote>
+
+
+<br><br>
+<a name="Server"></a>
+<h3>RedFlyServer</h3>
+<blockquote>
+  <dl>
+    <dt>
+      RedFlyServer()<br>
+      RedFlyServer(uint16_t port)<br>
+    </dt>
+    <dd>
+      Create server.<br>
+      <i>port</i> - Server port to connect<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      void begin(void)<br>
+      void beginUDP(void)<br>
+      int connect(void)<br>
+      int connectUDP(void)<br>
+    </dt>
+    <dd>
+      Start the TCP or UDP server. connect() returns 1 if everything is okay.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t connected(void)<br>
+    </dt>
+    <dd>
+      Is the Server port open? The return value is 1 if yes.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      void stop(void)<br>
+    </dt>
+    <dd>
+      Stop the Server.<br>
+    </dd>
+  </dl>
+ 
+  <dl>
+    <dt>
+      uint8_t status(void)<br>
+    </dt>
+    <dd>
+      Returns the Server status. 0 means an open connection.<br>
+      The status will be directly read from the WiFi module.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t getSocket(void)<br>
+    </dt>
+    <dd>
+      Returns the socket handle for the connection.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      int available(void)<br>
+    </dt>
+    <dd>
+      Returns the size of available data.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      int read(void)<br>
+    </dt>
+    <dd>
+      Get the received data. On -1 an error occurred.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      int read(uint8_t *s, size_t sz)<br>
+    </dt>
+    <dd>
+      Returns the received data len.<br>
+      <i>s</i> - Destination buffer<br>
+      <i>sz</i> - Buffer size<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      void flush(void)<br>
+    </dt>
+    <dd>
+      Flushes the receive buffer.<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      size_t write(uint8_t b)<br>
+      size_t write(const char *s)<br>
+      size_t write(const uint8_t *s, size_t sz)<br>
+    </dt>
+    <dd>
+      Write data to the connected device and return the number of written bytes.<br>
+      Note: The input buffer has to be empty before sending data (see read()).<br>
+      <i>b</i> - Byte to write<br>
+      <i>s</i> - String or Array to write<br>
+      <i>sz</i> - Array size<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      size_t print(text)<br>
+      size_t print(int, base)<br>
+      size_t println(text)<br>
+      size_t println(int, base)<br>
+    </dt>
+    <dd>
+      Print text from RAM.<br>
+      <i>text, int</i> - String, Char, Integer, Long, Float (RAM)<br>
+      <i>base</i> - DEC, HEX, OCT, BIN<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      size_t print_P(PGM_P s)<br>
+      size_t println_P(PGM_P s)<br>
+    </dt>
+    <dd>
+      Print text from Flash.<br>
+      <i>s</i> - Pointer to string (Flash), example: PSTR("test"), further infos about using flash memory: <a href="http://www.nongnu.org/avr-libc/user-manual/pgmspace.html">Link</a><br>
+    </dd>
+  </dl>
+</blockquote>
+
+
+<br><br>
+<a name="NBNS"></a>
+<h3>RedFlyNBNS</h3>
+<blockquote>
+  <dl>
+    <dt>
+    RedFlyNBNS()<br>
+    RedFlyNBNS(char *name)<br>
+    </dt>
+    <dd>
+      Create NBNS (NetBIOS Name Service).<br>
+      <i>name</i> - Device name<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      void setName(char *name)<br>
+      void setNamePGM(PGM_P name)<br>
+    </dt>
+    <dd>
+      Set device name.<br>
+      <i>name</i> - New name (string, Pointer to string in Flash)<br>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt>
+      uint8_t service(void)<br>
+    </dt>
+    <dd>
+      Service routine, run in loop().<br>
+    </dd>
+  </dl>
+</blockquote>
+
+
+<br><hr><br>
+
+
+<a name="Examples"></a>
+<h2>Examples</h2>
+
+<h3>Client/Server API</h3>
+<ul>
+  <li><b>Paint</b></li>
+  <li><b>TwitterRSSReader</b></li>
+  <li><b>UDPTest</b></li>
+  <li><b>WebClient</b></li>
+  <li><b>WebServer</b></li>
+  <li><b>WebServer 2</b></li>
+</ul>
+<h3>Socket API</h3>
+<ul>
+  <li><b>EchoTest_Socket</b></li>
+  <li><b>TwitterTest_Socket</b></li>
+  <li><b>TwitterWriter_Socket</b></li>
+  <li><b>WebClient_Socket</b></li>
+  <li><b>WebServer_Socket</b></li>
+</ul>
+<h3>Other</h3>
+<ul>
+  <li><b>NBNSTest</b> (NetBIOS Name Service)</li>
+  <li><b>NTPTest</b> (Network Time Protocol)</li>
+  <li><b>WLANScan</b></li>
+</ul>
+
+
+<br><br>
+</body>
+</html>

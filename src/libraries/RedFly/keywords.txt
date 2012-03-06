@@ -1,0 +1,65 @@
+#######################################
+# Syntax Coloring Map For REDFLY
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+RedFly	KEYWORD1
+RedFlyClient	KEYWORD1
+RedFlyServer	KEYWORD1
+RedFlyNBNS	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+init	KEYWORD2
+enable	KEYWORD2
+disable	KEYWORD2
+getversion	KEYWORD2
+getmac	KEYWORD2
+getlocalip	KEYWORD2
+getip	KEYWORD2
+gettime	KEYWORD2
+getrssi	KEYWORD2
+getbssid	KEYWORD2
+gettype	KEYWORD2
+scan	KEYWORD2
+nextscan	KEYWORD2
+join	KEYWORD2
+disconnect	KEYWORD2
+begin	KEYWORD2
+socketConnect	KEYWORD2
+socketListen	KEYWORD2
+socketClose	KEYWORD2
+socketClosed	KEYWORD2
+socketStatus	KEYWORD2
+socketState	KEYWORD2
+socketSend	KEYWORD2
+socketSendPGM	KEYWORD2
+socketRead	KEYWORD2
+socketReset	KEYWORD2
+
+begin	KEYWORD2
+beginUDP	KEYWORD2
+connect	KEYWORD2
+connectUDP	KEYWORD2
+connected	KEYWORD2
+stop	KEYWORD2
+status	KEYWORD2
+service	KEYWORD2
+setName	KEYWORD2
+setNamePGM	KEYWORD2
+getSocket	KEYWORD2
+available	KEYWORD2
+read	KEYWORD2
+flush	KEYWORD2
+write	KEYWORD2
+print_P	KEYWORD2
+println_P	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
