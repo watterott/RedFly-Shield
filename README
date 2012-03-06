@@ -1,8 +1,10 @@
 RedFly-Shield
 -------------
-A WiFi/WLAN Shield for Arduino.
+WiFi/WLAN Shield for Arduino
+
 
 More information in the wiki: https://github.com/watterott/RedFly-Shield/wiki
+
 
 Directories:
  /fw  - Firmware for the WiFi module
