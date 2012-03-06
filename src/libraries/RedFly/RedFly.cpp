@@ -106,8 +106,9 @@ uint8_t REDFLY::init(uint32_t br, uint8_t pwr)
           //skip firmware upgrade question at power on
           write('n');
           write('\n');
-          i = 1;
-          break;
+          ret = 0xFE;
+          i = 1;  //break 1st for loop
+          break; //break 2nd for loop
         }
       }
     }
@@ -115,20 +116,23 @@ uint8_t REDFLY::init(uint32_t br, uint8_t pwr)
   delay_10ms(20); //wait 200ms for booting
 
   //get firmware version and set config
-  for(i=3; i!=0; i--) //try 3 times
-  {
-    flush();
-    if(cmd(PSTR(CMD_FWVERSION)) == 0)
+  // if(ret == 0xFE)
+  // {
+    for(i=3; i!=0; i--) //try 3 times
     {
-      //cmd(PSTR(CMD_RESET)); //soft reset
-      cmd(PSTR(CMD_BAND BAND24));
-      cmd(PSTR(CMD_INIT));
-      tx_power = pwr;
-      ret = 0;
-      break;
+      flush();
+      if(cmd(PSTR(CMD_FWVERSION)) == 0)
+      {
+        //cmd(PSTR(CMD_RESET)); //soft reset
+        cmd(PSTR(CMD_BAND BAND24));
+        cmd(PSTR(CMD_INIT));
+        tx_power = pwr;
+        ret = 0;
+        break;
+      }
+      delay_10ms(10);
     }
-    delay_10ms(10);
-  }
+  // }
 
   if(ret)
   {
@@ -722,11 +726,23 @@ uint8_t REDFLY::socketClose(uint8_t socket)
 {
   if(available()) //check for new data, if socket already closed?
   {
-    uint8_t socket=INVALID_SOCKET;
+    uint8_t sock=INVALID_SOCKET;
     uint16_t len=0;
-    socketRead(&socket, &len, 0, 0, 0, 0);
+    socketRead(&sock, &len, 0, 0, 0, 0);
+
+    while(len && (sock == socket)) //clear buffer
+    {
+      uint8_t ret, b;
+      sock = socket;
+      ret  = socketRead(&sock, &len, 0, 0, &b, 1);
+      if((ret == 0) || (ret == 0xFFFF))
+      {
+        break;
+      }
+    }
   }
 
+  //close socket
   for(uint8_t i=0; i<MAX_SOCKETS; i++)
   {
     if(socket_state[i].handle == socket)
@@ -745,9 +761,9 @@ uint8_t REDFLY::socketClosed(uint8_t socket)
 {
   if(available()) //check for new data, if socket closed?
   {
-    uint8_t socket=INVALID_SOCKET;
+    uint8_t sock=INVALID_SOCKET;
     uint16_t len=0;
-    socketRead(&socket, &len, 0, 0, 0, 0);
+    socketRead(&sock, &len, 0, 0, 0, 0);
   }
 
   for(uint8_t i=0; i<MAX_SOCKETS; i++)
@@ -766,9 +782,9 @@ uint8_t REDFLY::socketStatus(uint8_t socket)
 {
   if(available()) //check for new data, if socket closed?
   {
-    uint8_t socket=INVALID_SOCKET;
+    uint8_t sock=INVALID_SOCKET;
     uint16_t len=0;
-    socketRead(&socket, &len, 0, 0, 0, 0);
+    socketRead(&sock, &len, 0, 0, 0, 0);
   }
 
   for(uint8_t i=0; i<MAX_SOCKETS; i++)
@@ -933,7 +949,7 @@ uint16_t REDFLY::socketRead(uint8_t *socket, uint16_t *len, uint8_t *ip, uint16_
       return 0;
     }
   }
-  
+
   do
   {
     switch(read_state)
@@ -1111,10 +1127,10 @@ uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, char *v1, PGM_P p2
   }
   else if(available()) //check for new data
   {
-    uint8_t socket=INVALID_SOCKET;
+    uint8_t sock=INVALID_SOCKET;
     uint16_t len=0;
-    socketRead(&socket, &len, 0, 0, 0, 0);
-    if(len) //rx data found
+    socketRead(&sock, &len, 0, 0, 0, 0);
+    if(len != 0) //rx data found
     {
       return 0xFF;
     }

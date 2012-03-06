@@ -1,6 +1,6 @@
-RedFly-Shield Software Package v0.11
-====================================
-  Visit www.watterott.net/projects/redfly-shield for updates.
+RedFly-Shield Software Package
+==============================
+  Visit github.com/watterott/RedFly-Shield for updates.
 
 
 Installation
@@ -33,6 +33,8 @@ License
 
 History
 -------
+         2012  v0.12  socketClose() now clears the input buffer.
+  
   Feb 26 2012  v0.11  Added ArdOSC Lib.
 
   Jan 07 2012  v0.10  Compatible with Arduino 1.0.

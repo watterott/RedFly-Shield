@@ -23,11 +23,9 @@
 <body>
 <h1>RedFly-Shield for Arduino</h1>
 <ul>
-  <li>Updates: <a href="http://www.watterott.net/projects/redfly-shield">watterott.net/projects/redfly-shield</a></li>
   <li>Further infos: <a href="readme.txt">readme.txt</a></li>
   <li>License: <a href="license.txt">license.txt</a></li>
   <li><a href="#Libraries">Arduino Libraries</a></li>
-  <li><a href="#Examples">Arduino Examples</a></li>
 </ul>
 French description and additional functions: <a href="http://www.mon-club-elec.fr/pmwiki_reference_arduino/pmwiki.php?n=Main.LibrairieRedFly">Librairie RedFly-Shield</a>, <a href="http://www.mon-club-elec.fr/pmwiki_mon_club_elec/pmwiki.php?n=MAIN.MATERIELArduinoShieldWifiRedflyShield">RedFly-Shield</a><br>
 <br>
@@ -325,7 +323,7 @@ When sending commands to the RedFly you always have to check, that the input buf
       uint8_t socketSend(uint8_t socket, int value)<br>
     </dt>
     <dd>
-      Send data on socket and returns 0 if everything is okay.<br>
+      Send data on socket. The function returns 0 if everything is okay and 0xFF if there is new data in the input buffer (no data is sent).<br>
       ip and port only used on UDP connections.<br>
       Note: The input buffer has to be empty before sending data (see socketRead()).<br>
       <i>socket</i> - Socket handle<br>
@@ -769,37 +767,6 @@ received_len = socketRead(&socket, &len, dst, d_size);</pre>
     </dd>
   </dl>
 </blockquote>
-
-
-<br><hr><br>
-
-
-<a name="Examples"></a>
-<h2>Examples</h2>
-
-<h3>Client/Server API</h3>
-<ul>
-  <li><b>Paint</b></li>
-  <li><b>TwitterRSSReader</b></li>
-  <li><b>UDPTest</b></li>
-  <li><b>WebClient</b></li>
-  <li><b>WebServer</b></li>
-  <li><b>WebServer 2</b></li>
-</ul>
-<h3>Socket API</h3>
-<ul>
-  <li><b>EchoTest_Socket</b></li>
-  <li><b>TwitterTest_Socket</b></li>
-  <li><b>TwitterWriter_Socket</b></li>
-  <li><b>WebClient_Socket</b></li>
-  <li><b>WebServer_Socket</b></li>
-</ul>
-<h3>Other</h3>
-<ul>
-  <li><b>NBNSTest</b> (NetBIOS Name Service)</li>
-  <li><b>NTPTest</b> (Network Time Protocol)</li>
-  <li><b>WLANScan</b></li>
-</ul>
 
 
 <br><br>

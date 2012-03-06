@@ -27,7 +27,7 @@ extern "C" {
 #define PROTO_UDP       (1)
 #define PROTO_MCAST     (2)
 
-//max. sockets (module currently supports up to 8)
+//max. sockets (WiFi module currently supports up to 8)
 #define MAX_SOCKETS     (8)
 #define INVALID_SOCKET  (0xFF)
 
