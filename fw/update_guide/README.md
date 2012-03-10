@@ -7,12 +7,12 @@
 2. Connect a 3V3 FTDI Basic-Breakout to the FTDI-3V3 connector on the RedFly. 
    Or you can also use an Arduino with FTDI chipset for the update (baud rate error on the boards with ATmega8u2/16u2 is too high).
    In this case connect pin 0 to FTDI-3V3 pin 4 (TxO) and pin 1 to FTDI-3V3 pin 5 (RxI):<br>
-   ![RedFly-Shield](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/img/fw_redfly.png)
+   ![RedFly-Shield](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_redfly.png)
 
 3. Run Windows Hyper Terminal: **115200 baud, 8N1, no handshake**<br>
-   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/img/img/fw_hterm1.png)
-   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/img/img/fw_hterm2.png)
-   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/img/img/fw_hterm3.png)
+   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm1.png)
+   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm2.png)
+   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm3.png)
 
 4. Power cycle the Arduino+RedFly and make sure that on the RedFly no LED is on. If a LED is on then power cycle again.
 
@@ -23,13 +23,13 @@
    `Firmware upgrade (y/n) y`<br>
 
 7. Send the respected file when the prompt Send xxx appears and use the Kermit protocol.<br>
-   `WELCOME TO REDPINE SIGNALS`<br>
-   `Firmware upgrade (y/n) y`<br>
+   ```WELCOME TO REDPINE SIGNALS
+      Firmware upgrade (y/n) y```
    `Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware`<br>
    `Send taim1`<br>
-   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/img/img/fw_hterm4.png)
-   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/img/img/fw_hterm5.png)
-   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/img/img/fw_hterm6.png)
+   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm4.png)
+   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm5.png)
+   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm6.png)
    `WELCOME TO REDPINE SIGNALS`<br>
    `Firmware upgrade (y/n) y`<br>
    `Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware`<br>
