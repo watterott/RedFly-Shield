@@ -1,5 +1,6 @@
 Firmware Update Guide: <https://github.com/watterott/RedFly-Shield/tree/master/fw/update_guide>
 
+
 ## Release notes
 
 * 4.5.0
@@ -14,7 +15,7 @@ Firmware Update Guide: <https://github.com/watterott/RedFly-Shield/tree/master/f
   * Fixed issue with TCP server in handling more than one socket with same port nr.
   * Bugfix in WEP security mode.
 
-* >= 4.3.0
+* 4.3.0
   * Supporting DNS client.
   * Supporting Multicast socket.
   * Supporting Auto IP.
