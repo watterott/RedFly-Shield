@@ -12,39 +12,31 @@
   In this case connect pin 0 to FTDI-3V3 pin 4 (TxO) and pin 1 to FTDI-3V3 pin 5 (RxI):<br>
   ![RedFly-Shield](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_redfly.png)
 
-
 * Run Windows Hyper Terminal: **115200 baud, 8N1, no handshake**<br>
   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm1.png)
   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm2.png)
   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm3.png)
 
-
 * Power cycle the Arduino+RedFly and make sure that on the RedFly no LED is on. If a LED is on then power cycle again.
-
 
 * Start connection on the serial port and wait about 20 seconds. Then the module starts with the default settings.
 
-
-* On the firmware upgrade question press y.
-
+* On the firmware upgrade question press y.<br>
 
     WELCOME TO REDPINE SIGNALS
     Firmware upgrade (y/n) y
 
 
-* Send the respected file when the prompt Send xxx appears and use the Kermit protocol.
-
+* Send the respected file when the prompt Send xxx appears and use the Kermit protocol.<br>
 
     WELCOME TO REDPINE SIGNALS
     Firmware upgrade (y/n) y
     Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware
     Send taim1
 
-
   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm4.png)
   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm5.png)
   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm6.png)
-
 
     WELCOME TO REDPINE SIGNALS
     Firmware upgrade (y/n) y
@@ -55,8 +47,7 @@
     Send tadm2
 
 
-* Power cycle the Arduino+RedFly after the update is completed.
-
+* Power cycle the Arduino+RedFly after the update is completed.<br>
 
     WELCOME TO REDPINE SIGNALS
     Firmware upgrade (y/n) y
