@@ -22,21 +22,17 @@
 * Start connection on the serial port and wait about 20 seconds. Then the module starts with the default settings.
 
 * On the firmware upgrade question press y.<br>
-
         WELCOME TO REDPINE SIGNALS
         Firmware upgrade (y/n) y
 
 * Send the respected file when the prompt Send xxx appears and use the Kermit protocol.<br>
-
         WELCOME TO REDPINE SIGNALS
         Firmware upgrade (y/n) y
         Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware
         Send taim1
-
   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm4.png)
   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm5.png)
   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm6.png)
-
         WELCOME TO REDPINE SIGNALS
         Firmware upgrade (y/n) y
         Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware
@@ -46,7 +42,6 @@
         Send tadm2
 
 * Power cycle the Arduino+RedFly after the update is completed.<br>
-
         WELCOME TO REDPINE SIGNALS
         Firmware upgrade (y/n) y
         Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware
@@ -62,12 +57,12 @@
 Alternatively it's also possible to do the firmware update with cutecom and kermit. 
 In this case run kermit with following settings.
 
-        set xm li on
-        set line /dev/ttyUSB0
-        set speed 115200
-        set modem type none
-        set flow-control none
-        set handshake none
-        connect
+    set xm li on
+    set line /dev/ttyUSB0
+    set speed 115200
+    set modem type none
+    set flow-control none
+    set handshake none
+    connect
 
 _(Thanks to Jesse Madsen.)_
