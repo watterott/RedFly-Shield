@@ -23,30 +23,30 @@
    `Firmware upgrade (y/n) y`<br>
 
 7. Send the respected file when the prompt Send xxx appears and use the Kermit protocol.<br>
-   `WELCOME TO REDPINE SIGNALS
-   `Firmware upgrade (y/n) y`
-   `Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware`<br>
-   `Send taim1`<br>
+   ``WELCOME TO REDPINE SIGNALS``
+   ``Firmware upgrade (y/n) y``
+   ``Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware``
+   ``Send taim1``
    ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm4.png)
    ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm5.png)
    ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm6.png)
-   `WELCOME TO REDPINE SIGNALS`<br>
-   `Firmware upgrade (y/n) y`<br>
-   `Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware`<br>
-   `Send taim1`<br>
-   `Send taim2`<br>
-   `Send tadm1`<br>
-   `Send tadm2`<br>
+   ``WELCOME TO REDPINE SIGNALS``
+   ``Firmware upgrade (y/n) y``
+   ``Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware``
+   ``Send taim1``
+   ``Send taim2``
+   ``Send tadm1
+   Send tadm2``
 
-8. Power cycle the Arduino+RedFly after the update is completed.<br>
-   `WELCOME TO REDPINE SIGNALS`<br>
-   `Firmware upgrade (y/n) y`<br>
-   `Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware`<br>
-   `Send taim1`<br>
-   `Send taim2`<br>
-   `Send tadm1`<br>
-   `Send tadm2`<br>
-   `Firmware Upgradation completed`<br>
+8. Power cycle the Arduino+RedFly after the update is completed.
+   ``WELCOME TO REDPINE SIGNALS``
+   ``Firmware upgrade (y/n) y``
+   ``Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware``
+   ``Send taim1``
+   ``Send taim2``
+   ``Send tadm1``
+   ``Send tadm2``
+   ``Firmware Upgradation completed``
 
 
 ## Update under Linux with cutecom and kermit
@@ -54,12 +54,12 @@
 Alternatively it's also possible to do the firmware update with cutecom and kermit. 
 In this case run kermit with following settings.
 
-   `set xm li on`<br>
-   `set line /dev/ttyUSB0`<br>
-   `set speed 115200`<br>
-   `set modem type none`<br>
-   `set flow-control none`<br>
-   `set handshake none`<br>
-   `connect`<br>
+   ``set xm li on``
+   ``set line /dev/ttyUSB0``
+   ``set speed 115200``
+   ``set modem type none``
+   ``set flow-control none``
+   ``set handshake none``
+   ``connect``
 
 _(Thanks to Jesse Madsen.)_
