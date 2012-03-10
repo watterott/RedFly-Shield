@@ -1,6 +1,6 @@
 # How to update the RedFly Firmware?
 
-##Update under Windows with Hyper Terminal
+## Update under Windows with Hyper Terminal
 
 1. Load the **FWupdate** Sketch into the Arduino Board.
 
@@ -23,8 +23,8 @@
    `Firmware upgrade (y/n) y`<br>
 
 7. Send the respected file when the prompt Send xxx appears and use the Kermit protocol.<br>
-   ```WELCOME TO REDPINE SIGNALS
-      Firmware upgrade (y/n) y```
+   `WELCOME TO REDPINE SIGNALS
+   `Firmware upgrade (y/n) y`
    `Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware`<br>
    `Send taim1`<br>
    ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm4.png)
@@ -49,7 +49,7 @@
    `Firmware Upgradation completed`<br>
 
 
-##Update under Linux with cutecom and kermit
+## Update under Linux with cutecom and kermit
 
 Alternatively it's also possible to do the firmware update with cutecom and kermit. 
 In this case run kermit with following settings.
