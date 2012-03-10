@@ -54,12 +54,12 @@
 Alternatively it's also possible to do the firmware update with cutecom and kermit. 
 In this case run kermit with following settings.
 
-   ``set xm li on``
-   ``set line /dev/ttyUSB0``
-   ``set speed 115200``
-   ``set modem type none``
-   ``set flow-control none``
-   ``set handshake none``
-   ``connect``
+    set xm li on
+    set line /dev/ttyUSB0
+    set speed 115200
+    set modem type none
+    set flow-control none
+    set handshake none
+    connect
 
 _(Thanks to Jesse Madsen.)_
