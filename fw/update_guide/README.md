@@ -22,10 +22,10 @@
 * Start connection on the serial port and wait about 20 seconds. Then the module starts with the default settings.
 
 * On the firmware upgrade question press y.<br>
-<code>
-    WELCOME TO REDPINE SIGNALS
-    Firmware upgrade (y/n) y
-</code>
+
+        WELCOME TO REDPINE SIGNALS
+        Firmware upgrade (y/n) y
+
 
 * Send the respected file when the prompt Send xxx appears and use the Kermit protocol.<br>
 
