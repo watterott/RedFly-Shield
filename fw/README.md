@@ -1,7 +1,8 @@
-Firmware Update Guide: https://github.com/watterott/RedFly-Shield/wiki/Firmware-Update
+Firmware Update Guide: <https://github.com/watterott/RedFly-Shield/tree/master/fw/update_guide>
 
+[[/update_guide]]
 
-## Release notes:
+## Release notes
 
 4.5.0
  * Fixed some IBSS issues.
