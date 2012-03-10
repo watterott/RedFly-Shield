@@ -5,7 +5,8 @@
 1. Load the **FWupdate** Sketch into the Arduino Board.
 
 2. Connect a 3V3 FTDI Basic-Breakout to the FTDI-3V3 connector on the RedFly. 
-   Or you can also use an Arduino with FTDI chipset for the update (baud rate error on the boards with ATmega8u2/16u2 is too high).
+   Or you can also use an Arduino with FTDI chipset for the update 
+   (baud rate error on the boards with ATmega8u2/16u2 is too high).
    In this case connect pin 0 to FTDI-3V3 pin 4 (TxO) and pin 1 to FTDI-3V3 pin 5 (RxI):<br>
    ![RedFly-Shield](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_redfly.png)
 
@@ -18,35 +19,35 @@
 
 5. Start connection on the serial port and wait about 20 seconds. Then the module starts with the default settings.
 
-6. On the firmware upgrade question press y.<br>
-   `WELCOME TO REDPINE SIGNALS`<br>
-   `Firmware upgrade (y/n) y`<br>
+6. On the firmware upgrade question press y.
+    WELCOME TO REDPINE SIGNALS
+    Firmware upgrade (y/n) y
 
-7. Send the respected file when the prompt Send xxx appears and use the Kermit protocol.<br>
-   ``WELCOME TO REDPINE SIGNALS``
-   ``Firmware upgrade (y/n) y``
-   ``Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware``
-   ``Send taim1``
+7. Send the respected file when the prompt Send xxx appears and use the Kermit protocol.
+    WELCOME TO REDPINE SIGNALS
+    Firmware upgrade (y/n) y
+    Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware
+    Send taim1
    ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm4.png)
    ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm5.png)
    ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm6.png)
-   ``WELCOME TO REDPINE SIGNALS``
-   ``Firmware upgrade (y/n) y``
-   ``Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware``
-   ``Send taim1``
-   ``Send taim2``
-   ``Send tadm1
-   Send tadm2``
+    WELCOME TO REDPINE SIGNALS
+    Firmware upgrade (y/n) y
+    Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware
+    Send taim1
+    Send taim2
+    Send tadm1
+    Send tadm2
 
 8. Power cycle the Arduino+RedFly after the update is completed.
-   ``WELCOME TO REDPINE SIGNALS``
-   ``Firmware upgrade (y/n) y``
-   ``Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware``
-   ``Send taim1``
-   ``Send taim2``
-   ``Send tadm1``
-   ``Send tadm2``
-   ``Firmware Upgradation completed``
+    WELCOME TO REDPINE SIGNALS
+    Firmware upgrade (y/n) y
+    Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware
+    Send taim1
+    Send taim2
+    Send tadm1
+    Send tadm2
+    Firmware Upgradation completed
 
 
 ## Update under Linux with cutecom and kermit
