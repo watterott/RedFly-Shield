@@ -32,17 +32,18 @@
         Firmware upgrade (y/n) y
         Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware
         Send taim1
+
   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm4.png)
   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm5.png)
   ![HTerm](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_hterm6.png)
 
-    WELCOME TO REDPINE SIGNALS
-    Firmware upgrade (y/n) y
-    Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware
-    Send taim1
-    Send taim2
-    Send tadm1
-    Send tadm2
+        WELCOME TO REDPINE SIGNALS
+        Firmware upgrade (y/n) y
+        Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware
+        Send taim1
+        Send taim2
+        Send tadm1
+        Send tadm2
 
 * Power cycle the Arduino+RedFly after the update is completed.
 
