@@ -59,34 +59,35 @@ void loop()
   //scan for wireless networks
   buf[0] = 0;
   ret = RedFly.scan(buf, &mode, &rssi);
-  do
+  while((ret == 0) && (rssi != 0))
   {
-    if((ret == 0) && rssi)
+    //show mode (0=Open, 1=WPA, 2=WPA2, 3=WEP) and RSSI
+    debugout(buf);
+    sprintf_P(buf, PSTR(", mode %i, rssi %i"), mode, rssi);
+    debugoutln(buf);
+
+    //get and show type (0=Ad-hoc, 1=Infrastructure)
+    ret = RedFly.gettype(buf, &type);
+    if(ret == 0)
     {
-      //show mode (0=Open, 1=WPA, 2=WPA2, 3=WEP) and RSSI
       debugout(buf);
-      sprintf_P(buf, PSTR(", mode %i, rssi %i"), mode, rssi);
+      sprintf_P(buf, PSTR(", type %i"), type);
       debugoutln(buf);
-      //get and show type (0=Ad-hoc, 1=Infrastructure)
-      ret = RedFly.gettype(buf, &type);
-      if(ret == 0)
-      {
-        debugout(buf);
-        sprintf_P(buf, PSTR(", type %i"), type);
-        debugoutln(buf);
-      }
-      //get and show BSSID
-      ret = RedFly.getbssid(buf, mac);
-      if(ret == 0)
-      {
-        debugout(buf);
-        sprintf_P(buf, PSTR(", bssid %x:%x:%x:%x:%x:%x"), mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
-        debugoutln(buf);
-      }
     }
+
+    //get and show BSSID
+    ret = RedFly.getbssid(buf, mac);
+    if(ret == 0)
+    {
+      debugout(buf);
+      sprintf_P(buf, PSTR(", bssid %x:%x:%x:%x:%x:%x"), mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+      debugoutln(buf);
+    }
+
+    //next scan
     buf[0] = 0;
     ret = RedFly.nextscan(buf, &mode, &rssi);
-  }while((ret == 0) && (rssi != 0));
+  }
 
   //wait 3s
   delay(3000); 
