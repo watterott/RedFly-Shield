@@ -140,7 +140,8 @@ uint8_t RedFlyNBNS::service(void)
   if(len >= (NBNS_PACKETLEN+NBNSQ_PACKETLEN))
   {
     //read data
-    len = read(buf, len);
+    read(buf, sizeof(buf));
+    flush(); //flush input buffer
     //check data for NBNS header and question
     nbns = (NBNS_Packet*) buf;
     if((nbns->qdcount      == SWAP16(0x0001))         &&
