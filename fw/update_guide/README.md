@@ -6,7 +6,7 @@
 * Load the **FWupdate** Sketch into the Arduino Board.
 
 * Connect a 3V3 FTDI Basic-Breakout to the FTDI-3V3 connector on the RedFly.<br>
-  Or you can also use an Arduino with **FTDI chipset for the** update
+  Or you can also use an **Arduino with FTDI chipset** for the update
   (baud rate error on the boards with ATmega8u2/16u2 is too high).
   In this case connect pin 0 to FTDI-3V3 pin 4 (TxO) and pin 1 to FTDI-3V3 pin 5 (RxI):<br>
   ![RedFly-Shield](https://github.com/watterott/RedFly-Shield/raw/master/fw/update_guide/fw_redfly.png)
