@@ -724,6 +724,8 @@ uint8_t REDFLY::socketListen(uint8_t proto, uint16_t lport)
 
 uint8_t REDFLY::socketClose(uint8_t socket)
 {
+  uint8_t ret=0xFF;
+
   if(available()) //check for new data, if socket already closed?
   {
     uint8_t sock=INVALID_SOCKET;
@@ -732,28 +734,32 @@ uint8_t REDFLY::socketClose(uint8_t socket)
 
     while(len && (sock == socket)) //clear buffer
     {
-      uint8_t ret, b;
+      uint8_t read, b;
       sock = socket;
-      ret  = socketRead(&sock, &len, 0, 0, &b, 1);
-      if((ret == 0) || (ret == 0xFFFF))
+      read = socketRead(&sock, &len, 0, 0, &b, 1);
+      if((read == 0) || (read == 0xFFFF))
       {
         break;
       }
     }
   }
 
-  //close socket
+  //close socket if opened
   for(uint8_t i=0; i<MAX_SOCKETS; i++)
   {
     if(socket_state[i].handle == socket)
     {
-      socket_state[i].handle = INVALID_SOCKET;
-      socket_state[i].state  = SOCKET_CLOSED;
-      return cmd(PSTR(CMD_CLS), socket);
+      ret = cmd(PSTR(CMD_CLS), socket);
+      if(ret == 0)
+      {
+        socket_state[i].handle = INVALID_SOCKET;
+        socket_state[i].state  = SOCKET_CLOSED;
+      }
+      break;
     }
   }
 
-  return 0;
+  return ret;
 }
 
 
