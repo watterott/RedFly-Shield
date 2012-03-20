@@ -170,9 +170,7 @@ void REDFLY::disable(void) //deselect module
 
 uint8_t REDFLY::getversion(char *ver) //return module firmware version
 {
-  uint8_t i;
-
-  for(i=3; i!=0; i--) //try 3 times
+  for(uint8_t i=3; i!=0; i--) //try 3 times
   {
     memset(buffer, 0, sizeof(buffer));
     if(cmd(buffer, sizeof(buffer), PSTR(CMD_FWVERSION)) == 0) //OKa.b.c
@@ -190,9 +188,7 @@ uint8_t REDFLY::getversion(char *ver) //return module firmware version
 
 uint8_t REDFLY::getmac(uint8_t *mac) //return module MAC address
 {
-  uint8_t i;
-
-  for(i=3; i!=0; i--) //try 3 times
+  for(uint8_t i=3; i!=0; i--) //try 3 times
   {
     memset(buffer, 0, sizeof(buffer));
     if(cmd(buffer, sizeof(buffer), PSTR(CMD_MAC)) == 0) //OKabcdef
@@ -220,9 +216,7 @@ uint8_t REDFLY::getlocalip(uint8_t *ip) //return module IP address
 
 uint8_t REDFLY::getip(char *host, uint8_t *ip) //return IP addr from host/domain
 {
-  uint8_t i;
-
-  for(i=3; i!=0; i--) //try 3 times
+  for(uint8_t i=3; i!=0; i--) //try 3 times
   {
     memset(buffer, 0, sizeof(buffer));
     if(cmd(buffer, sizeof(buffer), PSTR(CMD_DNSGET), (uint8_t*)host, strlen(host)) == 0) //OKx...
@@ -265,11 +259,11 @@ uint32_t REDFLY::gettime(uint8_t *server, uint16_t port)
     if(socketSend(hNTP, buf, NTP_PACKETLEN) == 0)
     {
       //get data
-      sock    = hNTP;
       ptr     = buf;
       buf_len = 0;
       for(timeout=F_CPU/16; timeout!=0; timeout--) //about 3s
       {
+        sock = hNTP;
         rd = socketRead(&sock, &len, ptr, sizeof(buf)-buf_len);
         if((rd != 0) && (rd != 0xFFFF)) //0xFFFF = connection closed
         {
@@ -304,9 +298,7 @@ uint32_t REDFLY::gettime(uint8_t *server){ return gettime(server, 0); };
 
 uint8_t REDFLY::getrssi(void) //return signal strength for current connection
 {
-  uint8_t i;
-
-  for(i=3; i!=0; i--) //try 3 times
+  for(uint8_t i=3; i!=0; i--) //try 3 times
   {
     memset(buffer, 0, sizeof(buffer));
     if(cmd(buffer, sizeof(buffer), PSTR(CMD_RSSI)) == 0) //OKx
@@ -724,23 +716,25 @@ uint8_t REDFLY::socketListen(uint8_t proto, uint16_t lport)
 
 uint8_t REDFLY::socketClose(uint8_t socket)
 {
-  uint8_t ret=0xFF;
+  uint8_t ret = 0;
 
-  if(available()) //check for new data, if socket already closed?
+  while(available()) //check for new data, if socket already closed?
   {
     uint8_t sock=INVALID_SOCKET;
     uint16_t len=0;
     socketRead(&sock, &len, 0, 0, 0, 0);
-
-    while(len && (sock == socket)) //clear buffer
+    if(sock == socket)
     {
-      uint8_t read, b;
-      sock = socket;
-      read = socketRead(&sock, &len, 0, 0, &b, 1);
-      if((read == 0) || (read == 0xFFFF))
+      while(len) //clear buffer
       {
-        break;
+        uint8_t b[8];
+        sock = socket;
+        socketRead(&sock, &len, 0, 0, b, 8);
       }
+    }
+    else
+    {
+      break;
     }
   }
 
@@ -749,11 +743,16 @@ uint8_t REDFLY::socketClose(uint8_t socket)
   {
     if(socket_state[i].handle == socket)
     {
-      ret = cmd(PSTR(CMD_CLS), socket);
-      if(ret == 0)
+      socket_state[i].handle = INVALID_SOCKET;
+      socket_state[i].state  = SOCKET_CLOSED;
+      for(i=3; i!=0; i--) //try 3 times
       {
-        socket_state[i].handle = INVALID_SOCKET;
-        socket_state[i].state  = SOCKET_CLOSED;
+        ret = cmd(PSTR(CMD_CLS), socket);
+        if((ret == 0) || (ret == 0xFE)) //(0xFE = socket already closed)
+        {
+          ret = 0;
+          break;
+        }
       }
       break;
     }
@@ -801,7 +800,7 @@ uint8_t REDFLY::socketStatus(uint8_t socket)
     }
   }
 
-  return 1;
+  return 0xFF;
 }
 
 
@@ -1142,8 +1141,6 @@ uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, char *v1, PGM_P p2
     }
   }
 
-  //flush(); //clear rx and tx buffer
-
   //send p1 command
   c = pgm_read_byte(p1++);
   while(c != 0)
@@ -1213,7 +1210,10 @@ uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, char *v1, PGM_P p2
     }
   }
 
-  //send end characters
+  //flush rx and tx buffer
+  flush_nowait();
+
+  //send end characters of command
   write('\r');
   write('\n');
 
@@ -1231,6 +1231,10 @@ uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, char *v1, PGM_P p2
         if(i < 8)
         {
           buf[i++] = c;
+          if((buf[0] != 'O') && (buf[0] != 'E')) //OK or ERROR
+          {
+            i = 0;
+          }
         }
         timeout = F_CPU/16384; //about 2ms
       }
@@ -1248,6 +1252,10 @@ uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, char *v1, PGM_P p2
         if(i < dst_size)
         {
           dst[i++] = c;
+          if((dst[0] != 'O') && (dst[0] != 'E')) //OK or ERROR
+          {
+            i = 0;
+          }
         }
         timeout = F_CPU/16384; //about 2ms
       }
@@ -1262,7 +1270,7 @@ uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, char *v1, PGM_P p2
   {
     return 0; //OK
   }
-  else if((buf[5] != 0) && (buf[5] != '\r') && (buf[5] != '\n'))
+  else if((buf[0] == 'E') && (buf[1] == 'R') && (buf[5] != 0) && (buf[5] != '\r'))
   {
     return buf[5]; //ERROR code
   }
@@ -1302,13 +1310,31 @@ void REDFLY::flush(void)
   # define _UDRIE_ UDRIE0
   #endif
 
-   //clear rx and tx buffer
+  //clear tx buffer
+  Serial.flush();
+
+  //clear rx buffer
   Serial.flush();
   for(timeout=F_CPU/1024; ((_UCSRB_&(1<<UDRIE0)) || available()) && timeout; timeout--)
   {
     read();
   }
   delay_10ms(1);
+
+  return;
+}
+
+
+void REDFLY::flush_nowait(void)
+{
+  //clear tx buffer
+  Serial.flush();
+
+  //clear rx buffer
+  for(int len=available(); len!=0; len--)
+  {
+    read();
+  }
 
   return;
 }

@@ -13,8 +13,8 @@
 
 byte ip[]        = { 192,168,  0, 30 }; //ip from shield (client)
 byte netmask[]   = { 255,255,255,  0 }; //netmask
-byte gateway[]   = { 192,168,  0,103 }; //ip from gateway/router
-byte dnsserver[] = { 192,168,  0,103 }; //ip from dns server
+byte gateway[]   = { 192,168,  0,100 }; //ip from gateway/router
+byte dnsserver[] = { 192,168,  0,100 }; //ip from dns server
 byte server[]    = {   0,  0,  0,  0 }; //{ 209, 85,149,141 }; //ip from arduino-tweet.appspot.com (server)
 #define HOSTNAME "arduino-tweet.appspot.com" //host
 #define TOKEN    "273978908-s6eBqQrr97iXcrXVw4abHcpZ0bof2v5mKdQANXEI" //token from twitter.com/RedFlyShield

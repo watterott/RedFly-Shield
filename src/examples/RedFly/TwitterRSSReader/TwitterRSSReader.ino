@@ -17,8 +17,8 @@ ADS7846 tp;
 
 byte ip[]        = { 192,168,  0, 30 }; //ip from shield (client)
 byte netmask[]   = { 255,255,255,  0 }; //netmask
-byte gateway[]   = { 192,168,  0,103 }; //ip from gateway/router
-byte dnsserver[] = { 192,168,  0,103 }; //ip from dns server
+byte gateway[]   = { 192,168,  0,100 }; //ip from gateway/router
+byte dnsserver[] = { 192,168,  0,100 }; //ip from dns server
 byte server[]    = {   0,  0,  0,  0 }; //ip from twitter.com (server)
 #define HOSTNAME "twitter.com" //host
 #define FILENAME "statuses/user_timeline/redflyshield.rss?count=5"

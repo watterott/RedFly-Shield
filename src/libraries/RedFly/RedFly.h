@@ -149,6 +149,7 @@ class REDFLY
     uint8_t cmd(PGM_P p1);
 
     void flush(void);
+    void flush_nowait(void);
     int available(void);
     uint8_t readwait(void);
     uint8_t read(void);

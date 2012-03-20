@@ -337,12 +337,9 @@ int RedFlyClient::read(uint8_t *s, size_t sz)
 
 void RedFlyClient::flush(void)
 {
-  uint16_t len = available();
-
-  while(len)
+  for(int len=available(); len!=0; len--)
   {
     read();
-    len--;
   }
 
   return;
