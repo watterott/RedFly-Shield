@@ -33,7 +33,7 @@ License
 
 History
 -------
-         2012  v0.12  socketClose() now clears the input buffer.
+  Apr 07 2012  v0.12  socketClose() now clears the input buffer.
   
   Feb 26 2012  v0.11  Added ArdOSC Lib.
 
