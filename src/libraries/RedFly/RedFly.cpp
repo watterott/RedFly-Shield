@@ -377,11 +377,11 @@ uint8_t REDFLY::scan(uint8_t chn, char *ssid, uint8_t *mode, uint8_t *rssi) //ch
 
   if(ssid[0] != 0) //scan for ssid
   {
-    uitoa(chn, (char*)&buffer); //chn
+    uitoa(chn, (char*)&buffer[0]); //chn
     len = strlen((char*)buffer);
-    strcat_P((char*)buffer[len], PSTR(",")); //,
+    strcat_P((char*)&buffer[len], PSTR(",")); //,
     len = strlen((char*)buffer);
-    strcat((char*)buffer[len], ssid); //ssid
+    strcat((char*)&buffer[len], ssid); //ssid
     ret = cmd(buffer, sizeof(buffer), PSTR(CMD_SCAN), (char*)buffer);
   }
   else
