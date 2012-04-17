@@ -84,7 +84,7 @@ void loop()
   //listen for incoming clients
   if(server.available())
   {
-    //an http request ends with a blank line
+    //a http request ends with a blank line
     boolean currentLineIsBlank = true;
     while(server.available())
     {

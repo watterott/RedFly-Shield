@@ -5,6 +5,7 @@ Firmware Update Guide: <https://github.com/watterott/RedFly-Shield/tree/master/f
 
 * 4.5.0
   * Fixed some IBSS issues.
+  * Fix for not sending ack for reset from remote peer.
 
 * 4.4.6
   * Fixed IBSS issues in high traffic scenarios.
