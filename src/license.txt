@@ -1,6 +1,6 @@
 License Agreement
 
-Copyright (c) 2011, 2012 Andreas Watterott (Watterott electronic)
+Copyright (c) 2011, 2012 Watterott electronic
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,

@@ -266,7 +266,7 @@ When sending commands to the RedFly you always have to check, that the input buf
       uint8_t socketListen(uint8_t proto, uint16_t lport)<br>
     </dt>
     <dd>
-      Listen on port. Returns the socket handle or 0xFF on an error.<br>
+      Listen on port. Returns the socket handle or 0xFF on an error. If you want to open multiply sockets with the same port number, you have to wait till the opened socket gets connected and then you can open a new socket.<br>
       <i>proto</i> - Protocol: PROTO_TCP, PROTO_UDP<br>
       <i>lport</i> - Local port<br>
     </dd>

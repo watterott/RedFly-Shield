@@ -21,7 +21,7 @@ byte server[]    = {   0,  0,  0,  0 }; //{ 209, 85,149,141 }; //ip from arduino
 #define MESSAGE  "Hello, World. This is just a test."
 
 
-uint8_t http=0xFF;   //socket handle
+uint8_t http=INVALID_SOCKET; //socket handle
 uint16_t http_len=0; //receive len
 char http_buf[512];  //receive buffer
 
@@ -118,7 +118,7 @@ void loop()
   uint8_t sock, buf[32];
   uint16_t rd, len;
 
-  if(http == 0xFF) //no socket open
+  if(http == INVALID_SOCKET) //no socket open
   {
     return;
   }

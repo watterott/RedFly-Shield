@@ -10,7 +10,7 @@
 byte ip[]      = { 192,168,  0, 30 }; //ip from shield (server)
 byte netmask[] = { 255,255,255,  0 }; //netmask
 
-uint8_t http=0xFF;   //socket handle
+uint8_t http=INVALID_SOCKET; //socket handle
 uint16_t http_len=0; //receive len
 char http_buf[64];   //receive buffer
 
@@ -91,7 +91,7 @@ void loop()
   uint16_t buf_len, rd, len;
 
   //check if socket is opened
-  if(RedFly.socketClosed(http) || (http == 0xFF)) //no socket open
+  if(RedFly.socketClosed(http)) //no socket open
   {
     http = RedFly.socketListen(PROTO_TCP, 80); //start listening on port 80
   }
@@ -111,7 +111,7 @@ void loop()
   }while((len != 0) && (buf_len < sizeof(buf)));
 
   //progress the received data
-  if(buf_len && (sock == http) && (sock != 0xFF))
+  if(buf_len && (sock == http) && (sock != INVALID_SOCKET))
   {
     if(strncmp_P(buf, PSTR("GET / HTTP"), 10) == 0) //main site
     {

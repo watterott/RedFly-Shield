@@ -34,6 +34,7 @@ License
 History
 -------
          2012  v0.13  Bugfix in scan().
+                      Updated examples and docu.
 
   Apr 07 2012  v0.12  socketClose() now clears the input buffer.
   

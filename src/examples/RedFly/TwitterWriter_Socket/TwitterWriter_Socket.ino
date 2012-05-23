@@ -168,7 +168,7 @@ uint8_t send_msg(void)
   {
     infoText("Connecting...");
     http = RedFly.socketConnect(PROTO_TCP, server, 80); //start connection to server on port 80
-    if(http != 0xFF)
+    if(http != INVALID_SOCKET)
     {
       infoText("Send message...");
       //build message and send to Twitter app

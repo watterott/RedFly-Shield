@@ -14,7 +14,7 @@ byte netmask[] = { 255,255,255,  0 }; //netmask
 #define TCP_PORT  (80) //local TCP port on the shield
 #define UDP_PORT  (80) //local UDP port on the shield
 
-uint8_t hTCP=0xFF, hUDP=0xFF;  //socket handles
+uint8_t hTCP=INVALID_SOCKET, hUDP=INVALID_SOCKET;  //socket handles
 
 
 //serial format: 9600 Baud, 8N2
@@ -83,11 +83,11 @@ void loop()
   uint8_t ip[4]; //incomming UDP ip
 
   //check if sockets are opened
-  if(RedFly.socketClosed(hTCP) || (hTCP == 0xFF))
+  if(RedFly.socketClosed(hTCP))
   {
     hTCP = RedFly.socketListen(PROTO_TCP, TCP_PORT); //open TCP socket
   }
-  if(RedFly.socketClosed(hUDP) || (hUDP == 0xFF))
+  if(RedFly.socketClosed(hUDP))
   {
     hUDP = RedFly.socketListen(PROTO_UDP, UDP_PORT); //open UDP socket
   }
@@ -107,7 +107,7 @@ void loop()
   }while(len != 0);  //len contains the data size from rx buffer
 
   //send data
-  if(buf_len && (sock != 0xFF)) //data received for transmitting?
+  if(buf_len && (sock != INVALID_SOCKET)) //data received for transmitting?
   {
     if(sock == hTCP)
     {
