@@ -5,10 +5,12 @@ RedFly-Shield Software Package
 
 Installation
 ------------
-  Copy the content of /examples/ and /libraries/ to your 
-  Arduino folder: /arduino/examples/ and /arduino/libraries/
+  Copy the content of /libraries/ to your Arduino lib folder 
+  /arduino/libraries/ or to your user documents folder
+  /My Documents/Arduino/libraries/
   If there are existing folders from a previous installation,
-  delete them before copying.
+  please delete them before copying.
+  Further infos: http://www.arduino.cc/en/Hacking/Libraries
 
 
 Documentation
@@ -35,6 +37,7 @@ History
 -------
          2012  v0.13  Bugfix in scan().
                       Updated examples and docu.
+                      New directory struct.
 
   Apr 07 2012  v0.12  socketClose() now clears the input buffer.
   
