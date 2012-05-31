@@ -35,7 +35,7 @@ License
 
 History
 -------
-         2012  v0.13  Bugfix in scan().
+  May 31 2012  v0.13  Bugfix in scan().
                       Updated examples and docu.
                       New directory struct.
 
