@@ -680,10 +680,13 @@ uint8_t REDFLY::socketListen(uint8_t proto, uint16_t lport)
 {
   uint8_t ret=INVALID_SOCKET;
 
+  //local port
+  uitoa(lport, (char*)&buffer[0]);
+
   if(proto == PROTO_TCP) //TCP
   {
     proto = SOCKET_TCP;
-    if(cmd(buffer, sizeof(buffer), PSTR(CMD_LTCP), lport) == 0)
+    if(cmd(buffer, sizeof(buffer), PSTR(CMD_LTCP), (char*)buffer) == 0)
     {
       ret = buffer[2]; //OKx
     }
@@ -691,7 +694,7 @@ uint8_t REDFLY::socketListen(uint8_t proto, uint16_t lport)
   else //UDP
   {
     proto = SOCKET_UDP;
-    if(cmd(buffer, sizeof(buffer), PSTR(CMD_LUDP), lport) == 0)
+    if(cmd(buffer, sizeof(buffer), PSTR(CMD_LUDP), (char*)buffer) == 0)
     {
       ret = buffer[2]; //OKx
     }
