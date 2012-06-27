@@ -31,8 +31,9 @@ French description and additional functions: <a href="http://www.mon-club-elec.f
 <br>
 DHCP and DNS servers for RedFly: <a href="http://notebook.kulchenko.com/embedded/dhcp-and-dns-servers-with-arduino">DHCP and DNS servers with Arduino</a>, <a href="https://github.com/pkulchenko/DHCPLite">DHCPLite</a><br>
 <br>
-The RedFly uses the hardware serial port (8N2) of the Arduino. 
-If you want to use the serial port for other things then you have to disable the communication with the RedFly (see enable() and disable()).<br>
+<b>Note:</b>
+The RedFly uses the hardware serial port (data format 8N2) of the Arduino. 
+If you want to use this serial port for other things then you have to disable the communication with the RedFly at first (see enable() and disable()).<br>
 When sending commands to the RedFly you always have to check, that the input buffer doesn't contain data (see socketRead(), client.read() and server.read()).<br>
 
 
@@ -71,7 +72,8 @@ When sending commands to the RedFly you always have to check, that the input buf
       void enable(void)<br>
     </dt>
     <dd>
-      Enable communication with the RedFly-Shield. Note: The function clears the serial input and output buffer.<br>
+      Enable communication with the RedFly-Shield.<br>
+      Note: The function clears the serial input and output buffer.<br>
     </dd>
   </dl>
 
@@ -80,7 +82,8 @@ When sending commands to the RedFly you always have to check, that the input buf
       void disable(void)<br>
     </dt>
     <dd>
-      Disable communication with the RedFly-Shield. Note: The function clears the serial input and output buffer.<br>
+      Disable communication with the RedFly-Shield.<br>
+      Note: The function clears the serial input and output buffer.<br>
     </dd>
   </dl>
 
@@ -89,7 +92,7 @@ When sending commands to the RedFly you always have to check, that the input buf
       uint8_t getversion(char *ver)<br>
     </dt>
     <dd>
-      Get the firmware version. The return value is 0 if the version is successfully copied to ver.<br>
+      Get the firmware version. The return value is 0 if the version is successfully copied to <i>ver</i>.<br>
      <i>ver</i> - Pointer to a buffer to receive the version<br>
     </dd>
   </dl>
@@ -99,7 +102,7 @@ When sending commands to the RedFly you always have to check, that the input buf
       uint8_t getmac(uint8_t *mac)<br>
     </dt>
     <dd>
-      Get the MAC address of the WiFi module. The return value is 0 if the MAC is successfully copied to mac.<br>
+      Get the MAC address of the WiFi module. The return value is 0 if the MAC is successfully copied to <i>mac</i>.<br>
      <i>mac</i> - Pointer to a buffer to receive the address<br>
     </dd>
   </dl>
@@ -119,7 +122,7 @@ When sending commands to the RedFly you always have to check, that the input buf
       uint8_t getip(char *host, uint8_t *ip)<br>
     </dt>
     <dd>
-      Returns 0 if the ip address of the host is succefully received. (FW >= 4.3.0 required)<br>
+      Returns 0 if the ip address of the searched host is succefully received. (FW >= 4.3.0 required)<br>
       <i>host</i> - host name<br>
       <i>ip</i> - Pointer to a buffer to receive the IP address<br>
     </dd>
@@ -151,7 +154,8 @@ When sending commands to the RedFly you always have to check, that the input buf
       uint8_t getbssid(char *ssid, uint8_t *mac)<br>
     </dt>
     <dd>
-      Get the SSID and MAC of the scanned network. Run after scan(). The return value is 0 if no error occurred.<br>
+      Get the SSID and MAC of the scanned network. The return value is 0 if no error occurred.<br>
+      Note: Run this function direct after scan() or nextscan().<br>
       <i>ssid</i> - Pointer to a buffer to receive the SSID<br>
       <i>mac</i> - Pointer to a buffer to receive the MAC address<br>
     </dd>
@@ -162,7 +166,8 @@ When sending commands to the RedFly you always have to check, that the input buf
       uint8_t gettype(char *ssid, uint8_t *type)<br>
     </dt>
     <dd>
-      Get the SSID and type of the scanned network. Run after scan(). The return value is 0 if no error occurred.<br>
+      Get the SSID and type of the scanned network. The return value is 0 if no error occurred.<br>
+      Note: Run this function direct after scan() or nextscan().<br>
       <i>ssid</i> - Pointer to a buffer to receive the SSID<br>
       <i>type</i> - Pointer to a buffer to receive the type (0=Ad-hoc, 1=Infrastructure)<br>
     </dd>
@@ -176,7 +181,8 @@ When sending commands to the RedFly you always have to check, that the input buf
       uint8_t scan(void)<br>
     </dt>
     <dd>
-      Scan for wireless networks and return SSID, Mode and RSSI. If the scanning was successful the return vaule is 0. A scan cannot be started after joining a network.<br>
+      Scan for wireless networks and return SSID, Mode and RSSI. If the scanning was successful the return vaule is 0.<br>
+      Note: A scan cannot be started after joining a network.<br>
       <i>chn</i> - Channel (0=all channels)<br>
       <i>ssid</i> - Pointer to a buffer to receive the SSID (if set on function call, the module scans for networks with hidden SSID)<br>
       <i>mode</i> - Pointer to a buffer to receive the mode value 0=Open, 1=WPA, 2=WPA2, 3=WEP<br>
@@ -190,7 +196,8 @@ When sending commands to the RedFly you always have to check, that the input buf
       uint8_t nextscan(char *ssid)<br>
     </dt>
     <dd>
-      Scan for next wireless networks and return SSID, Mode and RSSI. If the scanning was successful the return vaule is 0. A scan cannot be started after joining a network.<br>
+      Scan for next wireless networks and return SSID, Mode and RSSI. If the scanning was successful the return vaule is 0.<br>
+      Note: Run this function direct after scan() and a scan cannot be started after joining a network.<br>
       <i>ssid</i> - SSID<br>
       <i>mode</i> - Mode<br>
       <i>rssi</i> - RSSI<br>
@@ -209,7 +216,7 @@ When sending commands to the RedFly you always have to check, that the input buf
     </dt>
     <dd>
       Join wireless network. If everything is okay then the return value is 0.<br>
-      scan() has to be called before this function for infrastructure and IBSS joiner networks.<br>
+      Note: scan() has to be called before this function for infrastructure and IBSS joiner networks.<br>
       <i>ssid</i> - SSID<br>
       <i>key</i> - Key / Password (max 31 characters, WEP-64bit: 10 hex digits and WEP-128bit: 26 hex digits)<br>
       <i>net</i> - Network: INFRASTRUCTURE, IBSS_JOINER, IBSS_CREATOR<br>
@@ -266,9 +273,45 @@ When sending commands to the RedFly you always have to check, that the input buf
       uint8_t socketListen(uint8_t proto, uint16_t lport)<br>
     </dt>
     <dd>
-      Listen on port. Returns the socket handle or 0xFF on an error. If you want to open multiply sockets with the same port number, you have to wait till the opened socket gets connected and then you can open a new socket.<br>
+      Listen on port. Returns the socket handle or 0xFF on an error.<br>
+      Note: If you want to open multiply sockets with the same port number, you have to wait till the opened socket gets connected and then you can open a new socket with the same port number.<br>
       <i>proto</i> - Protocol: PROTO_TCP, PROTO_UDP<br>
       <i>lport</i> - Local port<br>
+      <pre><u>Example:</u>
+uint8_t socket1=INVALID_SOCKET, socket2=INVALID_SOCKET; //socket handles
+
+void setup()
+{
+  //init RedFly...
+
+  socket1 = RedFly.socketListen(PROTO_TCP, 123); //open 1st socket
+}
+
+void loop()
+{
+  uint8_t s=0xFF; //return data from all sockets
+  uint16_t len=0;
+  RedFly.socketRead(&s, &len, 0, 0, 0, 0);
+  if(len > 0) //data available?
+  {
+    if(s == socket1)
+    {
+      if(RedFly.socketClosed(socket2)) //check if 2nd socket is closed
+      {
+        socket2 = RedFly.socketListen(PROTO_TCP, 123); //open 2nd socket
+      }
+      //do something...
+    }
+    else if(s == socket2)
+    {
+      if(RedFly.socketClosed(socket1)) //check if 2nd socket is closed
+      {
+        socket1 = RedFly.socketListen(PROTO_TCP, 123); //open 1st socket
+      }
+      //do something...
+    }
+  }
+}</pre>
     </dd>
   </dl>
 
@@ -324,7 +367,7 @@ When sending commands to the RedFly you always have to check, that the input buf
     </dt>
     <dd>
       Send data on socket. The function returns 0 if everything is okay and 0xFF if there is new data in the input buffer (no data is sent).<br>
-      ip and port only used on UDP connections.<br>
+      The <i>ip</i> and <i>port</i> parameters are only used on UDP connections.<br>
       Note: The input buffer has to be empty before sending data (see socketRead()).<br>
       <i>socket</i> - Socket handle<br>
       <i>stream</i> - Data<br>
@@ -356,8 +399,8 @@ uint16_t port          //source port, only on UDP connection
 uint8_t dst[64];       //destination buffer for the data
 uint16_t d_size=64;    //size of destination buffer
 uint16_t received_len; //data copied to destination buffer
-received_len = socketRead(&socket, &len, ip, &port, dst, d_size); //ip and port only on UDP connections
-received_len = socketRead(&socket, &len, dst, d_size);</pre>
+received_len = RedFly.socketRead(&socket, &len, ip, &port, dst, d_size); //ip and port only on UDP connections
+received_len = RedFly.socketRead(&socket, &len, dst, d_size);</pre>
     </dd>
   </dl>
 
@@ -473,7 +516,7 @@ received_len = socketRead(&socket, &len, dst, d_size);</pre>
     </dt>
     <dd>
       Returns the Client status. 0 means an open connection.<br>
-      The status will be directly read from the WiFi module.<br>
+      Note: The status will be directly read from the WiFi module.<br>
     </dd>
   </dl>
 
@@ -620,7 +663,7 @@ received_len = socketRead(&socket, &len, dst, d_size);</pre>
     </dt>
     <dd>
       Returns the Server status. 0 means an open connection.<br>
-      The status will be directly read from the WiFi module.<br>
+      Note: The status will be directly read from the WiFi module.<br>
     </dd>
   </dl>
 
