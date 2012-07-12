@@ -1,5 +1,5 @@
 /*
-  Wlan Scanner
+  WLAN Scanner
  
   This sketch scans for WLANs using a RedFly-Shield. 
  */
@@ -26,25 +26,24 @@ void setup()
     debugoutln("INIT ERR");
     for(;;); //do nothing forevermore
   }
-  else
-  {
-    //get firmware version
-    char ver[5+1];
-    if(RedFly.getversion(ver) == 0)
-    {
-      debugout("FW: ");
-      debugoutln(ver);
-    }
 
-    //get WiFi module MAC
-    uint8_t mac[6];
-    if(RedFly.getmac(mac) == 0)
-    {
-      char tmp[32];
-      sprintf_P(tmp, PSTR("MAC: %x:%x:%x:%x:%x:%x"), mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
-      debugoutln(tmp);
-    }
+  //get firmware version
+  char ver[5+1];
+  if(RedFly.getversion(ver) == 0)
+  {
+    debugout("FW: ");
+    debugoutln(ver);
   }
+
+  //get WiFi module MAC
+  uint8_t mac[6];
+  if(RedFly.getmac(mac) == 0)
+  {
+    char tmp[32];
+    sprintf_P(tmp, PSTR("MAC: %x:%x:%x:%x:%x:%x"), mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+    debugoutln(tmp);
+  }
+
   debugoutln("-----------------");
   debugoutln("Start scanning...");
   debugoutln("-----------------");

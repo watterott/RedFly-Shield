@@ -95,7 +95,7 @@ uint8_t REDFLY::init(uint32_t br, uint8_t pwr)
   for(i=4; i!=0; i--) //try 4 times
   {
     write(0x1C); //transmit 0x1C
-    for(timeout=F_CPU/64; timeout!=0; timeout--) //wait for response
+    for(timeout=F_CPU/64UL; timeout!=0; timeout--) //wait for response
     {
       if(available())
       {
@@ -261,7 +261,7 @@ uint32_t REDFLY::gettime(uint8_t *server, uint16_t port)
       //get data
       ptr     = buf;
       buf_len = 0;
-      for(timeout=F_CPU/16; timeout!=0; timeout--) //about 3s
+      for(timeout=F_CPU/16UL; timeout!=0; timeout--) //about 3s
       {
         sock = hNTP;
         rd = socketRead(&sock, &len, ptr, sizeof(buf)-buf_len);
@@ -1227,7 +1227,7 @@ uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, char *v1, PGM_P p2
   write('\n');
 
   //read response
-  timeout = F_CPU/4; //about 10s
+  timeout = F_CPU/4UL; //about 10s
   if(dst_size == 0) //dont save response
   {
     buf[0] = 0;
@@ -1245,7 +1245,7 @@ uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, char *v1, PGM_P p2
             i = 0;
           }
         }
-        timeout = F_CPU/16384; //about 2ms
+        timeout = F_CPU/16384UL; //about 2ms
       }
     }
   }
@@ -1266,7 +1266,7 @@ uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, char *v1, PGM_P p2
             i = 0;
           }
         }
-        timeout = F_CPU/16384; //about 2ms
+        timeout = F_CPU/16384UL; //about 2ms
       }
     }
     buf[0] = dst[0];
@@ -1324,7 +1324,7 @@ void REDFLY::flush(void)
 
   //clear rx buffer
   Serial.flush();
-  for(timeout=F_CPU/1024; ((_UCSRB_&(1<<UDRIE0)) || available()) && timeout; timeout--)
+  for(timeout=F_CPU/1024UL; ((_UCSRB_&(1<<UDRIE0)) || available()) && timeout; timeout--)
   {
     read();
   }
