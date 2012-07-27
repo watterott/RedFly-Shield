@@ -170,10 +170,13 @@ void REDFLY::disable(void) //deselect module
 
 uint8_t REDFLY::getversion(char *ver) //return module firmware version
 {
+  uint8_t ret;
+
   for(uint8_t i=3; i!=0; i--) //try 3 times
   {
     memset(buffer, 0, sizeof(buffer));
-    if(cmd(buffer, sizeof(buffer), PSTR(CMD_FWVERSION)) == 0) //OKa.b.c
+    ret = cmd(buffer, sizeof(buffer), PSTR(CMD_FWVERSION)); //OKa.b.c
+    if(ret == 0)
     {
       //buffer[0] = 'O', buffer[1] = 'K'
       memcpy(&ver[0], &buffer[2], 5);
@@ -182,23 +185,26 @@ uint8_t REDFLY::getversion(char *ver) //return module firmware version
     }
   }
 
-  return 1;
+  return ret;
 }
 
 
 uint8_t REDFLY::getmac(uint8_t *mac) //return module MAC address
 {
+  uint8_t ret;
+
   for(uint8_t i=3; i!=0; i--) //try 3 times
   {
     memset(buffer, 0, sizeof(buffer));
-    if(cmd(buffer, sizeof(buffer), PSTR(CMD_MAC)) == 0) //OKabcdef
+    ret = cmd(buffer, sizeof(buffer), PSTR(CMD_MAC)); //OKabcdef
+    if(ret == 0)
     {
       memcpy(&mac[0], &buffer[2], 6); //buffer[0] = 'O', buffer[1] = 'K'
       return 0;
     }
   }
 
-  return 1;
+  return ret;
 }
 
 
@@ -216,10 +222,13 @@ uint8_t REDFLY::getlocalip(uint8_t *ip) //return module IP address
 
 uint8_t REDFLY::getip(char *host, uint8_t *ip) //return IP addr from host/domain
 {
+  uint8_t ret;
+
   for(uint8_t i=3; i!=0; i--) //try 3 times
   {
     memset(buffer, 0, sizeof(buffer));
-    if(cmd(buffer, sizeof(buffer), PSTR(CMD_DNSGET), (uint8_t*)host, strlen(host)) == 0) //OKx...
+    ret = cmd(buffer, sizeof(buffer), PSTR(CMD_DNSGET), (uint8_t*)host, strlen(host)); //OKx...
+    if(ret == 0)
     {
       if(buffer[2]) //IP received?
       {
@@ -229,7 +238,7 @@ uint8_t REDFLY::getip(char *host, uint8_t *ip) //return IP addr from host/domain
     }
   }
 
-  return 1;
+  return ret;
 }
 
 
