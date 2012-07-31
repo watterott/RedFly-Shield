@@ -35,7 +35,7 @@ License
 
 History
 -------
-         2012  v0.14  Bugfix in socketListen().
+  Jul 31 2012  v0.14  Bugfix in socketListen().
                       Updated docu.
 
   May 31 2012  v0.13  Bugfix in scan().
