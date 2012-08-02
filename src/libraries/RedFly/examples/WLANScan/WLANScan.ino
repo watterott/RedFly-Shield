@@ -7,14 +7,39 @@
 #include <RedFly.h>
 
 
-//serial format: 9600 Baud, 8N2
-void debugout(char *s)  { RedFly.disable(); Serial.print(s);   RedFly.enable(); }
-void debugoutln(char *s){ RedFly.disable(); Serial.println(s); RedFly.enable(); }
+//debug output functions (9600 Baud, 8N2)
+//Leonardo boards use USB for communication, so we dont need to disable the RedFly
+void debugout(char *s)
+{
+#if defined(__AVR_ATmega32U4__)
+  RedFly.disable();
+#endif
+  Serial.print(s);
+#if defined(__AVR_ATmega32U4__)
+  RedFly.enable();
+#endif
+}
+
+void debugoutln(char *s)
+{
+#if defined(__AVR_ATmega32U4__)
+  RedFly.disable();
+#endif
+  Serial.println(s);
+#if defined(__AVR_ATmega32U4__)
+  RedFly.enable();
+#endif
+}
 
 
 void setup()
 {
   uint8_t ret;
+
+#if defined(__AVR_ATmega32U4__) //Leonardo boards use USB for communication
+  Serial.begin(9600); //init serial port and set baudrate
+  while(!Serial); //wait for serial port to connect (needed for Leonardo only)
+#endif
 
   //init the WiFi module on the shield
   // ret = RedFly.init(br, pwr) //br=9600|19200|38400|57600|115200|200000|230400, pwr=LOW_POWER|MED_POWER|HIGH_POWER

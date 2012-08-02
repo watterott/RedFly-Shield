@@ -9,7 +9,6 @@ extern "C" {
 }
 #endif
 #include "Arduino.h"
-#include "../digitalWriteFast/digitalWriteFast.h"
 #include "RedFlyCommands.h"
 #include "RedFly.h"
 #include "RedFlyClient.h"
@@ -22,11 +21,31 @@ extern "C" {
 #define RST_PIN         (2)
 #define CS_PIN          (3)
 
-#define RST_DISABLE()   digitalWriteFast(RST_PIN, HIGH)
-#define RST_ENABLE()    digitalWriteFast(RST_PIN, LOW)
+#define RST_DISABLE()   digitalWrite(RST_PIN, HIGH)
+#define RST_ENABLE()    digitalWrite(RST_PIN, LOW)
 
-#define CS_DISABLE()    digitalWriteFast(CS_PIN, HIGH)
-#define CS_ENABLE()     digitalWriteFast(CS_PIN, LOW)
+#define CS_DISABLE()    digitalWrite(CS_PIN, HIGH)
+#define CS_ENABLE()     digitalWrite(CS_PIN, LOW)
+
+#if defined(UBRRH) && defined(UBRRL)
+# define _UCSRA_  UCSRA
+# define _RXC_    RXC
+# define _UCSRC_  UCSRC
+# define _USBS_   USBS
+# define _SERIAL_ Serial
+#elif !defined(UBRR0H) && !defined(UBRR0L)
+# define _UCSRA_ UCSR1A
+# define _RXC_   RXC1
+# define _UCSRC_ UCSR1C
+# define _USBS_  USBS1
+# define _SERIAL_ Serial1
+#else
+# define _UCSRA_ UCSR0A
+# define _RXC_   RXC0
+# define _UCSRC_ UCSR0C
+# define _USBS_  USBS0
+# define _SERIAL_ Serial
+#endif
 
 
 REDFLY RedFly;
@@ -58,19 +77,19 @@ uint8_t REDFLY::init(uint32_t br, uint8_t pwr)
   //init pins
 #ifdef CS_PIN
   pinMode(CS_PIN, OUTPUT);
-  digitalWriteFast(CS_PIN, HIGH); //deselect
+  CS_DISABLE(); //deselect
 #endif
 #ifdef RST_PIN
   pinMode(RST_PIN, OUTPUT);
-  digitalWriteFast(RST_PIN, LOW); //reset on
+  RST_ENABLE(); //reset on
 #endif
 #ifdef TX_PIN
   pinMode(TX_PIN, OUTPUT);
-  digitalWriteFast(TX_PIN, HIGH);
+  digitalWrite(TX_PIN, HIGH);
 #endif
 #ifdef RX_PIN
   pinMode(RX_PIN, INPUT);
-  digitalWriteFast(RX_PIN, HIGH); //pull-up on
+  digitalWrite(RX_PIN, HIGH); //pull-up on
 #endif
 
   //reset vars
@@ -88,7 +107,7 @@ uint8_t REDFLY::init(uint32_t br, uint8_t pwr)
   delay_10ms(2); //wait 20ms
   RST_ENABLE();
   delay_10ms(30); //wait 300ms
-  RST_DISABLE()
+  RST_DISABLE();
 
   //auto baud rate detection
   delay_10ms(10); //wait 100ms
@@ -1320,20 +1339,11 @@ void REDFLY::flush(void)
 {
   uint32_t timeout;
 
-  #if defined(UBRRH) && defined(UBRRL)
-  # define _UCSRB_ UCSRB
-  # define _UDRIE_ UDRIE
-  #else
-  # define _UCSRB_ UCSR0B 
-  # define _UDRIE_ UDRIE0
-  #endif
-
   //clear tx buffer
-  Serial.flush();
+  _SERIAL_.flush();
 
   //clear rx buffer
-  Serial.flush();
-  for(timeout=F_CPU/1024UL; ((_UCSRB_&(1<<UDRIE0)) || available()) && timeout; timeout--)
+  for(timeout=F_CPU/1024UL; ((_UCSRA_&(1<<_RXC_)) || available()) && timeout; timeout--)
   {
     read();
   }
@@ -1346,7 +1356,7 @@ void REDFLY::flush(void)
 void REDFLY::flush_nowait(void)
 {
   //clear tx buffer
-  Serial.flush();
+  _SERIAL_.flush();
 
   //clear rx buffer
   for(int len=available(); len!=0; len--)
@@ -1360,7 +1370,7 @@ void REDFLY::flush_nowait(void)
 
 int REDFLY::available(void)
 {
-  return Serial.available();
+  return _SERIAL_.available();
 }
 
 
@@ -1368,19 +1378,19 @@ uint8_t REDFLY::readwait(void) //serial read
 {
   while(!available());
 
-  return (uint8_t)Serial.read();
+  return (uint8_t)_SERIAL_.read();
 }
 
 
 uint8_t REDFLY::read(void) //serial read
 {
-  return (uint8_t)Serial.read();
+  return _SERIAL_.read();
 }
 
 
 void REDFLY::write(uint8_t c) //serial write
 {
-  Serial.write(c);
+  _SERIAL_.write(c);
 
   return;
 }
@@ -1397,14 +1407,10 @@ void REDFLY::setbaudrate(uint32_t br) //set serial baudrate and config (8n2)
     br = 3686400;
   }
 
-  Serial.begin(br);
+  _SERIAL_.begin(br);
 
   //8 N 2
-  #if defined(UBRRH) && defined(UBRRL)
-    UCSRC  |= (1<<USBS);
-  #else
-    UCSR0C |= (1<<USBS0);
-  #endif
+  _UCSRC_ |= (1<<_USBS_);
 
   return;
 }

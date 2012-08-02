@@ -20,9 +20,6 @@ Documentation
 
 Third party software
 --------------------
-  digitalWriteFast
-    http://code.google.com/p/digitalwritefast/
-
   ArdOSC
     http://recotana.com/
     http://github.com/recotana/ArdOSC/
@@ -35,6 +32,9 @@ License
 
 History
 -------
+         2012  v0.15  Added Leonardo support.
+                      Removed digitalWriteFast.
+
   Jul 31 2012  v0.14  Bugfix in socketListen().
                       Updated docu.
 
