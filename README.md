@@ -17,7 +17,7 @@ The RedFly-Shield is a plug-on module with WiFi/WLAN for Arduino.
 
 
 ## Hardware
-Compatible with Arduino Uno, Duemilanove, Diecimila and Mega.
+Compatible with Arduino Uno, Duemilanove, Diecimila, Mega and Leonardo.
 
 ![RedFly-Shield hardware dia](https://github.com/watterott/RedFly-Shield/raw/master/img/hw_dia.png)
 
