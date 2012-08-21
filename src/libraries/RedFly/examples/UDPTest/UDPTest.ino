@@ -22,10 +22,10 @@ RedFlyServer server(1000);
 void debugout(char *s)
 {
 #if defined(__AVR_ATmega32U4__)
-  RedFly.disable();
-#endif
   Serial.print(s);
-#if defined(__AVR_ATmega32U4__)
+#else
+  RedFly.disable();
+  Serial.print(s);
   RedFly.enable();
 #endif
 }
@@ -33,10 +33,10 @@ void debugout(char *s)
 void debugoutln(char *s)
 {
 #if defined(__AVR_ATmega32U4__)
-  RedFly.disable();
-#endif
   Serial.println(s);
-#if defined(__AVR_ATmega32U4__)
+#else
+  RedFly.disable();
+  Serial.println(s);
   RedFly.enable();
 #endif
 }

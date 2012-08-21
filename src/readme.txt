@@ -32,7 +32,7 @@ License
 
 History
 -------
-         2012  v0.15  Added Leonardo support.
+  Aug 21 2012  v0.15  Added Leonardo support.
                       Removed digitalWriteFast.
 
   Jul 31 2012  v0.14  Bugfix in socketListen().
