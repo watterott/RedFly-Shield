@@ -64,9 +64,21 @@
 #define AUTHMODE_SK     "1"     //Shared Key 
 
 #define CMD_JOIN        "AT+RSI_JOIN=" //SSID,TxRate(1 byte),TxPower(1 byte) 
-#define JOIN_LOWPW      ",0,0"   //auto data rate,       7dBm (TxPower)
-#define JOIN_MEDPW      ",0,1"   //auto data rate,      10dBm (TxPower)
-#define JOIN_HIGHPW     ",0,2"   //auto data rate, 16...17dBm (TxPower)
+#define JOIN_LOWPW      ",0,0"   //auto data rate,       7dBm
+#define JOIN_MEDPW      ",0,1"   //auto data rate,      10dBm
+#define JOIN_HIGHPW     ",0,2"   //auto data rate, 16...17dBm
+#define JOIN_LOWPW1M    ",1,0"   //1 Mbps,               7dBm
+#define JOIN_MEDPW1M    ",1,1"   //1 Mbps,              10dBm
+#define JOIN_HIGHPW1M   ",1,2"   //1 Mbps,         16...17dBm
+#define JOIN_LOWPW2M    ",2,0"   //2 Mbps,               7dBm
+#define JOIN_MEDPW2M    ",2,1"   //2 Mbps,              10dBm
+#define JOIN_HIGHPW2M   ",2,2"   //2 Mbps,         16...17dBm
+#define JOIN_LOWPW54M   ",12,0"  //54 Mbps,              7dBm
+#define JOIN_MEDPW54M   ",12,1"  //54 Mbps,             10dBm
+#define JOIN_HIGHPW54M  ",12,2"  //54 Mbps,        16...17dBm
+  //DataRate (Mbps)=TxRate
+  //auto=0, 1=1, 2=2, 5.5=3, 11=4, 6=5, 9=6, 12=7, 18=8, 24=9, 36=10, 48=11, 54=12 
+  //MCS0=13, MCS1=14, MCS2=15, MCS3=16, MCS4=17, MCS5=18, MCS6=19, MCS7=20 
 
 #define CMD_DISCONN     "AT+RSI_DISASSOC" //disassociate / disconnect
 

@@ -63,7 +63,10 @@ When sending commands to the RedFly you always have to check, that the input buf
     <dd>
       Initialize the WiFi module and set baud rate and transmitter power. Returns 0 if everything is okay.<br>
       <i>br</i> - Baud rate: 9600, 19200, 38400, 57600, 115200, 200000, 230400, 460800, 921600, 1843200, 3686400 (only baud rates up to 230400 are support by Arduino @16MHz)<br>
-      <i>pwr</i> - Transmitter power: LOW_POWER, MED_POWER, HIGH_POWER<br>
+      <i>pwr</i> - Transmitter power: LOW_POWER,     MED_POWER,     HIGH_POWER     (auto data rate) /
+                                      LOW_POWER_1M,  MED_POWER_1M,  HIGH_POWER_1M  (1Mbps data rate) /
+                                      LOW_POWER_2M,  MED_POWER_2M,  HIGH_POWER_2M  (2Mbps data rate) /
+                                      LOW_POWER_54M, MED_POWER_54M, HIGH_POWER_54M (54Mbps data rate)<br>
     </dd>
   </dl>
 

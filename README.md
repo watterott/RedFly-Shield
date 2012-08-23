@@ -8,7 +8,7 @@ The RedFly-Shield is a plug-on module with WiFi/WLAN for Arduino.
 
 ## Features
  * IEEE 802.11b/g/n/i 2.4GHz (single stream 802.11n)
- * Wireless security: TKIP, WEP, WPA, WPA2-PSK
+ * Wireless security: WPA/WPA2-PSK, WEP, TKIP
  * Ad-hoc (IBSS) and Infrastructure mode (on Ad-hoc only WEP encryption)
  * Scanning for networks with signal strengh indicator
  * Integrated WiFi and IPv4 stack (TCP, UDP, DHCP, Auto-IP, DNS)

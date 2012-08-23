@@ -533,9 +533,22 @@ uint8_t REDFLY::join(char *ssid, char *key, uint8_t net, uint8_t chn, uint8_t au
   //join
   switch(tx_power)
   {
-    case LOW_POWER:  ret = cmd(PSTR(CMD_JOIN), ssid, PSTR(JOIN_LOWPW));  break;
-    case MED_POWER:  ret = cmd(PSTR(CMD_JOIN), ssid, PSTR(JOIN_MEDPW));  break;
-    case HIGH_POWER: ret = cmd(PSTR(CMD_JOIN), ssid, PSTR(JOIN_HIGHPW)); break;
+    //auto data rate
+    case LOW_POWER:      ret = cmd(PSTR(CMD_JOIN), ssid, PSTR(JOIN_LOWPW));  break;
+    case MED_POWER:      ret = cmd(PSTR(CMD_JOIN), ssid, PSTR(JOIN_MEDPW));  break;
+    case HIGH_POWER:     ret = cmd(PSTR(CMD_JOIN), ssid, PSTR(JOIN_HIGHPW)); break;
+    //1Mbps
+    case LOW_POWER_1M:   ret = cmd(PSTR(CMD_JOIN), ssid, PSTR(JOIN_LOWPW1M));  break;
+    case MED_POWER_1M:   ret = cmd(PSTR(CMD_JOIN), ssid, PSTR(JOIN_MEDPW1M));  break;
+    case HIGH_POWER_1M:  ret = cmd(PSTR(CMD_JOIN), ssid, PSTR(JOIN_HIGHPW1M)); break;
+    //2Mbps
+    case LOW_POWER_2M:   ret = cmd(PSTR(CMD_JOIN), ssid, PSTR(JOIN_LOWPW2M));  break;
+    case MED_POWER_2M:   ret = cmd(PSTR(CMD_JOIN), ssid, PSTR(JOIN_MEDPW2M));  break;
+    case HIGH_POWER_2M:  ret = cmd(PSTR(CMD_JOIN), ssid, PSTR(JOIN_HIGHPW2M)); break;
+    //54Mbps
+    case LOW_POWER_54M:  ret = cmd(PSTR(CMD_JOIN), ssid, PSTR(JOIN_LOWPW54M));  break;
+    case MED_POWER_54M:  ret = cmd(PSTR(CMD_JOIN), ssid, PSTR(JOIN_MEDPW54M));  break;
+    case HIGH_POWER_54M: ret = cmd(PSTR(CMD_JOIN), ssid, PSTR(JOIN_HIGHPW54M)); break;
   }
 
   return ret;
