@@ -73,12 +73,24 @@
 #define JOIN_LOWPW2M    ",2,0"   //2 Mbps,               7dBm
 #define JOIN_MEDPW2M    ",2,1"   //2 Mbps,              10dBm
 #define JOIN_HIGHPW2M   ",2,2"   //2 Mbps,         16...17dBm
+#define JOIN_LOWPW11M   ",4,0"   //11 Mbps,              7dBm
+#define JOIN_MEDPW11M   ",4,1"   //11 Mbps,             10dBm
+#define JOIN_HIGHPW11M  ",4,2"   //11 Mbps,        16...17dBm
+#define JOIN_LOWPW12M   ",7,0"   //12 Mbps,              7dBm
+#define JOIN_MEDPW12M   ",7,1"   //12 Mbps,             10dBm
+#define JOIN_HIGHPW12M  ",7,2"   //12 Mbps,        16...17dBm
+#define JOIN_LOWPW24M   ",9,0"   //24 Mbps,              7dBm
+#define JOIN_MEDPW24M   ",9,1"   //24 Mbps,             10dBm
+#define JOIN_HIGHPW24M  ",9,2"   //24 Mbps,        16...17dBm
 #define JOIN_LOWPW54M   ",12,0"  //54 Mbps,              7dBm
 #define JOIN_MEDPW54M   ",12,1"  //54 Mbps,             10dBm
 #define JOIN_HIGHPW54M  ",12,2"  //54 Mbps,        16...17dBm
   //DataRate (Mbps)=TxRate
-  //auto=0, 1=1, 2=2, 5.5=3, 11=4, 6=5, 9=6, 12=7, 18=8, 24=9, 36=10, 48=11, 54=12 
-  //MCS0=13, MCS1=14, MCS2=15, MCS3=16, MCS4=17, MCS5=18, MCS6=19, MCS7=20 
+  // auto=0, 1=1, 2=2, 5.5=3, 11=4, 6=5, 9=6, 12=7, 18=8, 24=9, 36=10, 48=11, 54=12 
+  // MCS0=13, MCS1=14, MCS2=15, MCS3=16, MCS4=17, MCS5=18, MCS6=19, MCS7=20 
+  //802.11n:   6.5, 13, 19.5, 26, 39, 52, 58.5, 65 Mbps 
+  //802.11a/g: 6, 9, 12, 18, 24, 36, 48, 54 Mbps 
+  //802.11b:   1, 2, 5.5, 11 Mbps
 
 #define CMD_DISCONN     "AT+RSI_DISASSOC" //disassociate / disconnect
 

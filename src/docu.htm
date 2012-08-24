@@ -3,7 +3,7 @@
   <title>RedFly-Shield for Arduino</title>
   <style type="text/css">
     h1
-      { font-size:135%; font-weight:bold; text-shadow:1px 1px 1px #DDDDDD; }
+      { font-size:135%; font-weight:bold; text-shadow:2px 2px 2px #DDDDDD; }
     h2
       { font-size:120%; font-weight:bold; text-shadow:1px 1px 1px #DDDDDD; }
     h3
@@ -25,16 +25,40 @@
 <ul>
   <li>Further infos: <a href="readme.txt">readme.txt</a></li>
   <li>License: <a href="license.txt">license.txt</a></li>
+  <li><a href="#FAQ">FAQ</a></li>
   <li><a href="#Libraries">Arduino Libraries</a></li>
 </ul>
 French description and additional functions: <a href="http://www.mon-club-elec.fr/pmwiki_reference_arduino/pmwiki.php?n=Main.LibrairieRedFly">Librairie RedFly-Shield</a>, <a href="http://www.mon-club-elec.fr/pmwiki_mon_club_elec/pmwiki.php?n=MAIN.MATERIELArduinoShieldWifiRedflyShield">RedFly-Shield</a><br>
 <br>
 DHCP and DNS servers for RedFly: <a href="http://notebook.kulchenko.com/embedded/dhcp-and-dns-servers-with-arduino">DHCP and DNS servers with Arduino</a>, <a href="https://github.com/pkulchenko/DHCPLite">DHCPLite</a><br>
-<br>
-<b>Note:</b>
-The RedFly uses the hardware serial port (data format 8N2) of the Arduino. 
+
+
+<br><hr><br>
+
+
+<a name="FAQ"></a>
+<h2>FAQ</h2>
+
+<h3>Which pins does the RedFly use?</h3>
+Used pins: D0, D1, D2, D3<br>
+The RedFly also uses the first hardware serial port (data format 8N2) of the Arduino (pin D0+D1).
 If you want to use this serial port for other things then you have to disable the communication with the RedFly at first (see enable() and disable()).<br>
-When sending commands to the RedFly you always have to check, that the input buffer doesn't contain data (see socketRead(), client.read() and server.read()).<br>
+
+<h3>Why I am getting errors when I send commands/data to the RedFly?</h3>
+When sending commands to the RedFly you always have to check, that the serial input buffer doesn't contain data (see socketRead(), client.read() and server.read()).<br>
+
+<h3>The WiFi connection does not work?</h3>
+In high power transmit mode an external power supply is recommended, because in some cases the USB port has not enough current.<br>
+
+<h3>The received data is not correct?</h3>
+If you have receiving problems, e.g. on a high data volume, then set a higher communication baud rate with the init() function.<br>
+
+<h3>The initialization of the WiFi module does not work (init() returns a value >0)?</h3>
+Try to update/re-flash the WiFi module firmware: <a href="https://github.com/watterott/RedFly-Shield/tree/master/fw">Firmware on GitHub</a>.<br>
+
+<h3>What is the wireless range of the RedFly?</h3>
+The range varies depending on the environment (indoor, outdoor, other nearby WiFi networks).
+The indoor range is about 10-20 metres and the outdoor range is up to 200 metres.<br>
 
 
 <br><hr><br>
@@ -63,10 +87,14 @@ When sending commands to the RedFly you always have to check, that the input buf
     <dd>
       Initialize the WiFi module and set baud rate and transmitter power. Returns 0 if everything is okay.<br>
       <i>br</i> - Baud rate: 9600, 19200, 38400, 57600, 115200, 200000, 230400, 460800, 921600, 1843200, 3686400 (only baud rates up to 230400 are support by Arduino @16MHz)<br>
-      <i>pwr</i> - Transmitter power: LOW_POWER,     MED_POWER,     HIGH_POWER     (auto data rate) /
-                                      LOW_POWER_1M,  MED_POWER_1M,  HIGH_POWER_1M  (1Mbps data rate) /
-                                      LOW_POWER_2M,  MED_POWER_2M,  HIGH_POWER_2M  (2Mbps data rate) /
-                                      LOW_POWER_54M, MED_POWER_54M, HIGH_POWER_54M (54Mbps data rate)<br>
+      <i>pwr</i> - Transmitter power and data rate: <br>
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; LOW_POWER,     MED_POWER,     HIGH_POWER     (auto data rate)<br>
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; LOW_POWER_1M,  MED_POWER_1M,  HIGH_POWER_1M  (1Mbps data rate)<br>
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; LOW_POWER_2M,  MED_POWER_2M,  HIGH_POWER_2M  (2Mbps data rate)<br>
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; LOW_POWER_11M, MED_POWER_11M, HIGH_POWER_11M (11Mbps data rate)<br>
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; LOW_POWER_12M, MED_POWER_12M, HIGH_POWER_12M (12Mbps data rate)<br>
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; LOW_POWER_24M, MED_POWER_24M, HIGH_POWER_24M (24Mbps data rate)<br>
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; LOW_POWER_54M, MED_POWER_54M, HIGH_POWER_54M (54Mbps data rate)<br>
     </dd>
   </dl>
 
