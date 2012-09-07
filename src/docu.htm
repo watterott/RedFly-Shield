@@ -47,11 +47,11 @@ If you want to use this serial port for other things then you have to disable th
 <h3>Why I am getting errors when I send commands/data to the RedFly?</h3>
 When sending commands to the RedFly you always have to check, that the serial input buffer doesn't contain data (see socketRead(), client.read() and server.read()).<br>
 
-<h3>The WiFi connection does not work?</h3>
-In high power transmit mode an external power supply is recommended, because in some cases the USB port has not enough current.<br>
-
 <h3>The received data is not correct?</h3>
 If you have receiving problems, e.g. on a high data volume, then set a higher communication baud rate with the init() function.<br>
+
+<h3>The WiFi connection does not work (join() or begin() return an error)?</h3>
+In high power transmit mode an external power supply is recommended, because in some cases the USB port has not enough current.<br>
 
 <h3>The initialization of the WiFi module does not work (init() returns a value >0)?</h3>
 Try to update/re-flash the WiFi module firmware: <a href="https://github.com/watterott/RedFly-Shield/tree/master/fw">Firmware on GitHub</a>.<br>
@@ -59,6 +59,9 @@ Try to update/re-flash the WiFi module firmware: <a href="https://github.com/wat
 <h3>What is the wireless range of the RedFly?</h3>
 The range varies depending on the environment (indoor, outdoor, other nearby WiFi networks).
 The indoor range is about 10-20 metres and the outdoor range is up to 200 metres.<br>
+
+<h3>What WiFi module is on the RedFly?</h3>
+It is a <a href="http://www.redpinesignals.com/pdfs/datasheets/RS9110-N-11-22_DataSheet.pdf">Redpine Signals RS9110-N-11-22</a>.<br>
 
 
 <br><hr><br>
