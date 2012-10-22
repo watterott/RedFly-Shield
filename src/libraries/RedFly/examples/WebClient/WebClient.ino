@@ -134,7 +134,7 @@ void loop()
   int c;
 
   //if there are incoming bytes available 
-  //from the server, read them and print them
+  //from the server then read them 
   if(client.available())
   {
     do
@@ -147,7 +147,7 @@ void loop()
     }while(c != -1);
   }
 
-  //if the server's disconnected, stop the client
+  //if the server's disconnected, stop the client and print the received data
   if(len && !client.connected())
   {
     client.stop();

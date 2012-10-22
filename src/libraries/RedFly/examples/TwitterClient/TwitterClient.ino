@@ -1,5 +1,5 @@
 /*
-  Twitter Test
+  Twitter Client
  
   This sketch connects to Twitter and posts a message on http://twitter.com/RedFlyShield
 
@@ -9,6 +9,7 @@
  */
 
 #include <RedFly.h>
+#include <RedFlyClient.h>
 
 
 byte ip[]        = { 192,168,  0, 30 }; //ip from shield (client)
@@ -16,14 +17,14 @@ byte netmask[]   = { 255,255,255,  0 }; //netmask
 byte gateway[]   = { 192,168,  0,100 }; //ip from gateway/router
 byte dnsserver[] = { 192,168,  0,100 }; //ip from dns server
 byte server[]    = {   0,  0,  0,  0 }; //{ 209, 85,149,141 }; //ip from arduino-tweet.appspot.com (server)
+
 #define HOSTNAME "arduino-tweet.appspot.com" //host
 #define TOKEN    "273978908-s6eBqQrr97iXcrXVw4abHcpZ0bof2v5mKdQANXEI" //token from twitter.com/RedFlyShield
 #define MESSAGE  "Hello, World. This is just a test."
 
-
-uint8_t http=INVALID_SOCKET; //socket handle
-uint16_t http_len=0; //receive len
-char http_buf[512];  //receive buffer
+//initialize the client library with the ip and port of the server 
+//that you want to connect to (port 80 is default for HTTP)
+RedFlyClient client(server, 80);
 
 
 //debug output functions (9600 Baud, 8N2)
@@ -108,22 +109,21 @@ void setup()
       {
         if(RedFly.getip(HOSTNAME, server) == 0) //get ip
         {
-          http = RedFly.socketConnect(PROTO_TCP, server, 80); //start connection to server on port 80
-          if(http == 0xFF)
+          if(client.connect(server, 80))
           {
-            debugoutln("SOCKET ERR");
-            RedFly.disconnect();
-            for(;;); //do nothing forevermore
+            //build message and send to Twitter app
+            char buf[8];
+            client.print_P(PSTR("POST http://"HOSTNAME"/update HTTP/1.0\r\nHost: "HOSTNAME"\r\nContent-Length: ")); //send HTTP header
+            sprintf(buf, "%i\r\n", strlen("token="TOKEN"&status="MESSAGE)); //calc content length
+            client.print(buf); //send content length
+            client.print_P(PSTR("Connection: close\r\n\r\n"));
+            client.print_P(PSTR("token="TOKEN"&status="MESSAGE)); //send token and data
           }
           else
           {
-            //build message and send to Twitter app
-            //note: to minimize the RAM usage everything is in Flash memory
-            char buf[8];
-            RedFly.socketSendPGM(http, PSTR("POST http://"HOSTNAME"/update HTTP/1.0\r\nHost: "HOSTNAME"\r\nContent-Length: ")); //send HTTP header
-            sprintf(buf, "%i\r\n\r\n", strlen("token="TOKEN"&status="MESSAGE)); //calc content length
-            RedFly.socketSend(http, buf); //send content length and HTTP header end
-            RedFly.socketSendPGM(http, PSTR("token="TOKEN"&status="MESSAGE)); //send token and data
+            debugoutln("CLIENT ERR");
+            RedFly.disconnect();
+            for(;;); //do nothing forevermore
           }
         }
         else
@@ -138,38 +138,36 @@ void setup()
 }
 
 
+char data[1024];  //receive buffer
+unsigned int len=0; //receive buffer length
+
 void loop()
 {
-  uint8_t sock, buf[32];
-  uint16_t rd, len;
+  int c;
 
-  if(http == INVALID_SOCKET) //no socket open
+  //if there are incoming bytes available 
+  //from the server then read them 
+  if(client.available())
   {
-    return;
+    do
+    {
+      c = client.read();
+      if((c != -1) && (len < (sizeof(data)-1)))
+      {
+        data[len++] = c;
+      }
+    }while(c != -1);
   }
 
-  sock = 0xFF; //0xFF = return data from all open sockets
-  rd = RedFly.socketRead(&sock, &len, buf, sizeof(buf));
-  if(sock == http)
+  //if the server's disconnected, stop the client and print the received data
+  if(len && !client.connected())
   {
-    if((rd != 0) && (rd != 0xFFFF))
-    {
-      if((http_len+rd) > sizeof(http_buf))
-      {
-        rd = sizeof(http_buf)-http_len;
-      }
-      memcpy(&http_buf[http_len], buf, rd);
-      http_len += rd;
-    }
+    client.stop();
+    RedFly.disconnect();
 
-    if((rd == 0xFFFF) || (len == 0)) //connection closed or all data received
-    {
-      //close connection
-      RedFly.socketClose(sock);
-
-      //show http buffer
-      http_buf[sizeof(http_buf)-1] = 0;
-      debugout(http_buf);
-    }
+    data[len] = 0;
+    debugout(data);
+    
+    len = 0;
   }
 }

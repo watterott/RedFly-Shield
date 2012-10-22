@@ -1,29 +1,32 @@
 /*
-  Twitter Test
+  Cosm Client
  
-  This sketch connects to Twitter and posts a message on http://twitter.com/RedFlyShield
-
-  Based on the Twitter Lib from NeoCat
-  http://www.arduino.cc/playground/Code/TwitterLibrary
-  http://arduino-tweet.appspot.com
+  This sketch connects to Cosm (http://cosm.com) using a RedFly-Shield.
+  https://cosm.com/feeds/81548
+  https://cosm.com/users/redflyshield
  */
 
 #include <RedFly.h>
+#include <RedFlyClient.h>
 
 
 byte ip[]        = { 192,168,  0, 30 }; //ip from shield (client)
 byte netmask[]   = { 255,255,255,  0 }; //netmask
 byte gateway[]   = { 192,168,  0,100 }; //ip from gateway/router
 byte dnsserver[] = { 192,168,  0,100 }; //ip from dns server
-byte server[]    = {   0,  0,  0,  0 }; //{ 209, 85,149,141 }; //ip from arduino-tweet.appspot.com (server)
-#define HOSTNAME "arduino-tweet.appspot.com" //host
-#define TOKEN    "273978908-s6eBqQrr97iXcrXVw4abHcpZ0bof2v5mKdQANXEI" //token from twitter.com/RedFlyShield
-#define MESSAGE  "Hello, World. This is just a test."
+byte server[]    = {   0,  0,  0,  0 }; //{  85, 13,145,242 }; //ip from www.watterott.net (server)
 
+#define HOSTNAME  "api.cosm.com"           //host
+#define APIKEY    "ZmR191JkoUttt0rQoCSqVKdKa5KSAKx5c1JDZGZ1OFFyYz0g" //your cosm/pachube api key here
+#define FEEDID    "81548"                  //your feed ID
+#define USERAGENT "My Arduino Project"     //user agent is the project name
+#define INTERVAL 10*1000UL                 //delay between updates
 
-uint8_t http=INVALID_SOCKET; //socket handle
-uint16_t http_len=0; //receive len
-char http_buf[512];  //receive buffer
+unsigned long lastConnectionTime = 0; //last time you connected to the server, in milliseconds
+
+//initialize the client library with the ip and port of the server 
+//that you want to connect to (port 80 is default for HTTP)
+RedFlyClient client(server, 80);
 
 
 //debug output functions (9600 Baud, 8N2)
@@ -108,23 +111,8 @@ void setup()
       {
         if(RedFly.getip(HOSTNAME, server) == 0) //get ip
         {
-          http = RedFly.socketConnect(PROTO_TCP, server, 80); //start connection to server on port 80
-          if(http == 0xFF)
-          {
-            debugoutln("SOCKET ERR");
-            RedFly.disconnect();
-            for(;;); //do nothing forevermore
-          }
-          else
-          {
-            //build message and send to Twitter app
-            //note: to minimize the RAM usage everything is in Flash memory
-            char buf[8];
-            RedFly.socketSendPGM(http, PSTR("POST http://"HOSTNAME"/update HTTP/1.0\r\nHost: "HOSTNAME"\r\nContent-Length: ")); //send HTTP header
-            sprintf(buf, "%i\r\n\r\n", strlen("token="TOKEN"&status="MESSAGE)); //calc content length
-            RedFly.socketSend(http, buf); //send content length and HTTP header end
-            RedFly.socketSendPGM(http, PSTR("token="TOKEN"&status="MESSAGE)); //send token and data
-          }
+          //everything okay
+          debugoutln("Start sending...");
         }
         else
         {
@@ -140,36 +128,39 @@ void setup()
 
 void loop()
 {
-  uint8_t sock, buf[32];
-  uint16_t rd, len;
+  unsigned long ms = millis();
 
-  if(http == INVALID_SOCKET) //no socket open
+  if(!client.connected() && ((ms-lastConnectionTime) > INTERVAL))
   {
-    return;
-  }
+    lastConnectionTime = ms;
 
-  sock = 0xFF; //0xFF = return data from all open sockets
-  rd = RedFly.socketRead(&sock, &len, buf, sizeof(buf));
-  if(sock == http)
-  {
-    if((rd != 0) && (rd != 0xFFFF))
-    {
-      if((http_len+rd) > sizeof(http_buf))
-      {
-        rd = sizeof(http_buf)-http_len;
-      }
-      memcpy(&http_buf[http_len], buf, rd);
-      http_len += rd;
-    }
+    //read and pepare sensor data
+    char tmp[64];
+    int adc0 = analogRead(A0);
+    int adc1 = analogRead(A1);  
+    int adc2 = analogRead(A2);  
+    sprintf(tmp, "adc0,%i\r\nadc1,%i\r\nadc2,%i\r\n", adc0, adc1, adc2);
 
-    if((rd == 0xFFFF) || (len == 0)) //connection closed or all data received
+    //connect to Cosm
+    if(client.connect(server, 80)) 
     {
+      //send HTTP header
+      client.print_P(PSTR("PUT /v2/feeds/"FEEDID".csv HTTP/1.1\r\n"));
+      client.print_P(PSTR("Host: "HOSTNAME"\r\n"));
+      client.print_P(PSTR("X-ApiKey: "APIKEY"\r\n"));
+      client.print_P(PSTR("User-Agent: "USERAGENT"\r\n"));
+      client.print_P(PSTR("Content-Type: text/csv\r\n"));
+      client.print_P(PSTR("Content-Length: "));
+      client.println(strlen(tmp));
+      client.print_P(PSTR("Connection: close\r\n\r\n"));
+      //here's the content of the PUT request
+      client.print(tmp);
       //close connection
-      RedFly.socketClose(sock);
-
-      //show http buffer
-      http_buf[sizeof(http_buf)-1] = 0;
-      debugout(http_buf);
+      client.stop();
+    }
+    else
+    {
+      debugoutln("CONN ERR");
     }
   }
 }
