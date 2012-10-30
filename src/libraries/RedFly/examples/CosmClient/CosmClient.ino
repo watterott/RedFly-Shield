@@ -14,10 +14,10 @@ byte ip[]        = { 192,168,  0, 30 }; //ip from shield (client)
 byte netmask[]   = { 255,255,255,  0 }; //netmask
 byte gateway[]   = { 192,168,  0,100 }; //ip from gateway/router
 byte dnsserver[] = { 192,168,  0,100 }; //ip from dns server
-byte server[]    = {   0,  0,  0,  0 }; //{  85, 13,145,242 }; //ip from www.watterott.net (server)
+byte server[]    = {   0,  0,  0,  0 }; //ip from api.cosm.com (server)
 
 #define HOSTNAME  "api.cosm.com"           //host
-#define APIKEY    "ZmR191JkoUttt0rQoCSqVKdKa5KSAKx5c1JDZGZ1OFFyYz0g" //your cosm/pachube api key here
+#define APIKEY    "ZmR191JkoUttt0rQoCSqVKdKa5KSAKx5c1JDZGZ1OFFyYz0g" //your cosm/pachube api key
 #define FEEDID    "81548"                  //your feed ID
 #define USERAGENT "My Arduino Project"     //user agent is the project name
 #define INTERVAL 10*1000UL                 //delay between updates
