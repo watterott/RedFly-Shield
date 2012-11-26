@@ -272,7 +272,7 @@ void loop()
           }
         }while((c != ' ') && (c != '\n') && (c != '\r') && (c != -1));
 
-        //decode paramter
+        //decode parameter
         ptr = param;
         while(len != 0)
         {
