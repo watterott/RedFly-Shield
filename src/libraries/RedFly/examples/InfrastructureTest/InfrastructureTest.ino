@@ -1,7 +1,7 @@
 /*
-  Ad-hoc Test
+  Infrastructure Test
 
-  This sketch connects two RedFly-Shields using an ad-hoc network
+  This sketch connects two RedFly-Shields using an infrastructure network
   and synchronizes the state of a switch connected to pin A5 and GND.
   One shield is the server and the other one is the client.
   Use the Serial Monitor for configuration (9600 Baud).
@@ -91,25 +91,19 @@ void setup()
     }
     RedFly.enable();
 
+    do
+    {
+      delay(1000);
+      ret = RedFly.join("wlan-ssid", "wlan-passw", INFRASTRUCTURE);
+    }
+    while(ret != 0);
+
     if(working_mode == 0) //server
     {
-      do
-      {
-        delay(1000);
-        ret = RedFly.join("ADHOC", "1A2B3C4D5E", IBSS_CREATOR, 1); //create ad-hoc network
-      }
-      while(ret != 0);
       ret = RedFly.begin(ip_server); //use static ip
     }
     else //client
     {
-      do
-      {
-        delay(1000);
-        RedFly.scan(); //scan for wireless networks (must be run before join command)
-        ret = RedFly.join("ADHOC", "1A2B3C4D5E", IBSS_JOINER); //join ad-hoc network
-      }
-      while(ret != 0);
       ret = RedFly.begin(ip_client); //use static ip
     }
 
