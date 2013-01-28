@@ -94,6 +94,7 @@ void setup()
     {
       do
       {
+        delay(1000);
         ret = RedFly.join("ADHOC", "1A2B3C4D5E", IBSS_CREATOR, 1); //create ad-hoc network
       }
       while(ret != 0);
