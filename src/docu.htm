@@ -311,7 +311,7 @@ It is a <a href="http://www.redpinesignals.com/pdfs/datasheets/RS9110-N-11-22_Da
       Note: If you want to open multiply sockets with the same port number, you have to wait till the opened socket gets connected and then you can open a new socket with the same port number.<br>
       <i>proto</i> - Protocol: PROTO_TCP, PROTO_UDP<br>
       <i>lport</i> - Local port<br>
-      <pre><u>Example:</u>
+      <pre><u>Example for using 2 sockets with the same port number:</u>
 uint8_t socket1=INVALID_SOCKET, socket2=INVALID_SOCKET; //socket handles
 
 void setup()

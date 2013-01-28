@@ -18,10 +18,8 @@ ADS7846 tp;
 
 byte ip_server[] = { 192,168,  0, 50 }; //ip from server shield
 byte ip_client[] = { 192,168,  0, 51 }; //ip from client shield
-byte netmask[]   = { 255,255,255,  0 }; //netmask
-byte gateway[]   = {   0,  0,  0,  0 }; //ip from gateway/router (not needed)
 
-uint16_t comm_port = 1000;
+uint16_t comm_port = 1000; //communication port
 
 RedFlyClient client(ip_server, comm_port);
 RedFlyServer server(comm_port);
@@ -77,14 +75,14 @@ uint8_t startwifi(void)
     if(working_mode == 0) //server
     {
       infoText("Create network...");
-      ret = RedFly.join("DemoWLAN", "1A2B3C4D5E", IBSS_CREATOR, 1);
+      ret = RedFly.join("PAINT", "1A2B3C4D5E", IBSS_CREATOR, 1); //create ad-hoc network
     }
     else
     {
       infoText("Scan...");
       RedFly.scan(); //scan for wireless networks (must be run before join command)
       infoText("Join network...");
-      ret = RedFly.join("DemoWLAN", "1A2B3C4D5E", IBSS_JOINER);
+      ret = RedFly.join("PAINT", "1A2B3C4D5E", IBSS_JOINER); //join ad-hoc network
     }
     if(ret)
     {
@@ -104,11 +102,11 @@ uint8_t startwifi(void)
   infoText("Set IP config...");
   if(working_mode == 0) //server
   {
-    ret = RedFly.begin(ip_server, 0, gateway, netmask);
+    ret = RedFly.begin(ip_server);
   }
   else
   {
-    ret = RedFly.begin(ip_client, 0, gateway, netmask);
+    ret = RedFly.begin(ip_client);
   }
   if(ret)
   {
