@@ -32,9 +32,9 @@ License
 
 History
 -------
-         2012  v0.16  Selectable data rates on init().
+  Jan 28 2013  v0.16  Selectable data rates on init().
                       Updated docu.
-                      Added Cosm example.
+                      Added Cosm, AdhocTest, InfrastructureTest example.
 
   Aug 21 2012  v0.15  Added Leonardo support.
                       Removed digitalWriteFast.
