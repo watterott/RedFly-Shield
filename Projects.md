@@ -8,3 +8,4 @@
  * DHCP + DNS servers: <https://github.com/pkulchenko/DHCPLite/> <http://notebook.kulchenko.com/embedded/dhcp-and-dns-servers-with-arduino>
  * TinyCLR/FEZ + RedFly: <http://www.tinyclr.com/codeshare/entry/251> <http://robotics-visionexperiments.blogspot.de/search/label/RedFly-Shield>
  * Android + RedFly: <http://android-arduino-redfly.npage.de>
+ * Universal WiFi IR Remote: <http://www.youtube.com/watch?v=DiDKT5V9gJE>
