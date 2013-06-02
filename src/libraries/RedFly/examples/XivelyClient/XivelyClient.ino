@@ -1,9 +1,8 @@
 /*
-  Cosm Client
+  Xively Client (previously Cosm, Pachube)
  
-  This sketch connects to Cosm (http://cosm.com) using a RedFly-Shield.
-  https://cosm.com/feeds/81548
-  https://cosm.com/users/redflyshield
+  This sketch connects to Xively (http://xively.com) using a RedFly-Shield.
+  https://xively.com/feeds/81548
  */
 
 #include <RedFly.h>
@@ -14,13 +13,13 @@ byte ip[]        = { 192,168,  0, 30 }; //ip from shield (client)
 byte netmask[]   = { 255,255,255,  0 }; //netmask
 byte gateway[]   = { 192,168,  0,100 }; //ip from gateway/router
 byte dnsserver[] = { 192,168,  0,100 }; //ip from dns server
-byte server[]    = {   0,  0,  0,  0 }; //ip from api.cosm.com (server)
+byte server[]    = {   0,  0,  0,  0 }; //ip from api.xively.com (server)
 
-#define HOSTNAME  "api.cosm.com"           //host
-#define APIKEY    "ZmR191JkoUttt0rQoCSqVKdKa5KSAKx5c1JDZGZ1OFFyYz0g" //your cosm/pachube api key
+#define HOSTNAME  "api.xively.com"         //host
+#define APIKEY    "ZmR191JkoUttt0rQoCSqVKdKa5KSAKx5c1JDZGZ1OFFyYz0g" //your api key
 #define FEEDID    "81548"                  //your feed ID
 #define USERAGENT "My Arduino Project"     //user agent is the project name
-#define INTERVAL 10*1000UL                 //delay between updates
+#define INTERVAL 10*1000UL                 //10s delay between updates
 
 unsigned long lastConnectionTime = 0; //last time you connected to the server, in milliseconds
 
@@ -141,7 +140,7 @@ void loop()
     int adc2 = analogRead(A2);  
     sprintf(tmp, "adc0,%i\r\nadc1,%i\r\nadc2,%i\r\n", adc0, adc1, adc2);
 
-    //connect to Cosm
+    //connect to server
     if(client.connect(server, 80)) 
     {
       //send HTTP header
