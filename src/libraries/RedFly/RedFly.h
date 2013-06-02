@@ -11,6 +11,8 @@ extern "C" {
 }
 #endif
 
+//default baud rate
+#define REDFLY_BAUDRATE (9600)
 
 //Tx power (init cmd)
 #define LOW_POWER       (0)
@@ -45,8 +47,8 @@ extern "C" {
 #define PROTO_UDP       (1)
 #define PROTO_MCAST     (2)
 
-//max. sockets (WiFi module currently supports up to 8)
-#define MAX_SOCKETS     (8)
+//max. sockets (WiFi module supports up to 8 sockets and FW 4.7.1 only 7 sockets)
+#define MAX_SOCKETS     (7)
 #define INVALID_SOCKET  (0xFF)
 
 //socket states

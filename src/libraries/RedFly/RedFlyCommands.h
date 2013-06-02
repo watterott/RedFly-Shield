@@ -51,17 +51,21 @@
   //chn: 0=all, 
   //     2.4GHz 1...14,
   //     5GHz   36,40,44,48,52,56,60,64,100,104,108,112,116,136,140,149,153,157,161,165
-  //ret: OK<uSSID1uMode1uRSSIval1><uSSID2uMode2uRSSIval2>… 
+  //ret: OK<uSSID1uMode1uRSSIval1><uSSID2uMode2uRSSIval2>...
 
 #define CMD_NETWORK     "AT+RSI_NETWORK=" //INFRASTRUCTURE or IBSS,type,chn
-  //IBSS type: 0 indicates IBSS Joiner and 1 indicates IBSS Creator,
+  //IBSS type: 0 indicates IBSS Joiner and 1 indicates IBSS Creator
   //for Joiner mode, chn has to be 0
 
-#define CMD_PSK         "AT+RSI_PSK=" //maximum length is 32 characters
+#define CMD_PSK         "AT+RSI_PSK=" //Pre Shared Key,  max length is 63 characters
+#define CMD_PSK_WEP     "AT+RSI_WEP_KEYS=" //3 WEP keys: key_index,key2,key3,key4
 
-#define CMD_AUTHMODE    "AT+RSI_AUTHMODE=" //0 Open or 1 Shared Key 
-#define AUTHMODE_OPEN   "0"     //Open
-#define AUTHMODE_SK     "1"     //Shared Key 
+#define CMD_AUTHMODE    "AT+RSI_AUTHMODE=" //auth mode
+#define AUTHMODE_WEPOK  "0"     //WEP Open Key
+#define AUTHMODE_WEPSK  "1"     //WEP Shared Key 
+#define AUTHMODE_WPA    "2"     //WPA
+#define AUTHMODE_WPA2   "3"     //WPA2
+#define AUTHMODE_OPEN   "4"     //No securtiy (open)
 
 #define CMD_JOIN        "AT+RSI_JOIN=" //SSID,TxRate(1 byte),TxPower(1 byte) 
 #define JOIN_LOWPW      ",0,0"   //auto data rate,       7dBm

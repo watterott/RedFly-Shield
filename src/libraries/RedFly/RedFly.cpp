@@ -72,7 +72,7 @@ REDFLY::~REDFLY(void)
 uint8_t REDFLY::init(uint32_t br, uint8_t pwr)
 {
   uint8_t ret=0xFF, i;
-  uint32_t timeout;
+  uint32_t ms;
 
   //init pins
 #ifdef CS_PIN
@@ -104,17 +104,16 @@ uint8_t REDFLY::init(uint32_t br, uint8_t pwr)
   enable();
 
   //reset module
-  delay_10ms(2); //wait 20ms
   RST_ENABLE();
-  delay_10ms(30); //wait 300ms
+  delay_10ms(5); //wait 50ms
   RST_DISABLE();
 
   //auto baud rate detection
-  delay_10ms(10); //wait 100ms
+  delay_10ms(11); //wait 110ms for module boot-up
   for(i=4; i!=0; i--) //try 4 times
   {
     write(0x1C); //transmit 0x1C
-    for(timeout=F_CPU/64UL; timeout!=0; timeout--) //wait for response
+    for(ms=millis(); (millis()-ms) < 200;) //wait 200ms for response
     {
       if(available())
       {
@@ -162,8 +161,8 @@ uint8_t REDFLY::init(uint32_t br, uint8_t pwr)
 }
 
 
-uint8_t REDFLY::init(uint8_t pwr) { return init(9600, pwr); }
-uint8_t REDFLY::init(void)        { return init(9600, HIGH_POWER); }
+uint8_t REDFLY::init(uint8_t pwr) { return init(REDFLY_BAUDRATE, pwr); }
+uint8_t REDFLY::init(void)        { return init(REDFLY_BAUDRATE, HIGH_POWER); }
 
 
 void REDFLY::enable(void) //select module
@@ -268,7 +267,7 @@ uint8_t REDFLY::getip(char *host, uint8_t *ip) //return IP addr from host/domain
 uint32_t REDFLY::gettime(uint8_t *server, uint16_t port)
 {
   uint8_t buf[64]; //min. NTP_PACKETLEN
-  uint32_t time=0UL, timeout;
+  uint32_t time=0UL, ms;
   uint8_t hNTP, sock, buf_len, *ptr;
   uint16_t rd, len;
   
@@ -289,7 +288,7 @@ uint32_t REDFLY::gettime(uint8_t *server, uint16_t port)
       //get data
       ptr     = buf;
       buf_len = 0;
-      for(timeout=F_CPU/16UL; timeout!=0; timeout--) //about 3s
+      for(ms=millis(); (millis()-ms) < 3000;) //wait max. 3s
       {
         sock = hNTP;
         rd = socketRead(&sock, &len, ptr, sizeof(buf)-buf_len);
@@ -514,14 +513,10 @@ uint8_t REDFLY::join(char *ssid, char *key, uint8_t net, uint8_t chn, uint8_t au
       break;
   }
 
-  //authentication mode 
-  if(authmode == 0)
+  //authentication mode
+  if(authmode <= 4)
   {
-    cmd(PSTR(CMD_AUTHMODE AUTHMODE_OPEN));
-  }
-  else if(authmode == 1)
-  {
-    cmd(PSTR(CMD_AUTHMODE AUTHMODE_SK));
+    cmd(PSTR(CMD_AUTHMODE), authmode);
   }
 
   //key
@@ -1185,6 +1180,7 @@ void REDFLY::socketReset(void)
 uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, char *v1, PGM_P p2, uint8_t *v2, uint16_t v2_size)
 {
   uint8_t c, i;
+  uint32_t ms;
   uint32_t timeout;
   uint8_t buf[8]; //ERRORx
 
@@ -1280,12 +1276,12 @@ uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, char *v1, PGM_P p2
   write('\n');
 
   //read response
-  timeout = F_CPU/4UL; //about 10s
+  timeout = 10000; //default timeout: 10s
   if(dst_size == 0) //dont save response
   {
     buf[0] = 0;
     buf[5] = 0;
-    for(i=0; timeout!=0; timeout--)
+    for(i=0, ms=millis(); (millis()-ms) < timeout;)
     {
       if(available())
       {
@@ -1298,7 +1294,8 @@ uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, char *v1, PGM_P p2
             i = 0;
           }
         }
-        timeout = F_CPU/16384UL; //about 2ms
+        ms = millis();
+        timeout = 3; //3 ms timeout
       }
     }
   }
@@ -1306,7 +1303,7 @@ uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, char *v1, PGM_P p2
   {
     dst[0] = 0;
     dst[5] = 0;
-    for(i=0; timeout!=0; timeout--)
+    for(i=0, ms=millis(); (millis()-ms) < timeout;)
     {
       if(available())
       {
@@ -1319,7 +1316,8 @@ uint8_t REDFLY::cmd(uint8_t *dst, uint8_t dst_size, PGM_P p1, char *v1, PGM_P p2
             i = 0;
           }
         }
-        timeout = F_CPU/16384UL; //about 2ms
+        ms = millis();
+        timeout = 3; //3 ms timeout
       }
     }
     buf[0] = dst[0];
@@ -1362,13 +1360,13 @@ uint8_t REDFLY::cmd(                                PGM_P p1)                   
 
 void REDFLY::flush(void)
 {
-  uint32_t timeout;
+  uint32_t ms;
 
   //clear tx buffer
   _SERIAL_.flush();
 
   //clear rx buffer
-  for(timeout=F_CPU/1024UL; ((_UCSRA_&(1<<_RXC_)) || available()) && timeout; timeout--)
+  for(ms=millis(); ((_UCSRA_&(1<<_RXC_)) || available()) && ((millis()-ms) < 50);) //50ms
   {
     read();
   }
