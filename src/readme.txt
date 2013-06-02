@@ -3,16 +3,6 @@ RedFly-Shield Software Package
   Visit github.com/watterott/RedFly-Shield for updates.
 
 
-Installation
-------------
-  Copy the content of /libraries/ to your Arduino lib folder 
-  /arduino/libraries/ or to your user documents folder
-  /My Documents/Arduino/libraries/
-  If there are existing folders from a previous installation,
-  please delete them before copying.
-  Further infos: http://www.arduino.cc/en/Hacking/Libraries
-
-
 Documentation
 -------------
   See docu.htm
