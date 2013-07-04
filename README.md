@@ -24,5 +24,9 @@ Compatible with Arduino Uno, Duemilanove, Diecimila, Mega and Leonardo.
 _Note: The PCB v1.3 has the new Arduino UNO R3 layout. But the connectors are the normal ones, which don't use SDA, SCL, IOREF and NC. So that the shield can be mounted also on an Arduino Duemilanove or Mega._
 
 
+## Software
+* [Arduino Library + Examples](https://github.com/watterott/RedFly-Shield/tree/master/src)
+
+
 ## Projects
-[Projects using the RedFly-Shield](https://github.com/watterott/RedFly-Shield/blob/master/Projects.md)
+* [Projects using the RedFly-Shield](https://github.com/watterott/RedFly-Shield/blob/master/Projects.md)

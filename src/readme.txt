@@ -22,6 +22,9 @@ License
 
 History
 -------
+  Jun 02 2013  v0.17  Rewrote timeout functions to be more portable.
+                      Changed documentation format.
+
   Jan 28 2013  v0.16  Selectable data rates on init().
                       Updated docu.
                       Added Cosm, AdhocTest, InfrastructureTest example.
