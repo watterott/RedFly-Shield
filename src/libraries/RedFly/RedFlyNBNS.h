@@ -2,13 +2,9 @@
 #define REDFLYNBNS_h
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-  #include <inttypes.h>
-  #include <avr/pgmspace.h>
-#ifdef __cplusplus
-}
+#include <inttypes.h>
+#if defined(__AVR__)
+# include <avr/pgmspace.h>
 #endif
 #include "RedFlyServer.h"
 

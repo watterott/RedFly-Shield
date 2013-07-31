@@ -1,14 +1,14 @@
-#ifdef __cplusplus
-extern "C" {
+#include <inttypes.h>
+#if defined(__AVR__)
+# include <avr/io.h>
+# include <avr/pgmspace.h>
+# include <util/delay.h>
 #endif
-  #include <inttypes.h>
-  #include <avr/io.h>
-  #include <avr/pgmspace.h>
-  #include <util/delay.h>
-#ifdef __cplusplus
-}
+#if ARDUINO >= 100
+# include "Arduino.h"
+#else
+# include "WProgram.h"
 #endif
-#include "Arduino.h"
 #include "RedFlyCommands.h"
 #include "RedFly.h"
 #include "RedFlyClient.h"
@@ -573,6 +573,7 @@ uint8_t REDFLY::join(char *ssid)                                      { return j
 uint8_t REDFLY::disconnect(void)
 {
   socketReset();
+  memset(ipaddr, 0, sizeof(ipaddr));
 
   return cmd(PSTR(CMD_DISCONN));
 }

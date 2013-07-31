@@ -2,14 +2,11 @@
 #define REDFLY_h
 
 
-#ifdef __cplusplus
-extern "C" {
+#include <inttypes.h>
+#if defined(__AVR__)
+# include <avr/pgmspace.h>
 #endif
-  #include <inttypes.h>
-  #include <avr/pgmspace.h>
-#ifdef __cplusplus
-}
-#endif
+
 
 //default baud rate
 #define REDFLY_BAUDRATE (9600)

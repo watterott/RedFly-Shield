@@ -26,7 +26,7 @@ byte ip[]        = { 192,168,  0, 30 }; //ip from shield (client)
 byte netmask[]   = { 255,255,255,  0 }; //netmask
 byte gateway[]   = { 192,168,  0,100 }; //ip from gateway/router
 byte dnsserver[] = { 192,168,  0,100 }; //ip from dns server
-byte server[]    = {   0,  0,  0,  0 }; //{ 209, 85,149,141 }; //ip from arduino-tweet.appspot.com (server)
+byte server[]    = {   0,  0,  0,  0 }; //ip from server
 #define HOSTNAME "arduino-tweet.appspot.com" //host
 #define TOKEN    "273978908-s6eBqQrr97iXcrXVw4abHcpZ0bof2v5mKdQANXEI" //token from twitter.com/RedFlyShield
 
@@ -48,7 +48,46 @@ uint8_t clearall(void)
 }
 
 
-uint8_t startwifi(void)
+void setup()
+{
+  uint8_t ret;
+  
+  //init RedFly
+  RedFly.init(115200, HIGH_POWER);
+
+  //init keyboard
+  keyboard.begin(5, 3, PS2Keymap_German); //Data, Clock/IRQ (Uno: 2 3 | Mega: 2 3 18 19 20 21)
+
+  //init display
+  lcd.init(2); //spi-clk = Fcpu/2
+  lcd.setOrientation(0);
+
+  //init touch controller
+  tp.init();
+  tp.setOrientation(0);
+
+  //touch-panel calibration
+/*
+  tp.service();
+  if(tp.getPressure() > 5)
+  {
+    tp.doCalibration(&lcd, TP_EEPROMADDR, 0); //dont check EEPROM for calibration data
+  }
+  else
+  {
+    tp.doCalibration(&lcd, TP_EEPROMADDR, 1); //check EEPROM for calibration data
+  }
+*/
+  //draw screen background
+  clearall();
+
+  //set print options
+  lcd.printOptions(2, COLOR_BLACK, COLOR_WHITE);
+  lcd.printXY(2, 25);
+}
+
+
+uint8_t start_wifi(void)
 {
   uint8_t ret, i;
 
@@ -62,7 +101,7 @@ uint8_t startwifi(void)
   }
 
   //join network
-  for(i=3; i!=0; i--) //try 3 times
+  for(i=5; i!=0; i--) //try 5 times
   {
     //scan for wireless networks (must be run before join command)
     infoText("Scan...");
@@ -76,11 +115,11 @@ uint8_t startwifi(void)
     // ret = join("wlan-ssid", INFRASTRUCTURE or IBSS_JOINER) //join infrastructure or ad-hoc network
     // ret = join("wlan-ssid", "wlan-passw") //join infrastructure network with password
     // ret = join("wlan-ssid") //join infrastructure network
-    infoText("Join network...");
+    infoText("Join...");
     ret = RedFly.join("wlan-ssid", "wlan-passw", INFRASTRUCTURE);
     if(ret)
     {
-      errorText("Join network...Error");
+      errorText("Join...Error");
     }
     else
     {
@@ -99,11 +138,11 @@ uint8_t startwifi(void)
   // ret = RedFly.begin(ip, dnsserver);
   // ret = RedFly.begin(ip, dnsserver, gateway);
   // ret = RedFly.begin(ip, dnsserver, gateway, netmask);
-  infoText("Set IP config...");
+  infoText("Set IP...");
   ret = RedFly.begin(ip, dnsserver, gateway, netmask);
   if(ret)
   {
-    errorText("Set IP config...Error");
+    errorText("Set IP...Error");
     RedFly.disconnect();
     return 3;
   }
@@ -114,56 +153,17 @@ uint8_t startwifi(void)
 }
 
 
-void setup()
-{
-  uint8_t ret;
-
-  //init display
-  lcd.init(2); //spi-clk = Fcpu/2
-  lcd.setOrientation(0);
-
-  //init touch controller
-  tp.init();
-  tp.setOrientation(0);
-  
-  //init keyboard
-  keyboard.begin(18, 19); //Data, Clock (Uno: 2 3 | Mega: 2 3 18 19 20 21)
-
-  //clear screen
-  lcd.clear(COLOR_WHITE);
-  
-  //touch-panel calibration
-  tp.service();
-  if(tp.getPressure() > 5)
-  {
-    tp.doCalibration(&lcd, TP_EEPROMADDR, 0); //dont check EEPROM for calibration data
-  }
-  else
-  {
-    tp.doCalibration(&lcd, TP_EEPROMADDR, 1); //check EEPROM for calibration data
-  }
-
-  //clear screen
-  lcd.clear(COLOR_WHITE);
-
-  //start WiFi
-  while(startwifi() != 0){ delay(1000); }
-
-  //draw screen background
-  clearall();
-
-  //set print options
-  lcd.printOptions(2, COLOR_BLACK, COLOR_WHITE);
-  lcd.printXY(2, 25);
-}
-
-
 uint8_t send_msg(void)
 {
   uint8_t http, sock, buf[32];
   uint16_t rd, len, msg_len;
 
-  infoText("Get server IP...");
+  if(RedFly.getlocalip(buf) != 0) //RedFly connected?
+  {
+    return 1;
+  }
+
+  infoText("Get IP...");
   if(RedFly.getip(HOSTNAME, server) == 0) //get ip
   {
     infoText("Connecting...");
@@ -176,7 +176,6 @@ uint8_t send_msg(void)
       sprintf((char*)buf, "%i\r\n\r\n", strlen("token="TOKEN"&status=")+strlen(message)); //calc content length
       RedFly.socketSend(http, (char*)buf); //send content length and HTTP header end
       RedFly.socketSendPGM(http, PSTR("token="TOKEN"&status=")); //send token
-
       RedFly.socketSend(http, message); //send message
       delay(100);
 
@@ -219,13 +218,13 @@ uint8_t send_msg(void)
     else
     {
       errorText("Connecting...Error");
-      return 2;
+      return 3;
     }
   }
   else
   {
-    errorText("Get server IP...Error");
-    return 1;
+    errorText("Get IP...Error");
+    return 2;
   }
 
   infoClear();
@@ -245,10 +244,9 @@ void loop()
     switch(c)
     {
       case PS2_ENTER:
-        if(send_msg())
+        while(send_msg())
         {
-          while(startwifi() != 0){ delay(1000); } //restart wifi connection
-          send_msg();
+          while(start_wifi() != 0){ delay(1000); } //restart wifi connection
         }
         message[0] = 0;
         m_pos      = 0;
@@ -285,13 +283,12 @@ void loop()
            (c >= 'a') && (c <= 'z') ||
            (c == ' ')               ||
            (c == '@')               ||
+           (c == '#')               ||
            (c == '-')               ||
            (c == '+')               ||
            (c == '*')               ||
            (c == ',')               ||
            (c == '.')               ||
-           (c == ':')               ||
-           (c == ';')               ||
            (c == '!')               ||
            (c == '?'))
         {
@@ -305,10 +302,4 @@ void loop()
         break;
     }
   }
-
-  if(tp.getPressure() > 5)
-  {
-
-  }
-
 }

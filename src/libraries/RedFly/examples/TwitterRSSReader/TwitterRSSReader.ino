@@ -19,9 +19,16 @@ byte ip[]        = { 192,168,  0, 30 }; //ip from shield (client)
 byte netmask[]   = { 255,255,255,  0 }; //netmask
 byte gateway[]   = { 192,168,  0,100 }; //ip from gateway/router
 byte dnsserver[] = { 192,168,  0,100 }; //ip from dns server
-byte server[]    = {   0,  0,  0,  0 }; //ip from twitter.com (server)
-#define HOSTNAME "twitter.com" //host
-#define FILENAME "statuses/user_timeline/redflyshield.rss?count=5"
+byte server[]    = {   0,  0,  0,  0 }; //ip from server
+
+//obsolete Twitter API
+// #define HOSTNAME "twitter.com"
+// #define FILENAME "statuses/user_timeline/redflyshield.rss?count=5"
+//alternatives: http://twfeed.com/feed/USERNAME or http://www.rssitfor.me/getrss?name=USERNAME
+ #define HOSTNAME "twfeed.com"
+ #define FILENAME "feed/redflyshield"
+// #define HOSTNAME "rssitfor.me"
+// #define FILENAME "getrss?name=redflyshield"
 RedFlyClient client(server, 80);
 
 
@@ -31,7 +38,7 @@ RedFlyClient client(server, 80);
 #define errorText(x) lcd.fillRect(0, (lcd.getHeight()/2)-15, lcd.getWidth()-1,(lcd.getHeight()/2)+5, COLOR_BLACK); lcd.drawTextPGM((lcd.getWidth()/2)-60, (lcd.getHeight()/2)-10, PSTR(x), 1, COLOR_RED, COLOR_BLACK)
 
 
-uint8_t startwifi(void)
+uint8_t start_wifi(void)
 {
   uint8_t ret, i;
 
@@ -45,7 +52,7 @@ uint8_t startwifi(void)
   }
 
   //join network
-  for(i=3; i!=0; i--) //try 3 times
+  for(i=5; i!=0; i--) //try 5 times
   {
     //scan for wireless networks (must be run before join command)
     infoText("Scan...");
@@ -59,11 +66,11 @@ uint8_t startwifi(void)
     // ret = join("wlan-ssid", INFRASTRUCTURE or IBSS_JOINER) //join infrastructure or ad-hoc network
     // ret = join("wlan-ssid", "wlan-passw") //join infrastructure network with password
     // ret = join("wlan-ssid") //join infrastructure network
-    infoText("Join network...");
+    infoText("Join...");
     ret = RedFly.join("wlan-ssid", "wlan-passw", INFRASTRUCTURE);
     if(ret)
     {
-      errorText("Join network...Error");
+      errorText("Join...Error");
     }
     else
     {
@@ -82,11 +89,11 @@ uint8_t startwifi(void)
   // ret = RedFly.begin(ip, dnsserver);
   // ret = RedFly.begin(ip, dnsserver, gateway);
   // ret = RedFly.begin(ip, dnsserver, gateway, netmask);
-  infoText("Set IP config...");
+  infoText("Set IP...");
   ret = RedFly.begin(ip, dnsserver, gateway, netmask);
   if(ret)
   {
-    errorText("Set IP config...Error");
+    errorText("Set IP...Error");
     RedFly.disconnect();
     return 3;
   }
@@ -127,7 +134,7 @@ void setup()
   lcd.clear(COLOR_WHITE);
 
   //start WiFi
-  while(startwifi() != 0){ delay(1000); }
+  while(start_wifi() != 0){ delay(1000); }
 
   //draw screen background
   lcd.fillRect(0, 0, lcd.getWidth()-1, 20, COLOR_BLACK);
@@ -142,7 +149,7 @@ void setup()
 
 char data[128];  //receive buffer
 unsigned int dlen=0; //receive buffer length
-uint8_t state=0, lastc=0, rss_item=3, item=0;
+uint8_t state=0, lastc1=0, lastc2=0, rss_item=1, item=0;
 
 
 uint8_t request_data() //send request to server
@@ -153,10 +160,10 @@ uint8_t request_data() //send request to server
   lcd.fillRect(2, 25, lcd.getWidth()-2, (lcd.getHeight()-25), COLOR_WHITE);
 
   //draw item index
-  sprintf(txt, "%i", ((rss_item-1)/2));
+  sprintf(txt, "%i", ((rss_item+1)/2));
   lcd.drawText((lcd.getWidth()/2)-10, 50, txt, 2, COLOR_BLUE, COLOR_WHITE);
 
-  infoText("Get server IP...");
+  infoText("Get IP...");
   if(RedFly.getip(HOSTNAME, server) == 0) //get ip
   {
     infoText("Connecting...");
@@ -173,7 +180,7 @@ uint8_t request_data() //send request to server
   }
   else
   {
-    errorText("Get server IP...Error");
+    errorText("Get IP...Error");
     return 1;
   }
 
@@ -195,15 +202,13 @@ void read_data() //receive data from server
         {
           break;
         }
-        else
+        else if((lastc1 == '\n') && (c == '\r'))
         {
-          if((lastc == '\n') && (c == '\r'))
-          {
-            state++;
-            break;
-          }
-          lastc = c;
+          state++;
+          break;
         }
+        lastc2 = lastc1;
+        lastc1 = c;
       }
       break;
 
@@ -215,18 +220,16 @@ void read_data() //receive data from server
         {
           break;
         }
-        else
+        else if((lastc2 == 'l') && (lastc1 == 'e') && (c == '>')) //new:<title> old:<description>
         {
-          if((lastc == 'n') && (c == '>')) //<description>
+          if(++item == rss_item)
           {
-            if(++item == rss_item)
-            {
-              state++;
-              break;
-            }
+            state++;
+            break;
           }
-          lastc = c;
         }
+        lastc2 = lastc1;
+        lastc1 = c;
       }
       break;
 
@@ -236,28 +239,35 @@ void read_data() //receive data from server
         c = client.read();
         if(c == -1)
         {
+          state++;
           break;
         }
-        else if((c != '\n') &&  
-                (c != '\r') && 
-                (dlen < sizeof(data)))
+        else if((c != '\n') && (c != '\r'))
         {
-          data[dlen++] = c;
-          if((lastc == '<') && (c == '/')) //</description>
+          if(dlen >= 128)
           {
-            dlen -= 2;
-            data[dlen] = 0;
             state++;
             break;
           }
-          lastc = c;
+          else
+          {
+            data[dlen++] = c;
+            if((lastc1 == '<') && (c == '/')) //new:</title> old:</description>
+            {
+              dlen -= 2;
+              data[dlen] = 0;
+              state++;
+              break;
+            }
+          }
         }
+        lastc2 = lastc1;
+        lastc1 = c;
       }
       break;
 
-    case 3: //read remaining data
-      c = client.read();
-      //client.stop();
+    case 3: //stop receiving
+      client.stop();
       break;
   }
 }
@@ -286,7 +296,7 @@ void loop()
     {
       if(tp.getY() < 50) //newer rss item
       {
-        if(rss_item > 3) //3 is the first item
+        if(rss_item > 1) //1 is the first item
           rss_item -= 2;
       }
       else if(tp.getY() > (lcd.getHeight()-50)) //older rss item
@@ -296,16 +306,16 @@ void loop()
       }
       
       //reset vars
-      state = 0;
-      lastc = 0;
-      item  = 0;
-      dlen  = 0;
+      state  = 0;
+      lastc1 = 0;
+      lastc2 = 0;
+      item   = 0;
+      dlen   = 0;
 
       //send request
-      if(request_data())
+      while(request_data())
       {
-        while(startwifi() != 0){ delay(1000); } //restart wifi connection
-        request_data();
+        while(start_wifi() != 0){ delay(1000); } //restart wifi connection
       }
     }
   }

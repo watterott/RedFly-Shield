@@ -1,15 +1,11 @@
-#ifdef __cplusplus
-extern "C" {
-#endif
-  #include <inttypes.h>
-  #include <avr/pgmspace.h>
-#ifdef __cplusplus
-}
+#include <inttypes.h>
+#if defined(__AVR__)
+# include <avr/pgmspace.h>
 #endif
 #if ARDUINO >= 100
-#include "Arduino.h"
+# include "Arduino.h"
 #else
-#include "WProgram.h"
+# include "WProgram.h"
 #endif
 #include "RedFly.h"
 #include "RedFlyClient.h"

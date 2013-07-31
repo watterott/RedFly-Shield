@@ -56,7 +56,7 @@ uint8_t clearall(uint8_t send) //redraw complete screen
 }
 
 
-uint8_t startwifi(void)
+uint8_t start_wifi(void)
 {
   uint8_t ret, i;
 
@@ -70,7 +70,7 @@ uint8_t startwifi(void)
   }
 
   //join/create network
-  for(i=3; i!=0; i--) //try 3 times
+  for(i=5; i!=0; i--) //try 5 times
   {
     if(working_mode == 0) //server
     {
@@ -81,12 +81,12 @@ uint8_t startwifi(void)
     {
       infoText("Scan...");
       RedFly.scan(); //scan for wireless networks (must be run before join command)
-      infoText("Join network...");
+      infoText("Join...");
       ret = RedFly.join("PAINT", "1A2B3C4D5E", IBSS_JOINER); //join ad-hoc network
     }
     if(ret)
     {
-      errorText("Join network...Error");
+      errorText("Join...Error");
     }
     else
     {
@@ -99,7 +99,7 @@ uint8_t startwifi(void)
   }
 
   //set ip config
-  infoText("Set IP config...");
+  infoText("Set IP...");
   if(working_mode == 0) //server
   {
     ret = RedFly.begin(ip_server);
@@ -110,7 +110,7 @@ uint8_t startwifi(void)
   }
   if(ret)
   {
-    errorText("Set IP config...Error");
+    errorText("Set IP...Error");
     RedFly.disconnect();
     return 3;
   }
@@ -180,7 +180,7 @@ void setup()
   lcd.clear(COLOR_WHITE);
   
   //start WiFi
-  while(startwifi() != 0){ delay(1000); }
+  while(start_wifi() != 0){ delay(1000); }
 }
 
 
@@ -199,7 +199,7 @@ void loop()
         server.stop();
         if(++connection >= 3)
         {
-          while(startwifi() != 0){ delay(1000); }
+          while(start_wifi() != 0){ delay(1000); }
         }
       }
       else
@@ -245,7 +245,7 @@ void loop()
         client.stop();
         if(++connection >= 3)
         {
-          while(startwifi() != 0){ delay(1000); }
+          while(start_wifi() != 0){ delay(1000); }
         }
       }
       else

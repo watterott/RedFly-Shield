@@ -1,5 +1,5 @@
 /*
-  Twitter Client
+  Twitter Test
  
   This sketch connects to Twitter and posts a message on http://twitter.com/RedFlyShield
 
