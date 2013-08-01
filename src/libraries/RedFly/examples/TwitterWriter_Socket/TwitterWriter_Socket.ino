@@ -244,21 +244,29 @@ void loop()
     switch(c)
     {
       case PS2_ENTER:
-        while(send_msg())
+        if(m_pos != 0)
         {
-          while(start_wifi() != 0){ delay(1000); } //restart wifi connection
+          while(send_msg())
+          {
+            while(start_wifi() != 0){ delay(1000); } //restart wifi connection
+          }
+          message[0] = 0;
+          m_pos      = 0;
+          clearall();
+          lcd.printXY(2, 25);
+          while(keyboard.read() != -1); //clear keyboard buffer
         }
-        message[0] = 0;
-        m_pos      = 0;
-        clearall();
-        lcd.printXY(2, 25);
         break;
 
       case PS2_ESC:
-        memset(message, 0, sizeof(message));
-        m_pos = 0;
-        clearall();
-        lcd.printXY(2, 25);
+        if(m_pos != 0)
+        {
+          memset(message, 0, sizeof(message));
+          m_pos = 0;
+          clearall();
+          lcd.printXY(2, 25);
+          while(keyboard.read() != -1); //clear keyboard buffer
+        }
         break;
 
       case PS2_DELETE:
@@ -274,6 +282,7 @@ void loop()
             lcd.printXY(((FONT_WIDTH*2)*(((lcd.getWidth()-2)/(FONT_WIDTH*2))-1))+2, lcd.printGetY()-1-(FONT_HEIGHT*2));
           }
           lcd.fillRect(lcd.printGetX(), lcd.printGetY(), lcd.printGetX()+(FONT_WIDTH*2), lcd.printGetY()+(FONT_HEIGHT*2), COLOR_WHITE);
+          while(keyboard.read() != -1); //clear keyboard buffer
         }
         break;
 
