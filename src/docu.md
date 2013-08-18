@@ -154,7 +154,7 @@ Note: Run this function direct after *scan()* and a scan cannot be started after
 * authmode - Auth mode: 0=Open Key, 1=Shared Key (only for WEP)
 
 Join wireless network. If everything is okay then the return value is 0.
-Note: *scan()* has to be called before this function for infrastructure and IBSS joiner networks.
+Note: *scan()* has to be called before this function for infrastructure and IBSS joiner networks. The maximum number of IBSS_JOINER devices (ad-hoc) is 4.
 
     uint8_t disconnect(void)
 Disconnect / disassociate wireless connection.
