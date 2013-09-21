@@ -17,8 +17,6 @@ Shop: [RedFly-Shield](http://www.watterott.com/en/Arduino-RedFly-Shield)
 
 
 ## Hardware
-Compatible with Arduino Uno, Duemilanove, Diecimila, Mega and Leonardo.
-
 ![RedFly-Shield hardware dia](https://raw.github.com/watterott/RedFly-Shield/master/img/hw_dia.png)
 
 
