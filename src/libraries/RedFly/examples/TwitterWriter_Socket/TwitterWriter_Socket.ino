@@ -11,14 +11,15 @@
   PS2Keyboard Library http://www.pjrc.com/teensy/td_libs_PS2Keyboard.html
  */
 
-#include <MI0283QT2.h>
+#include <MI0283QT2.h> //include <MI0283QT2.h> or <MI0283QT9.h>
 #include <ADS7846.h>
 #include <PS2Keyboard.h>
 #include <RedFly.h>
 
 
 #define TP_EEPROMADDR (0x00) //eeprom address for calibration data
-MI0283QT2 lcd;
+
+MI0283QT2 lcd; //declare MI0283QT2 or MI0283QT9
 ADS7846 tp;
 PS2Keyboard keyboard;
 

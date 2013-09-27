@@ -5,14 +5,15 @@
   Requires RedFly + mSD-shield with MI0283QT-Adapter.
  */
 
-#include <MI0283QT2.h>
+#include <MI0283QT2.h> //include <MI0283QT2.h> or <MI0283QT9.h>
 #include <ADS7846.h>
 #include <RedFly.h>
 #include <RedFlyClient.h>
 
 
 #define TP_EEPROMADDR (0x00) //eeprom address for calibration data
-MI0283QT2 lcd;
+
+MI0283QT2 lcd; //declare MI0283QT2 or MI0283QT9
 ADS7846 tp;
 
 byte ip[]        = { 192,168,  0, 30 }; //ip from shield (client)
