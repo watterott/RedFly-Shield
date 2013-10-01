@@ -6,6 +6,6 @@
 * THE KNOB II: http://www.ketzler.de/2012/09/the-knob-ii-hardware
 * Solarlogger: http://cocoswelt.blogsport.de/2012/09/13/solarlogger-aus-einem-arduino
 * DHCP + DNS servers: https://github.com/pkulchenko/DHCPLite/ http://notebook.kulchenko.com/embedded/dhcp-and-dns-servers-with-arduino
-* TinyCLR/FEZ + RedFly: http://www.tinyclr.com/codeshare/entry/251 http://robotics-visionexperiments.blogspot.de/search/label/RedFly-Shield
+* TinyCLR/FEZ + RedFly: https://www.ghielectronics.com/community/codeshare/entry/251 http://robotics-visionexperiments.blogspot.de/search/label/RedFly-Shield
 * Android + RedFly: http://android-arduino-redfly.npage.de
 * Universal WiFi IR Remote: http://www.youtube.com/watch?v=DiDKT5V9gJE
