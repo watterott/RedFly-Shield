@@ -1,11 +1,12 @@
 RedFly-Shield Software Package
 ==============================
-  Visit github.com/watterott/RedFly-Shield for updates.
+  Visit https://github.com/watterott/RedFly-Shield for updates.
 
 
 Documentation
 -------------
   See docu.htm
+    https://github.com/watterott/RedFly-Shield/blob/master/src/docu.md
 
 
 Third party software
@@ -18,6 +19,7 @@ Third party software
 License
 -------
   See license.txt
+    https://github.com/watterott/RedFly-Shield/blob/master/src/license.txt
 
 
 History
