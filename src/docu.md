@@ -17,6 +17,11 @@ If there are existing folders from a previous installation, please delete them b
 Further infos: http://arduino.cc/en/Guide/Libraries and http://arduino.cc/en/Hacking/Libraries
 
 
+## Firmware Update
+
+See [Firmware Update Guide](https://github.com/watterott/RedFly-Shield/tree/master/fw/update_guide).
+
+
 ## FAQ
 
 ### Which pins does the RedFly use?
@@ -35,8 +40,7 @@ If you have receiving problems, e.g. on a high data volume, then set a higher co
 In high power transmit mode an external power supply is recommended, because in some cases the USB port has not enough current.
 
 ### The initialization of the WiFi module does not work (*init()* returns a value >0)?
-Try to update/re-flash the WiFi module firmware:
-https://github.com/watterott/RedFly-Shield/tree/master/fw
+Try to update/re-flash the WiFi module firmware: [Firmware Update Guide](https://github.com/watterott/RedFly-Shield/tree/master/fw/update_guide)
 
 ### What is the wireless range of the RedFly?
 The range varies depending on the environment (indoor, outdoor, other nearby WiFi networks).
