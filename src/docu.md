@@ -11,6 +11,8 @@ https://github.com/pkulchenko/DHCPLite
 
 ## Installation
 
+Download the files [here](https://github.com/watterott/RedFly-Shield/archive/master.zip).
+
 Copy the content of */libraries/* to your Arduino lib folder */arduino/libraries/* or to your user documents folder */My Documents/Arduino/libraries/*
 If there are existing folders from a previous installation, please delete them before copying.
 
@@ -36,8 +38,11 @@ When sending commands to the RedFly you always have to check that the serial inp
 ### The received data is not correct?
 If you have receiving problems, e.g. on a high data volume, then set a higher communication baud rate with the *init()* function.
 
+### A connection cannot be established to the RedFly?
+Check if your AP has a *client isolation* option and if it is disabled.
+
 ### The WiFi connection does not work (*join()* or *begin()* return an error)?
-In high power transmit mode an external power supply is recommended, because in some cases the USB port has not enough current.
+In high power transmit mode an external power supply is recommended, because in some cases the USB port has not enough power.
 
 ### The initialization of the WiFi module does not work (*init()* returns a value >0)?
 Try to update/re-flash the WiFi module firmware: [Firmware Update Guide](https://github.com/watterott/RedFly-Shield/tree/master/fw/update_guide)
@@ -48,6 +53,11 @@ The indoor range is about 10-20 meters and the outdoor range is up to 200 meters
 
 ### What WiFi module is on the RedFly?
 It is a Redpine Signals RS9110-N-11-22 with UART interface.
+
+
+## Examples
+
+Examples can be found in the Arduino IDE under ```File -> Examples -> RedFly```.
 
 
 ## Libraries
