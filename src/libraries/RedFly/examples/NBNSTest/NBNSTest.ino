@@ -2,7 +2,7 @@
   NBNS Test
  
   This sketch shows the basic NetBIOS Name Service (NBNS) support in action.
-  For testing: open in your browser http://redfly/
+  For testing, open in your browser http://redfly/
  */
 
 #include <RedFly.h>

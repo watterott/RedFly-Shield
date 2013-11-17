@@ -1,7 +1,8 @@
 /*
   Twitter Writer
  
-  This sketch posts a message on Twitter http://twitter.com/RedFlyShield
+  This sketch connects to Twitter and posts a message on
+  http://twitter.com/RedFlyShield
 
   Based on the Twitter Lib from NeoCat
   http://www.arduino.cc/playground/Code/TwitterLibrary

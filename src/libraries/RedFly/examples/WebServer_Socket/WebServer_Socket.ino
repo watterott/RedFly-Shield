@@ -1,7 +1,9 @@
 /*
   Web Server
- 
-  This sketch acts as a server using a RedFly-Shield. 
+  
+  This sketch acts as a server using a RedFly-Shield.
+  For testing, open in your browser http://192.168.0.30/
+  (Replace the IP with the one from your RedFly-Shield.)
  */
 
 #include <RedFly.h>
