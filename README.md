@@ -21,7 +21,7 @@ Shop: [RedFly-Shield](http://www.watterott.com/en/Arduino-RedFly-Shield)
 
 
 ## Software
-* [Arduino Library with Examples](https://github.com/watterott/RedFly-Shield/tree/master/src)
+* [Arduino Library with Examples](https://github.com/watterott/Arduino-Libs)
 
 
 ## Projects
