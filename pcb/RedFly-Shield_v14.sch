@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="2" fill="3" visible="no" active="no"/>
@@ -11071,51 +11071,6 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 </deviceset>
 </devicesets>
 </library>
-<library name="frames">
-<packages>
-</packages>
-<symbols>
-<symbol name="A4L-LOC">
-<wire x1="256.54" y1="3.81" x2="256.54" y2="8.89" width="0.1016" layer="94"/>
-<wire x1="256.54" y1="8.89" x2="256.54" y2="13.97" width="0.1016" layer="94"/>
-<wire x1="256.54" y1="13.97" x2="256.54" y2="19.05" width="0.1016" layer="94"/>
-<wire x1="256.54" y1="19.05" x2="256.54" y2="24.13" width="0.1016" layer="94"/>
-<wire x1="161.29" y1="3.81" x2="161.29" y2="24.13" width="0.1016" layer="94"/>
-<wire x1="161.29" y1="24.13" x2="215.265" y2="24.13" width="0.1016" layer="94"/>
-<wire x1="215.265" y1="24.13" x2="256.54" y2="24.13" width="0.1016" layer="94"/>
-<wire x1="246.38" y1="3.81" x2="246.38" y2="8.89" width="0.1016" layer="94"/>
-<wire x1="246.38" y1="8.89" x2="256.54" y2="8.89" width="0.1016" layer="94"/>
-<wire x1="246.38" y1="8.89" x2="215.265" y2="8.89" width="0.1016" layer="94"/>
-<wire x1="215.265" y1="8.89" x2="215.265" y2="3.81" width="0.1016" layer="94"/>
-<wire x1="215.265" y1="8.89" x2="215.265" y2="13.97" width="0.1016" layer="94"/>
-<wire x1="215.265" y1="13.97" x2="256.54" y2="13.97" width="0.1016" layer="94"/>
-<wire x1="215.265" y1="13.97" x2="215.265" y2="19.05" width="0.1016" layer="94"/>
-<wire x1="215.265" y1="19.05" x2="256.54" y2="19.05" width="0.1016" layer="94"/>
-<wire x1="215.265" y1="19.05" x2="215.265" y2="24.13" width="0.1016" layer="94"/>
-<text x="217.17" y="15.24" size="2.54" layer="94" font="vector">&gt;DRAWING_NAME</text>
-<text x="217.17" y="10.16" size="2.286" layer="94" font="vector">&gt;LAST_DATE_TIME</text>
-<text x="230.505" y="5.08" size="2.54" layer="94" font="vector">&gt;SHEET</text>
-<text x="216.916" y="4.953" size="2.54" layer="94" font="vector">Sheet:</text>
-<frame x1="0" y1="0" x2="260.35" y2="179.07" columns="6" rows="4" layer="94"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="A4L-LOC" prefix="FRAME" uservalue="yes">
-<description>&lt;b&gt;FRAME&lt;/b&gt;&lt;p&gt;
-DIN A4, landscape with location and doc. field</description>
-<gates>
-<gate name="G$1" symbol="A4L-LOC" x="0" y="0"/>
-</gates>
-<devices>
-<device name="">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="74xx-eu">
 <packages>
 <package name="DIL20">
@@ -14863,6 +14818,52 @@ DIN A4, landscape with location and doc. field</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="we-symbol">
+<description>Symbols, Logos...</description>
+<packages>
+</packages>
+<symbols>
+<symbol name="A4L-LOC">
+<wire x1="256.54" y1="3.81" x2="256.54" y2="8.89" width="0.1016" layer="94"/>
+<wire x1="256.54" y1="8.89" x2="256.54" y2="13.97" width="0.1016" layer="94"/>
+<wire x1="256.54" y1="13.97" x2="256.54" y2="19.05" width="0.1016" layer="94"/>
+<wire x1="256.54" y1="19.05" x2="256.54" y2="24.13" width="0.1016" layer="94"/>
+<wire x1="161.29" y1="3.81" x2="161.29" y2="24.13" width="0.1016" layer="94"/>
+<wire x1="161.29" y1="24.13" x2="215.265" y2="24.13" width="0.1016" layer="94"/>
+<wire x1="215.265" y1="24.13" x2="256.54" y2="24.13" width="0.1016" layer="94"/>
+<wire x1="246.38" y1="3.81" x2="246.38" y2="8.89" width="0.1016" layer="94"/>
+<wire x1="246.38" y1="8.89" x2="256.54" y2="8.89" width="0.1016" layer="94"/>
+<wire x1="246.38" y1="8.89" x2="215.265" y2="8.89" width="0.1016" layer="94"/>
+<wire x1="215.265" y1="8.89" x2="215.265" y2="3.81" width="0.1016" layer="94"/>
+<wire x1="215.265" y1="8.89" x2="215.265" y2="13.97" width="0.1016" layer="94"/>
+<wire x1="215.265" y1="13.97" x2="256.54" y2="13.97" width="0.1016" layer="94"/>
+<wire x1="215.265" y1="13.97" x2="215.265" y2="19.05" width="0.1016" layer="94"/>
+<wire x1="215.265" y1="19.05" x2="256.54" y2="19.05" width="0.1016" layer="94"/>
+<wire x1="215.265" y1="19.05" x2="215.265" y2="24.13" width="0.1016" layer="94"/>
+<frame x1="0" y1="0" x2="260.35" y2="179.07" columns="6" rows="4" layer="94"/>
+<text x="217.17" y="15.24" size="2.032" layer="94" font="vector">&gt;DRAWING_NAME</text>
+<text x="217.17" y="10.16" size="2.032" layer="94" font="vector">&gt;LAST_DATE_TIME</text>
+<text x="230.505" y="5.08" size="2.54" layer="94" font="vector">&gt;SHEET</text>
+<text x="217.17" y="5.08" size="2.54" layer="94" font="vector">Sheet:</text>
+<text x="217.17" y="20.32" size="2.032" layer="94" font="vector">www.watterott.com</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="FRAME-A4L" prefix="FRAME" uservalue="yes">
+<description>Frame: DIN A4 Landscape</description>
+<gates>
+<gate name="G$1" symbol="A4L-LOC" x="0" y="0"/>
+</gates>
+<devices>
+<device name="">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -14876,7 +14877,6 @@ DIN A4, landscape with location and doc. field</description>
 <part name="GND9" library="supply1" deviceset="GND" device=""/>
 <part name="C7" library="rcl" deviceset="C-EU" device="C0603" value="100nF"/>
 <part name="C8" library="rcl" deviceset="C-EU" device="C0603" value="2uF"/>
-<part name="FRAME1" library="frames" deviceset="A4L-LOC" device=""/>
 <part name="IC1" library="74xx-eu" deviceset="74*244" device="DW" technology="HC" value="74LVC244"/>
 <part name="GND10" library="supply1" deviceset="GND" device=""/>
 <part name="+3V11" library="supply1" deviceset="+3V3" device=""/>
@@ -14957,6 +14957,7 @@ DIN A4, landscape with location and doc. field</description>
 <part name="RST." library="wirepad" deviceset="WIREPAD" device="1,6/0,8"/>
 <part name="GND." library="wirepad" deviceset="WIREPAD" device="1,6/0,8"/>
 <part name="GND3" library="supply1" deviceset="GND" device=""/>
+<part name="FRAME1" library="we-symbol" deviceset="FRAME-A4L" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -14965,9 +14966,9 @@ DIN A4, landscape with location and doc. field</description>
 <wire x1="73.66" y1="54.61" x2="76.327" y2="54.61" width="0.8128" layer="94"/>
 <wire x1="72.39" y1="71.12" x2="75.057" y2="71.12" width="0.8128" layer="94"/>
 <wire x1="114.3" y1="71.12" x2="116.967" y2="71.12" width="0.8128" layer="94"/>
-<text x="161.29" y="31.75" size="1.27" layer="95">Released under the Creative Commons Attribution Share-Alike License</text>
-<text x="161.29" y="29.21" size="1.27" layer="95">http://creativecommons.org/licenses/by-sa/4.0/</text>
-<text x="161.29" y="25.4" size="1.27" layer="95">Designed by Andreas Watterott (Watterott electronic)</text>
+<text x="162.56" y="21.59" size="1.27" layer="95">Released under the Creative Commons Attribution Share-Alike License</text>
+<text x="162.56" y="19.05" size="1.27" layer="95">http://creativecommons.org/licenses/by-sa/4.0/</text>
+<text x="162.56" y="15.24" size="1.27" layer="95">Designed by Andreas Watterott (Watterott electronic)</text>
 <text x="52.07" y="166.37" size="3.81" layer="250">Arduino</text>
 <text x="46.99" y="74.93" size="3.81" layer="250">Level Converter</text>
 <text x="181.61" y="166.37" size="3.81" layer="250">WiFi-Module</text>
@@ -14990,11 +14991,6 @@ DIN A4, landscape with location and doc. field</description>
 <instance part="C8" gate="G$1" x="162.56" y="104.14" smashed="yes">
 <attribute name="NAME" x="160.782" y="107.696" size="1.778" layer="95"/>
 <attribute name="VALUE" x="160.782" y="96.266" size="1.778" layer="96"/>
-</instance>
-<instance part="FRAME1" gate="G$1" x="0" y="0" smashed="yes">
-<attribute name="DRAWING_NAME" x="217.17" y="15.24" size="2.54" layer="94" font="vector"/>
-<attribute name="LAST_DATE_TIME" x="217.17" y="10.16" size="2.286" layer="94" font="vector"/>
-<attribute name="SHEET" x="230.505" y="5.08" size="2.54" layer="94" font="vector"/>
 </instance>
 <instance part="IC1" gate="A" x="34.29" y="54.61" smashed="yes" rot="MR0">
 <attribute name="NAME" x="41.91" y="62.865" size="1.778" layer="95" rot="MR0"/>
@@ -15033,11 +15029,11 @@ DIN A4, landscape with location and doc. field</description>
 <instance part="GND4" gate="1" x="106.68" y="147.32" smashed="yes" rot="R90">
 <attribute name="VALUE" x="109.22" y="144.78" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="X1" gate="G$1" x="166.37" y="19.05"/>
-<instance part="X2" gate="G$1" x="173.99" y="19.05"/>
-<instance part="X3" gate="G$1" x="181.61" y="19.05"/>
-<instance part="X4" gate="G$1" x="189.23" y="19.05"/>
-<instance part="LOGO1" gate="G$1" x="201.93" y="19.05"/>
+<instance part="X1" gate="G$1" x="165.1" y="7.62" smashed="yes"/>
+<instance part="X2" gate="G$1" x="170.18" y="7.62" smashed="yes"/>
+<instance part="X3" gate="G$1" x="175.26" y="7.62" smashed="yes"/>
+<instance part="X4" gate="G$1" x="180.34" y="7.62" smashed="yes"/>
+<instance part="LOGO1" gate="G$1" x="208.28" y="7.62"/>
 <instance part="WIFI-WLAN" gate="G$1" x="198.12" y="116.84" smashed="yes">
 <attribute name="NAME" x="180.34" y="150.368" size="1.778" layer="95"/>
 <attribute name="VALUE" x="180.34" y="81.534" size="1.778" layer="95"/>
@@ -15139,7 +15135,7 @@ DIN A4, landscape with location and doc. field</description>
 <instance part="GND11" gate="1" x="237.49" y="147.32" smashed="yes" rot="R90">
 <attribute name="VALUE" x="240.03" y="144.78" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="LOGO2" gate="G$1" x="201.93" y="11.43"/>
+<instance part="LOGO2" gate="G$1" x="198.12" y="7.62"/>
 <instance part="ARD" gate="G$1" x="62.23" y="124.46"/>
 <instance part="RESET" gate="G$1" x="96.52" y="149.86" rot="R270"/>
 <instance part="SCL" gate="G$1" x="85.09" y="99.06" smashed="yes" rot="R180">
@@ -15246,6 +15242,7 @@ DIN A4, landscape with location and doc. field</description>
 <instance part="GND3" gate="1" x="34.29" y="120.65" smashed="yes" rot="R270">
 <attribute name="VALUE" x="31.75" y="123.19" size="1.778" layer="96" rot="R270"/>
 </instance>
+<instance part="FRAME1" gate="G$1" x="0" y="0"/>
 </instances>
 <busses>
 </busses>
