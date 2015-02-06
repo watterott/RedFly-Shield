@@ -10,7 +10,7 @@ Shop: [RedFly-Shield](http://www.watterott.com/en/Arduino-RedFly-Shield)
 * Compliant to 802.11b/g and single stream 802.11n
 * Network Standard: IEEE 802.11b/g/n/i 2.4GHz
 * Wireless security: AES, WEP, WPA, WPA2-PSK
-* Ad-hoc (IBSS) and Infrastructure mode (on Ad-hoc only WEP encryption)
+* Modes: Ad-hoc (only WEP encryption) and Infrastructure (no Access-Point mode)
 * Scanning for networks with signal strength indicator
 * Integrated WiFi and IPv4 stack (TCP, UDP, ARP, ICMP, DHCP, Auto-IP, DNS)
 * Supports up to 7 sockets at the same time
@@ -24,7 +24,7 @@ Shop: [RedFly-Shield](http://www.watterott.com/en/Arduino-RedFly-Shield)
 
 
 ## Software
-* [Arduino Library with Examples](https://github.com/watterott/Arduino-Libs)
+* [Arduino Library and Examples](https://github.com/watterott/Arduino-Libs)
 
 
 ## Projects
