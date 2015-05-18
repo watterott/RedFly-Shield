@@ -48,8 +48,6 @@
         Firmware Upgradation completed
 
 
-
-
 ## Update under Linux with cutecom and kermit
 
 Alternatively it's also possible to do the firmware update with cutecom and kermit. 
