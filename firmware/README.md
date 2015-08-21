@@ -1,4 +1,4 @@
-Firmware Update Guide: <https://github.com/watterott/RedFly-Shield/tree/master/fw/update_guide>
+Firmware Update Guide: https://github.com/watterott/RedFly-Shield/tree/master/firmware/update_guide
 
 
 ## Release notes
@@ -9,8 +9,8 @@ Firmware Update Guide: <https://github.com/watterott/RedFly-Shield/tree/master/f
   * Fixed TCP max payload length 1460 and UDP max payload length 1472.
   * Uses the new RF and BB programming values to improve sensitivity.
   * Improve the accuracy of RSSI value by doing averaging.
- * Support for 32 byte SSID.
- * Number of sockets supported limited to 7.
+  * Support for 32 byte SSID.
+  * Number of sockets supported limited to 7.
 
 * 4.5.0
   * Fixed some IBSS issues.

@@ -1,7 +1,7 @@
 # RedFly-Shield
 The RedFly-Shield is a plug-on module with WiFi/WLAN for Arduino/Genuino.
 
-[![RedFly-Shield](https://raw.github.com/watterott/RedFly-Shield/master/pcb/RedFly-Shield_v13.jpg)](http://www.watterott.com/en/Arduino-RedFly-Shield)
+[![RedFly-Shield](https://github.com/watterott/RedFly-Shield/raw/master/hardware/RedFly-Shield_v13.jpg)](http://www.watterott.com/en/Arduino-RedFly-Shield)
 
 
 ## Shop
@@ -21,8 +21,8 @@ The RedFly-Shield is a plug-on module with WiFi/WLAN for Arduino/Genuino.
 
 
 ## Hardware
-* ![RedFly-Shield hardware dia](https://raw.github.com/watterott/RedFly-Shield/master/img/hw_dia.png)
-* [Schematics + Layout](https://github.com/watterott/RedFly-Shield/tree/master/pcb)
+* ![RedFly-Shield hardware dia](https://github.com/watterott/RedFly-Shield/raw/master/img/hw_dia.png)
+* [Schematics + Layout](https://github.com/watterott/RedFly-Shield/tree/master/hardware)
 
 
 ## Software
