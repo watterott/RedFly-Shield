@@ -20,7 +20,7 @@
 
 * Start connection on the serial port and wait about 20 seconds. Then the module starts with the default settings.
 
-* On the firmware upgrade question press y.
+* On the firmware upgrade question press **y**.
 
         WELCOME TO REDPINE SIGNALS
         Firmware upgrade (y/n) y
@@ -48,15 +48,41 @@
         Firmware Upgradation completed
 
 
-## Update under Linux with cutecom and kermit
+## Update under Linux with kermit
 
-Alternatively it's also possible to do the firmware update with cutecom and kermit. 
-In this case run kermit with following settings.
+Alternatively it's also possible to do the firmware update with kermit.
 
-    set xm li on
-    set line /dev/ttyUSB0
-    set speed 115200
-    set modem type none
-    set flow-control none
-    set handshake none
-    connect
+* Run kermit with the following settings and start the serial console.
+
+        $ sudo kermit
+        
+        set xm li on
+        set line /dev/ttyUSB0
+        set speed 115200
+        set modem type none
+        set flow-control none
+        set handshake none
+        connect
+
+* On the firmware upgrade question press **y**.
+
+        WELCOME TO REDPINE SIGNALS
+        Firmware upgrade (y/n) y
+        Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware
+        Send taim1
+
+* Go back ```CRTL+C``` and send the first file.
+
+        send taim1
+
+* Go to the serial console (type ```connect```).
+
+        connect
+
+* Wait for ```Send taim2```, then go back, send the file and return to the serial console.
+
+* Wait for ```Send tadm1```, then go back, send the file and return to the serial console.
+
+* Wait for ```Send tadm2```, then go back, send the file and return to the serial console.
+
+* Wait for ```Firmware Upgradation completed```.
