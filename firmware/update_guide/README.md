@@ -71,7 +71,7 @@ Alternatively it's also possible to do the firmware update with kermit.
         Send taim1,taim2,tadm1,tadm2 files in order to upgrade the firmware
         Send taim1
 
-* Go back ```CRTL+C``` and send the first file.
+* Go back ```CTRL+\, C``` and send the first file.
 
         send taim1
 
