@@ -21,14 +21,4 @@ Alternative: [BlueFly-Shield](https://github.com/watterott/BlueFly-Shield) with 
 * ![RedFly-Shield hardware dia](https://github.com/watterott/RedFly-Shield/raw/master/hardware/hw_dia.png)
 * [Schematics + Layout](https://github.com/watterott/RedFly-Shield/tree/master/hardware)
 * [Arduino Library and Examples](https://github.com/watterott/Arduino-Libs)
-
-
-## Projects
-* [Wireless Servo Controller](http://www.mon-club-elec.fr/pmwiki_mon_club_elec/pmwiki.php?n=MAIN.ArduinoWifiServeurControleServox2PanTilt)
-* [WLAN-Robot](http://www.matthiasrosenthal.de/blog/?p=272)
-* [StreetScan](http://wiki.hacksaar.de/StreetScan)
-* [THE KNOB II](http://www.ketzler.de/2012/09/the-knob-ii-hardware)
-* [Solarlogger](http://cocoswelt.blogsport.de/2012/09/13/solarlogger-aus-einem-arduino)
 * [DHCP + DNS servers](https://github.com/pkulchenko/DHCPLite/)
-* [TinyCLR/FEZ + RedFly](https://www.ghielectronics.com/community/codeshare/entry/251)
-* [Android + RedFly](http://android-arduino-redfly.npage.de)
