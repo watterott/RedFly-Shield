@@ -15,6 +15,7 @@ Alternative: [BlueFly-Shield](https://github.com/watterott/BlueFly-Shield) with 
 * Supports up to 7 sockets at the same time
 * On-board Antenna
 * 3.3V - 5V tolerant IOs
+* Open-Source and released under the [Creative Commons Attribution Share-Alike License](https://creativecommons.org/licenses/by-sa/4.0/).
 
 
 ## Hardware and Software
